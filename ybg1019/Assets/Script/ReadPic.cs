@@ -9,12 +9,12 @@ using UnityEngine.UI;
 public class ReadPic : MonoBehaviour
 {
 
-    public static Texture2D img = null;
-    public static Color[,] imageColor2d;
-    public RawImage rawImageObj;
-    public Transform myPixels;
+    public static Texture2D Img = null;
+    public static Color[,] ImageColor2d;
+    public RawImage OrinImageBg;
+    public Transform MyPixelsTF;
     //parameters
-    private int pixScale;//di       ameter of pixel
+    private int pixScale;//diameter of pixel
     private int linePixNum = 25;//number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
@@ -43,7 +43,7 @@ public class ReadPic : MonoBehaviour
         sp = (Sprite)Resources.Load("sprites/circle", typeof(Sprite)) as Sprite;
         spMaterial = Resources.Load("Material/1") as Material;
     }
-    public void addHead()
+    public void AddHead()
     {
         OpenFileDialog od = new OpenFileDialog();
         od.Title = "请选择头像图片";
@@ -56,16 +56,16 @@ public class ReadPic : MonoBehaviour
         }
 
     }
-    public void picProcess()
+    public void PicProcess()
     {
-        if (img == null) return;
-        int width = Mathf.FloorToInt(img.width);
-        int height = Mathf.FloorToInt(img.height);
-        imageColor2d = new Color[height, width];//initialize
-        Color[] pix = img.GetPixels(0, 0, width, height);
+        if (Img == null) return;
+        int width = Mathf.FloorToInt(Img.width);
+        int height = Mathf.FloorToInt(Img.height);
+        ImageColor2d = new Color[height, width];//initialize
+        Color[] pix = Img.GetPixels(0, 0, width, height);
         pixScale = (int)Mathf.Floor(myScreemWidth / linePixNum);//像素直径是屏幕宽度除以列像素数
         //align to center
-        myPixels.transform.localPosition = new Vector3((myScreemWidth - width) * 0.5f, (myScreemHeight - height) * 0.5f, 1);
+        MyPixelsTF.transform.localPosition = new Vector3((myScreemWidth - width) * 0.5f, (myScreemHeight - height) * 0.5f, 1);
 
 
         rowNum = (int)Mathf.Floor(height / pixScale);
@@ -82,12 +82,12 @@ public class ReadPic : MonoBehaviour
         {
             for (int x = 0, clo = 0; clo < cloNum; x = x + pixScale, clo++)
             {
-                imageColor2d[y, x] = pix[width * y + x];//pay attention to the writing style of 2d array in c#
-                pixArray[row, clo] = createSprite(y, x, row, clo, imageColor2d[y, x]);
-                pixColors[row, clo] = imageColor2d[y, x];
+                ImageColor2d[y, x] = pix[width * y + x];//pay attention to the writing style of 2d array in c#
+                pixArray[row, clo] = CreateSprite(y, x, row, clo, ImageColor2d[y, x]);
+                pixColors[row, clo] = ImageColor2d[y, x];
             }
         }
-        rawImageObj.gameObject.SetActive(false);
+        OrinImageBg.gameObject.SetActive(false);
         //---------------------------------------------------------------------temp-----------
         //ca.SetActive(true);
 
@@ -113,7 +113,7 @@ public class ReadPic : MonoBehaviour
     }
 
 
-    public GameObject createSprite(int y, int x, int row, int clo, Color col)
+    public GameObject CreateSprite(int y, int x, int row, int clo, Color col)
     {
         //将粒子对象改成球体
         GameObject pixShape = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -126,13 +126,13 @@ public class ReadPic : MonoBehaviour
         //pixShape.GetComponent<Renderer>().material = Resources.Load <Material>("Assets/Resources/Materials/emission");
         //pixShape.AddComponent<TrailRenderer>();
         pixShape.AddComponent<BoxCollider>();
-        pixShape.AddComponent<myPixel>();
+        pixShape.AddComponent<MyPixel>();
         //将鼠标移动相关的脚本添加到粒子上
-        pixShape.AddComponent<dragObj>();
+        pixShape.AddComponent<DragObj>();
 
-        pixShape.GetComponent<myPixel>().row = row;
-        pixShape.GetComponent<myPixel>().clo = clo;
-        pixShape.GetComponent<myPixel>().col = col;
+        pixShape.GetComponent<MyPixel>().Row = row;
+        pixShape.GetComponent<MyPixel>().Clo = clo;
+        pixShape.GetComponent<MyPixel>().Col = col;
         pixShape.name = row + "," + clo;
 
 
@@ -147,7 +147,7 @@ public class ReadPic : MonoBehaviour
         //spr.color = col;
         //spr.sprite = sp;
 
-        pixShape.transform.SetParent(myPixels);
+        pixShape.transform.SetParent(MyPixelsTF);
         pixShape.transform.localScale = new Vector3(pixScale, pixScale, 1);
         pixShape.transform.localPosition = new Vector3(x, y, 10f);//Sets the coordinates relative to the parent object 
 
@@ -171,7 +171,7 @@ public class ReadPic : MonoBehaviour
         return result;
     }
 
-    public Texture2D resizePic(Texture2D pic)
+    public Texture2D ResizePic(Texture2D pic)
     {
         int picW = pic.width;
         int picH = pic.height;
@@ -192,14 +192,14 @@ public class ReadPic : MonoBehaviour
         yield return www;
         if (www.isDone && www.error == null)
         {
-            img = resizePic(www.texture);
+            Img = ResizePic(www.texture);
 
             //bei  18/10/19
             CanvasTF.GetChild(6).gameObject.SetActive(true);
             //让显示图片的UI控件一开始先隐藏，当打开图片之后再激活
             //因为控件背景为白色才能正常显示图片，但背景为黑
 
-            rawImageObj.texture = img;
+            OrinImageBg.texture = Img;
 
             //bei  18/10/19
             //以某种方式打开图片后，就不显示打开图片按钮
@@ -223,9 +223,9 @@ public class ReadPic : MonoBehaviour
     //bei  18/10/19
     public void Cancel()
     {
-        if (rawImageObj)
+        if (OrinImageBg)
         {
-            rawImageObj.texture = null;
+            OrinImageBg.texture = null;
         }
 
 
@@ -246,36 +246,36 @@ public class ReadPic : MonoBehaviour
         CanvasTF.GetChild(9).gameObject.SetActive(true);
     }
 
-    public void setControlto1()
+    public void SetControlto1()
     {
         Control = 1;
     }
 
-    public void setControlto2()
+    public void SetControlto2()
     {
         Control = 2;
     }
-    public void setControlto3()
+    public void SetControlto3()
     {
         Control = 3;
     }
-    public void setControlto4()
+    public void SetControlto4()
     {
         Control = 4;
     }
-    public void setControlto5()
+    public void SetControlto5()
     {
         Control = 5;
     }
-    public void setControlto6()
+    public void SetControlto6()
     {
         Control = 6;
     }
-    public void setControlto7()
+    public void SetControlto7()
     {
         Control = 7;
     }
-    public void setControlto8()
+    public void SetControlto8()
     {
         Control = 8;
     }

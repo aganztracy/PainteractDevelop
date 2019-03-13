@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class destroyAllChildren : MonoBehaviour {
+public class DestroyAllChildren : MonoBehaviour {
 
 
 //修改完成
 
 
-    public void destroyChildren()
+    public void DestroyChildren()
     {
         for (int i = transform.childCount - 1; i >= 0; i--)
         {

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class showCamPanel : MonoBehaviour
+public class ShowCamPanel : MonoBehaviour
 {
-	public GameObject cameraPanel;
+	public GameObject CameraPanelOBJ;
 	bool panelState=false;
     // Use this for initialization
-    public void showAndHide()
+    public void ShowAndHide()
     {
 		 panelState=!panelState;
-          cameraPanel.SetActive(panelState);
+          CameraPanelOBJ.SetActive(panelState);
     }
 }

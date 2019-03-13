@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class myPixel : MonoBehaviour
+public class MyPixel : MonoBehaviour
 {
     int Control =1;//which case 1-3 by ztq //4-6 by ybg 
     int scl = 10;//pixels' scale
 
-    public int row;
-    public int clo;
-    public Color col;
+    public int Row;
+    public int Clo;
+    public Color Col;
 
     Vector2 iniScreenPos;
     Vector2 pixScreenPos;//will update
@@ -21,31 +21,30 @@ public class myPixel : MonoBehaviour
     float maxspeed;
     
 
-    public GameObject dotFlow;
-    public GameObject myPixels;
-
-    public GameObject PicProcessed;// 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
+    public GameObject DotFlowOBJ;
+    public GameObject MyPixelsOBJ;
+    public GameObject CanvasOBJ;// 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
 
     void Start()
     {
         //The initial coordinate
-        myPixels = GameObject.Find("myPixels");
+        MyPixelsOBJ = GameObject.Find("MyPixels");
         iniPos = this.gameObject.transform.localPosition;
         pos = this.gameObject.transform.localPosition;
-        iniScreenPos = new Vector2(this.pos.x + myPixels.transform.position.x, this.pos.y + myPixels.transform.position.y);//粒子生成的位置是相对于父物体的位置生成的
-        pixScreenPos = new Vector2(this.pos.x + myPixels.transform.position.x, this.pos.y + myPixels.transform.position.y);
+        iniScreenPos = new Vector2(this.pos.x + MyPixelsOBJ.transform.position.x, this.pos.y + MyPixelsOBJ.transform.position.y);//粒子生成的位置是相对于父物体的位置生成的
+        pixScreenPos = new Vector2(this.pos.x + MyPixelsOBJ.transform.position.x, this.pos.y + MyPixelsOBJ.transform.position.y);
         vel = new Vector3(0, 0, 0);
         acc = new Vector3(0, 0, 0);
 
         //获取功能模式控制变量
-        PicProcessed = GameObject.FindWithTag("Canvas");    
-        Control = PicProcessed.GetComponent<ReadPic>().Control;
+        CanvasOBJ = GameObject.FindWithTag("Canvas");    
+        Control = CanvasOBJ.GetComponent<ReadPic>().Control;
 
 
         switch (Control)
         {
             case 1:
-                dotFlow = GameObject.Find("dotFlow");
+                DotFlowOBJ = GameObject.Find("DotFlow");
                 maxspeed = 1;
                 break;
             case 2:
@@ -58,7 +57,7 @@ public class myPixel : MonoBehaviour
                 break;
             case 4:
                 
-                Debug.Log(PicProcessed.GetComponent<ReadPic>().rowNum);
+                Debug.Log(CanvasOBJ.GetComponent<ReadPic>().rowNum);
                 //链接关节游戏对象
                 GameObject connectedObjRow = null;
                 GameObject connectedObjClo = null;
@@ -73,51 +72,51 @@ public class myPixel : MonoBehaviour
                     RigidbodyConstraints.FreezeRotationZ |RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY;
 
                 //物理效果，建立弹性网状结构
-                if (row == 0)
+                if (Row == 0)
                 {// 最下方一排，不进行连接
 
                 }
-                else if (clo == 0)
+                else if (Clo == 0)
                 {// 最左侧一排，只与其下方一排连接
-                    Debug.Log("my row is"+row+"and my clo is"+clo);
+                    Debug.Log("my row is"+Row+"and my clo is"+Clo);
                     jointComponentRow = gameObject.AddComponent<SpringJoint>();
                     jointComponentRow.maxDistance = 3;
 
                     //连接到下方一个连接粒子
-                    connectedObjRow = PicProcessed.GetComponent<ReadPic>().pixArray[row - 1, clo];
+                    connectedObjRow = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
                     jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody>();
                 }
 
-                if (row != 0 && clo != 0)
+                if (Row != 0 && Clo != 0)
                 {// 一般粒子元，和其左方和下方的粒子连接
-                    Debug.Log("my row is" + row + "and my clo is" + clo);
+                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
                     jointComponentRow = gameObject.AddComponent<SpringJoint>();
                     jointComponentClo = gameObject.AddComponent<SpringJoint>();
                     jointComponentRow.maxDistance = 3;
                     jointComponentClo.maxDistance = 3;
 
                     //连接到下方一个连接粒子
-                    connectedObjRow = PicProcessed.GetComponent<ReadPic>().pixArray[row - 1, clo];
+                    connectedObjRow = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
                     jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody>();
 
 
                     //连接到左方一个连接粒子
-                    connectedObjClo = PicProcessed.GetComponent<ReadPic>().pixArray[row, clo -1];
+                    connectedObjClo = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo -1];
                     jointComponentClo.connectedBody = connectedObjClo.GetComponent<Rigidbody>();
                 }
 
-                if (row == PicProcessed.GetComponent<ReadPic>().rowNum-1)//最上方一行锁定
+                if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum-1)//最上方一行锁定
                                                                             
                 {
-                    Debug.Log("my row is" + row + "and my clo is" + clo);
-                    Debug.Log("lock" + row + ":" + clo);
+                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
+                    Debug.Log("lock" + Row + ":" + Clo);
                     gameObject.GetComponent<Rigidbody>().constraints = 
                         RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
                 }
                 break;
             case 5:
-                PicProcessed = GameObject.FindWithTag("Canvas");
-                Debug.Log(PicProcessed.GetComponent<ReadPic>().rowNum);
+                CanvasOBJ = GameObject.FindWithTag("Canvas");
+                Debug.Log(CanvasOBJ.GetComponent<ReadPic>().rowNum);
                 //链接关节游戏对象
                 GameObject connectedObjRow2 = null;
                 GameObject connectedObjClo2 = null;
@@ -137,27 +136,27 @@ public class myPixel : MonoBehaviour
                     RigidbodyConstraints.FreezeRotationX;//| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationZ;
 
                 //物理效果，建立弹性网状结构
-                if (row == 0)
+                if (Row == 0)
                 {// 最下方一排，不进行连接
 
 
                 }
-                else if (clo == 0)
+                else if (Clo == 0)
                 {// 最左侧一排，只与其下方一排连接
-                    Debug.Log("my row is" + row + "and my clo is" + clo);
+                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
                     jointComponentRow2 = gameObject.AddComponent<HingeJoint>();
                     //gameObject.GetComponent<HingeJoint>().useSpring = true;
                     gameObject.GetComponent<HingeJoint>().useLimits = true;
                     //jointComponentRow2.maxDistance = 3;
 
                     //连接到上方一个连接粒子
-                    connectedObjRow2 = PicProcessed.GetComponent<ReadPic>().pixArray[row - 1, clo];
+                    connectedObjRow2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
                     jointComponentRow2.connectedBody = connectedObjRow2.GetComponent<Rigidbody>();
                 }
 
-                if (row != 0 && clo != 0)
+                if (Row != 0 && Clo != 0)
                 {// 一般粒子元，和其左方和下方的粒子连接
-                    Debug.Log("my row is" + row + "and my clo is" + clo);
+                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
                     jointComponentRow2 = gameObject.AddComponent<HingeJoint>();
                     //gameObject.GetComponent<HingeJoint>().useSpring = true;
                     jointComponentClo2 = gameObject.AddComponent<HingeJoint>();
@@ -165,20 +164,20 @@ public class myPixel : MonoBehaviour
                     //jointComponentClo2.maxDistance = 3;
 
                     //连接到上方一个连接粒子
-                    connectedObjRow2 = PicProcessed.GetComponent<ReadPic>().pixArray[row - 1, clo];
+                    connectedObjRow2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
                     jointComponentRow2.connectedBody = connectedObjRow2.GetComponent<Rigidbody>();
 
 
                     //连接到左方一个连接粒子
-                    //connectedObjClo2 = PicProcessed.GetComponent<ReadPic>().pixArray[row, clo - 1];
+                    //connectedObjClo2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo - 1];
                     //jointComponentClo2.connectedBody = connectedObjClo2.GetComponent<Rigidbody>();
                 }
 
-                if (row == PicProcessed.GetComponent<ReadPic>().rowNum - 1)//最上方一行锁定
+                if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum - 1)//最上方一行锁定
 
                 {
-                    Debug.Log("my row is" + row + "and my clo is" + clo);
-                    Debug.Log("lock" + row + ":" + clo);
+                    Debug.Log("my row is" + Row + "and my Clo is" + Clo);
+                    Debug.Log("lock" + Row + ":" + Clo);
                     gameObject.GetComponent<Rigidbody>().constraints =
                         RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
                 }
@@ -187,7 +186,7 @@ public class myPixel : MonoBehaviour
                 // 给每个粒子添加light组件
                 // 测试组件的属性效果
                 gameObject.AddComponent<Light>();
-                gameObject.GetComponent<Light>().color = col ;
+                gameObject.GetComponent<Light>().color = Col ;
                 //gameObject.GetComponent<Light>().
                 break;
             case 7:
@@ -203,13 +202,13 @@ public class myPixel : MonoBehaviour
     void Update()
     {
         //update pixScreenPos
-        pixScreenPos.x = this.pos.x + myPixels.transform.position.x;
-        pixScreenPos.y = this.pos.y + myPixels.transform.position.y;
+        pixScreenPos.x = this.pos.x + MyPixelsOBJ.transform.position.x;
+        pixScreenPos.y = this.pos.y + MyPixelsOBJ.transform.position.y;
         switch (Control)
         {
             case 1:
-                this.follow(dotFlow.GetComponent<dotFlowControl>().flowfield, dotFlow.GetComponent<dotFlowControl>().cols);
-                this.edges(0, 0);
+                this.Follow(DotFlowOBJ.GetComponent<DotFlowControl>().FlowField, DotFlowOBJ.GetComponent<DotFlowControl>().Cols);
+                this.Edges(0, 0);
 
                 this.vel += this.acc;
                 this.vel = Vector2.ClampMagnitude(this.vel, this.maxspeed); //limit velocity because of the ever-exsiting acceleration
@@ -221,11 +220,11 @@ public class myPixel : MonoBehaviour
 
                 if (Input.GetMouseButton(0))
                 {
-                    this.attract();
+                    this.Attract();
                 }
                 else
                 {
-                    this.arrive();
+                    this.Arrive();
                 }
 
                 this.vel += this.acc;
@@ -253,7 +252,7 @@ public class myPixel : MonoBehaviour
     }
 
     //change the force of the pixels
-    public void applyForce(Vector2 force)
+    public void ApplyForce(Vector2 force)
     {
         this.acc += force;
     } 
@@ -261,23 +260,23 @@ public class myPixel : MonoBehaviour
 
 
     //FOR CASE1------------------------------------------------------------------------------------------------------------------------------
-    void follow(vectorField[] vectors, int cols)
+    void Follow(VectorField[] vectors, int Cols)
     {
         int xx = (int)Mathf.Floor((pixScreenPos.x) / scl);
         int yy = (int)Mathf.Floor((pixScreenPos.y) / scl);
         //find colum and row of the pixels
-        int index = xx + yy * cols;
+        int index = xx + yy * Cols;
         //find the pixel's index in field 
-        Vector2 force = vectors[index].direction;
-        this.applyForce(force); //add the vector regarding as force
+        Vector2 force = vectors[index].Direction;
+        this.ApplyForce(force); //add the vector regarding as force
     }
-    void edges(int picwidth, int picheight)
+    void Edges(int picwidth, int picheight)
     {
         int inter = 100;
         if (Vector2.Distance(iniScreenPos, pixScreenPos) > inter)
         {
-            this.pos.x = iniScreenPos.x - myPixels.transform.position.x;
-            this.pos.y = iniScreenPos.y - myPixels.transform.position.y;
+            this.pos.x = iniScreenPos.x - MyPixelsOBJ.transform.position.x;
+            this.pos.y = iniScreenPos.y - MyPixelsOBJ.transform.position.y;
         }
     }
     //CASE1 END----------------------------------------------------------------------------------------------------------------------------------
@@ -287,7 +286,7 @@ public class myPixel : MonoBehaviour
 
 
     //FOR CASE2-----------------------------------------------------------------------------------------------------------------------------------
-    void arrive()
+    void Arrive()
     {
         float maxforce = 1.5f;
         Vector2 target = iniScreenPos;
@@ -295,9 +294,9 @@ public class myPixel : MonoBehaviour
         desired = Vector2.ClampMagnitude(desired, 10);
         Vector2 steer = desired - vel;
         steer = Vector2.ClampMagnitude(steer, maxforce);
-        applyForce(steer);
+        ApplyForce(steer);
     }
-    void attract()
+    void Attract()
     {
 
         float gmass=20;
@@ -307,16 +306,16 @@ public class myPixel : MonoBehaviour
         Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Vector2 force = mousePos - this.pixScreenPos;//distance between the pixels and mousepostion(attractor)
         float d = force.magnitude;
-        d = myConstrain(d, 2, 6);
+        d = MyConstrain(d, 2, 6);
 
         force = force.normalized;
         //float strength = (G * mass * p.mass) / (d );//gravity
         //float strength = (G * mass * p.mass) * (d * d);
         float strength = (d * d) / (G * gmass * mass);
         force *= strength;
-        applyForce(force);
+        ApplyForce(force);
     }
-    float myConstrain(float a, float min, float max)
+    float MyConstrain(float a, float min, float max)
     {
         if (a <= min) return min;
         else if (min < a && a < max) return a;

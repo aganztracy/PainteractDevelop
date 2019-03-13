@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-public class spriteCreate : MonoBehaviour
+public class SpriteCreate : MonoBehaviour
 {
     public Texture2D tex;
     private Sprite mySprite;

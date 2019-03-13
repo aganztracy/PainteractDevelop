@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 18899674}
   - component: {fileID: 18899673}
   m_Layer: 5
-  m_Name: Button (7)
+  m_Name: Button8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto8
+        m_MethodName: SetControlto8
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 58114613}
   - component: {fileID: 58114612}
   m_Layer: 5
-  m_Name: Button (5)
+  m_Name: Button6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto6
+        m_MethodName: SetControlto6
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 127891030}
   - component: {fileID: 127891029}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Button3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto3
+        m_MethodName: SetControlto3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 191565636}
   - component: {fileID: 191565635}
   m_Layer: 5
-  m_Name: cameraControl
+  m_Name: CameraControl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -843,10 +843,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0c707ddb1716444b96a5ee02dcc554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painterCametra: {fileID: 1282727687}
-  scaleCVel: 5000
-  rotateCVel: 10
-  moveCVel: 100000
+  PainterCametra: {fileID: 1282727687}
+  ScaleCVel: 500
+  RotateCVel: 100
+  MoveCVel: 0.1
 --- !u!114 &191565636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a98683db1b91164fb7d4671758ff730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPanel: {fileID: 475873047}
+  CameraPanelOBJ: {fileID: 475873047}
 --- !u!114 &191565637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 191565636}
-        m_MethodName: showAndHide
+        m_MethodName: ShowAndHide
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   - component: {fileID: 292778429}
   - component: {fileID: 292778428}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: OrinImageBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1250,7 +1250,7 @@ GameObject:
   - component: {fileID: 394753847}
   - component: {fileID: 394753846}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Button4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1315,7 +1315,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto4
+        m_MethodName: SetControlto3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 419161071}
   - component: {fileID: 419161070}
   m_Layer: 0
-  m_Name: dotFlow
+  m_Name: DotFlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1389,8 +1389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scl: 10
-  cols: 0
-  rows: 0
+  Cols: 0
+  Rows: 0
 --- !u!4 &419161071
 Transform:
   m_ObjectHideFlags: 0
@@ -1415,9 +1415,8 @@ GameObject:
   - component: {fileID: 420390691}
   - component: {fileID: 420390690}
   - component: {fileID: 420390689}
-  - component: {fileID: 420390688}
   m_Layer: 5
-  m_Name: openButton
+  m_Name: OpenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1442,22 +1441,6 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: -458}
   m_SizeDelta: {x: 382, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &420390688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420390686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054d60f5610cfda419ec01bafa2f8db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImageObj: {fileID: 292778428}
-  myPixels: {fileID: 1556136294}
-  rowNum: 0
-  cloNum: 0
-  Control: 1
 --- !u!114 &420390689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,7 +1481,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: addHead
+        m_MethodName: AddHead
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1696,9 +1679,8 @@ GameObject:
   - component: {fileID: 457548952}
   - component: {fileID: 457548951}
   - component: {fileID: 457548950}
-  - component: {fileID: 457548949}
   m_Layer: 5
-  m_Name: cancelButton
+  m_Name: CancelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,22 +1705,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: -700}
   m_SizeDelta: {x: 382, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &457548949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 457548947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054d60f5610cfda419ec01bafa2f8db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImageObj: {fileID: 292778428}
-  myPixels: {fileID: 1556136294}
-  rowNum: 0
-  cloNum: 0
-  Control: 1
 --- !u!114 &457548950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,7 +1802,7 @@ GameObject:
   - component: {fileID: 475873050}
   - component: {fileID: 475873049}
   m_Layer: 5
-  m_Name: cameraControlPanel
+  m_Name: CameraControlPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2018,8 +1984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 054d60f5610cfda419ec01bafa2f8db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rawImageObj: {fileID: 292778428}
-  myPixels: {fileID: 1556136294}
+  OrinImageBg: {fileID: 292778428}
+  MyPixelsTF: {fileID: 1556136294}
   rowNum: 0
   cloNum: 0
   Control: 1
@@ -2335,7 +2301,7 @@ GameObject:
   - component: {fileID: 593550744}
   - component: {fileID: 593550743}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2400,7 +2366,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto2
+        m_MethodName: SetControlto2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2677,7 +2643,7 @@ GameObject:
   - component: {fileID: 777571144}
   - component: {fileID: 777571143}
   m_Layer: 5
-  m_Name: Image
+  m_Name: OrinImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2746,9 +2712,8 @@ GameObject:
   - component: {fileID: 782124511}
   - component: {fileID: 782124510}
   - component: {fileID: 782124509}
-  - component: {fileID: 782124508}
   m_Layer: 5
-  m_Name: processButton
+  m_Name: ProcessButton
   m_TagString: processButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2773,22 +2738,6 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: -700}
   m_SizeDelta: {x: 382, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &782124508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 782124506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054d60f5610cfda419ec01bafa2f8db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImageObj: {fileID: 292778428}
-  myPixels: {fileID: 1556136294}
-  rowNum: 0
-  cloNum: 0
-  Control: 1
 --- !u!114 &782124509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2829,7 +2778,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: picProcess
+        m_MethodName: PicProcess
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3122,7 +3071,7 @@ GameObject:
   - component: {fileID: 855073988}
   - component: {fileID: 855073987}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Button5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3187,7 +3136,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto5
+        m_MethodName: SetControlto5
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3631,9 +3580,8 @@ GameObject:
   - component: {fileID: 1234017178}
   - component: {fileID: 1234017177}
   - component: {fileID: 1234017176}
-  - component: {fileID: 1234017175}
   m_Layer: 5
-  m_Name: homeButton
+  m_Name: HomeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3658,22 +3606,6 @@ RectTransform:
   m_AnchoredPosition: {x: -426, y: 872}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1234017175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1234017173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054d60f5610cfda419ec01bafa2f8db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImageObj: {fileID: 292778428}
-  myPixels: {fileID: 1556136294}
-  rowNum: 0
-  cloNum: 0
-  Control: 1
 --- !u!114 &1234017176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3725,7 +3657,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1556136293}
-        m_MethodName: destroyChildren
+        m_MethodName: DestroyChildren
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3784,7 +3716,7 @@ GameObject:
   - component: {fileID: 1282727685}
   - component: {fileID: 1282727684}
   m_Layer: 0
-  m_Name: painterCamera
+  m_Name: PainterCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3801,9 +3733,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c88502410e26046a4c688058068556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  painterCamera: {fileID: 1282727687}
-  dotFlow: {fileID: 419161069}
-  PicProcessed: {fileID: 0}
+  PainterCamera: {fileID: 1282727687}
+  DotFlowOBJ: {fileID: 419161069}
+  CanvasOBJ: {fileID: 506439512}
 --- !u!81 &1282727685
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4610,7 +4542,7 @@ GameObject:
   - component: {fileID: 1556136294}
   - component: {fileID: 1556136293}
   m_Layer: 0
-  m_Name: myPixels
+  m_Name: MyPixels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4769,7 +4701,7 @@ GameObject:
   - component: {fileID: 1745201998}
   - component: {fileID: 1745201997}
   m_Layer: 5
-  m_Name: Button (6)
+  m_Name: Button7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4834,7 +4766,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto7
+        m_MethodName: SetControlto7
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5044,7 +4976,7 @@ GameObject:
   - component: {fileID: 1872196835}
   - component: {fileID: 1872196834}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5109,7 +5041,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: setControlto1
+        m_MethodName: SetControlto1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5316,7 +5248,7 @@ GameObject:
   - component: {fileID: 1959391068}
   - component: {fileID: 1959391067}
   m_Layer: 5
-  m_Name: HomeLoge
+  m_Name: HomeLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5458,7 +5390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2004370777}
   m_Layer: 0
-  m_Name: functionChoose
+  m_Name: FunctionChoose
   m_TagString: functionChooseButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

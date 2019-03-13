@@ -2,41 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class myMouseEvent : MonoBehaviour
+public class MyMouseEvent : MonoBehaviour
 {
-    public Camera painterCamera;
-    public GameObject dotFlow;
-    public GameObject PicProcessed;// 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
+    public Camera PainterCamera;
+    public GameObject DotFlowOBJ;
+    public GameObject CanvasOBJ;// 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
 
     int Control = 1;// For convenient debugging to switch function
 
-    Vector2 prePOS = new Vector2(0, 0);
-    Vector2 POS = new Vector2(0, 0);
+    Vector2 prePos = new Vector2(0, 0);
+    Vector2 pos = new Vector2(0, 0);
 
     void Start()
     {
         //获取功能模式控制变量
-        PicProcessed = GameObject.FindWithTag("Canvas");
-        Control = PicProcessed.GetComponent<ReadPic>().Control;
+        CanvasOBJ = GameObject.FindWithTag("Canvas");
+        Control = CanvasOBJ.GetComponent<ReadPic>().Control;
     }
 
     void Update()
     {
-        POS = Input.mousePosition;
-        Vector3 mouseDirec = POS - prePOS;
+        pos = Input.mousePosition;
+        Vector3 mouseDirec = pos - prePos;
         if (Input.GetMouseButton(0))//if mouseleft down
         {
-            Ray ray = painterCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = PainterCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                prePOS = Input.mousePosition;
+                prePos = Input.mousePosition;
                 // hit.collider.gameObject.GetComponent<SpriteRenderer>().color=Color.black;
                 
                 switch (Control)
                 {
                     case 1:
-                        dotFlow.GetComponent<dotFlowControl>().changeFeild(mouseDirec);//change vectorfeild
+                        DotFlowOBJ.GetComponent<DotFlowControl>().ChangeFeild(mouseDirec);//change vectorfeild
                         break;
                     case 2:
 
@@ -58,7 +58,7 @@ public class myMouseEvent : MonoBehaviour
                 }
 
             }
-            prePOS = POS;
+            prePos = pos;
         }
     }
 
