@@ -1315,7 +1315,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 506439517}
-        m_MethodName: SetControlto3
+        m_MethodName: SetControlto4
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

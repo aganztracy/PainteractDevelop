@@ -57,7 +57,6 @@ public class MyPixel : MonoBehaviour
                 break;
             case 4:
                 
-                Debug.Log(CanvasOBJ.GetComponent<ReadPic>().rowNum);
                 //链接关节游戏对象
                 GameObject connectedObjRow = null;
                 GameObject connectedObjClo = null;
@@ -78,7 +77,7 @@ public class MyPixel : MonoBehaviour
                 }
                 else if (Clo == 0)
                 {// 最左侧一排，只与其下方一排连接
-                    Debug.Log("my row is"+Row+"and my clo is"+Clo);
+                    //Debug.Log("my row is"+Row+"and my clo is"+Clo);
                     jointComponentRow = gameObject.AddComponent<SpringJoint>();
                     jointComponentRow.maxDistance = 3;
 
@@ -89,7 +88,7 @@ public class MyPixel : MonoBehaviour
 
                 if (Row != 0 && Clo != 0)
                 {// 一般粒子元，和其左方和下方的粒子连接
-                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
+                    //Debug.Log("my row is" + Row + "and my clo is" + Clo);
                     jointComponentRow = gameObject.AddComponent<SpringJoint>();
                     jointComponentClo = gameObject.AddComponent<SpringJoint>();
                     jointComponentRow.maxDistance = 3;
@@ -108,14 +107,14 @@ public class MyPixel : MonoBehaviour
                 if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum-1)//最上方一行锁定
                                                                             
                 {
-                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
+                    //Debug.Log("my row is" + Row + "and my clo is" + Clo);
                     Debug.Log("lock" + Row + ":" + Clo);
                     gameObject.GetComponent<Rigidbody>().constraints = 
                         RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
                 }
                 break;
             case 5:
-                CanvasOBJ = GameObject.FindWithTag("Canvas");
+                
                 Debug.Log(CanvasOBJ.GetComponent<ReadPic>().rowNum);
                 //链接关节游戏对象
                 GameObject connectedObjRow2 = null;
@@ -169,8 +168,8 @@ public class MyPixel : MonoBehaviour
 
 
                     //连接到左方一个连接粒子
-                    //connectedObjClo2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo - 1];
-                    //jointComponentClo2.connectedBody = connectedObjClo2.GetComponent<Rigidbody>();
+                    connectedObjClo2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo - 1];
+                    jointComponentClo2.connectedBody = connectedObjClo2.GetComponent<Rigidbody>();
                 }
 
                 if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum - 1)//最上方一行锁定
@@ -193,7 +192,7 @@ public class MyPixel : MonoBehaviour
                 break;
             case 8:
                 break;
-                break;
+                
             default:
                 break;
         }
