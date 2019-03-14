@@ -127,12 +127,11 @@ public class ReadPic : MonoBehaviour
         //pixShape.AddComponent<TrailRenderer>();
         pixShape.AddComponent<BoxCollider>();
         pixShape.AddComponent<MyPixel>();
-        //将鼠标移动相关的脚本添加到粒子上
-        pixShape.AddComponent<DragObj>();
 
         pixShape.GetComponent<MyPixel>().Row = row;
         pixShape.GetComponent<MyPixel>().Clo = clo;
         pixShape.GetComponent<MyPixel>().Col = col;
+        pixShape.GetComponent<MyPixel>().PosXY = new Vector2(x,y);
         pixShape.name = row + "," + clo;
 
 

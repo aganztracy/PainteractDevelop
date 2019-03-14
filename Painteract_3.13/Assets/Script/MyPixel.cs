@@ -11,6 +11,8 @@ public class MyPixel : MonoBehaviour
     public int Clo;
     public Color Col;
 
+    public Vector2 PosXY;
+
     Vector2 iniScreenPos;
     Vector2 pixScreenPos;//will update
     Vector2 iniPos;
@@ -56,139 +58,25 @@ public class MyPixel : MonoBehaviour
 
                 break;
             case 4:
-                
-                //链接关节游戏对象
-                GameObject connectedObjRow = null;
-                GameObject connectedObjClo = null;
-                //当前链接的弹簧关节组件
-                SpringJoint jointComponentRow = null;
-                SpringJoint jointComponentClo = null;
-
-                // 给每个粒子添加刚体组件
-                gameObject.AddComponent<Rigidbody>();
-                // 锁定三个方向的旋转
-                gameObject.GetComponent<Rigidbody>().constraints = 
-                    RigidbodyConstraints.FreezeRotationZ |RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY;
-
-                //物理效果，建立弹性网状结构
-                if (Row == 0)
-                {// 最下方一排，不进行连接
-
-                }
-                else if (Clo == 0)
-                {// 最左侧一排，只与其下方一排连接
-                    //Debug.Log("my row is"+Row+"and my clo is"+Clo);
-                    jointComponentRow = gameObject.AddComponent<SpringJoint>();
-                    jointComponentRow.maxDistance = 3;
-
-                    //连接到下方一个连接粒子
-                    connectedObjRow = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
-                    jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody>();
-                }
-
-                if (Row != 0 && Clo != 0)
-                {// 一般粒子元，和其左方和下方的粒子连接
-                    //Debug.Log("my row is" + Row + "and my clo is" + Clo);
-                    jointComponentRow = gameObject.AddComponent<SpringJoint>();
-                    jointComponentClo = gameObject.AddComponent<SpringJoint>();
-                    jointComponentRow.maxDistance = 3;
-                    jointComponentClo.maxDistance = 3;
-
-                    //连接到下方一个连接粒子
-                    connectedObjRow = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
-                    jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody>();
-
-
-                    //连接到左方一个连接粒子
-                    connectedObjClo = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo -1];
-                    jointComponentClo.connectedBody = connectedObjClo.GetComponent<Rigidbody>();
-                }
-
-                if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum-1)//最上方一行锁定
-                                                                            
-                {
-                    //Debug.Log("my row is" + Row + "and my clo is" + Clo);
-                    Debug.Log("lock" + Row + ":" + Clo);
-                    gameObject.GetComponent<Rigidbody>().constraints = 
-                        RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-                }
+                //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                gameObject.AddComponent<DragObj>();
+                //将形成弹簧网络的功能脚本添加到粒子上
+                gameObject.AddComponent<SpringGrid>();   
                 break;
             case 5:
-                
-                Debug.Log(CanvasOBJ.GetComponent<ReadPic>().rowNum);
-                //链接关节游戏对象
-                GameObject connectedObjRow2 = null;
-                GameObject connectedObjClo2 = null;
-                //当前链接的弹簧关节组件
-                HingeJoint jointComponentRow2 = null;
-                HingeJoint jointComponentClo2 = null;
-
-                // 给每个粒子添加刚体组件
-                // 测试刚体组件的属性效果
-                gameObject.AddComponent<Rigidbody>();
-                gameObject.GetComponent<Rigidbody>().useGravity = true;
-                gameObject.GetComponent<Rigidbody>().drag = 0.1f;//    典型的Drag值介于0.001(固体金属)到10(羽毛)之间。
-                //gameObject.GetComponent<Rigidbody>().isKinematic = true; // 如果启用该参数，则对象不会被物理所控制
-                gameObject.GetComponent<Rigidbody>().mass = 0.1f;// 重量属性
-                // 锁定三个方向的旋转
-                gameObject.GetComponent<Rigidbody>().constraints =
-                    RigidbodyConstraints.FreezeRotationX;//| RigidbodyConstraints.FreezeRotationX| RigidbodyConstraints.FreezeRotationZ;
-
-                //物理效果，建立弹性网状结构
-                if (Row == 0)
-                {// 最下方一排，不进行连接
-
-
-                }
-                else if (Clo == 0)
-                {// 最左侧一排，只与其下方一排连接
-                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
-                    jointComponentRow2 = gameObject.AddComponent<HingeJoint>();
-                    //gameObject.GetComponent<HingeJoint>().useSpring = true;
-                    gameObject.GetComponent<HingeJoint>().useLimits = true;
-                    //jointComponentRow2.maxDistance = 3;
-
-                    //连接到上方一个连接粒子
-                    connectedObjRow2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
-                    jointComponentRow2.connectedBody = connectedObjRow2.GetComponent<Rigidbody>();
-                }
-
-                if (Row != 0 && Clo != 0)
-                {// 一般粒子元，和其左方和下方的粒子连接
-                    Debug.Log("my row is" + Row + "and my clo is" + Clo);
-                    jointComponentRow2 = gameObject.AddComponent<HingeJoint>();
-                    //gameObject.GetComponent<HingeJoint>().useSpring = true;
-                    jointComponentClo2 = gameObject.AddComponent<HingeJoint>();
-                    //jointComponentRow2.maxDistance = 3;
-                    //jointComponentClo2.maxDistance = 3;
-
-                    //连接到上方一个连接粒子
-                    connectedObjRow2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row - 1, Clo];
-                    jointComponentRow2.connectedBody = connectedObjRow2.GetComponent<Rigidbody>();
-
-
-                    //连接到左方一个连接粒子
-                    connectedObjClo2 = CanvasOBJ.GetComponent<ReadPic>().pixArray[Row, Clo - 1];
-                    jointComponentClo2.connectedBody = connectedObjClo2.GetComponent<Rigidbody>();
-                }
-
-                if (Row == CanvasOBJ.GetComponent<ReadPic>().rowNum - 1)//最上方一行锁定
-
-                {
-                    Debug.Log("my row is" + Row + "and my Clo is" + Clo);
-                    Debug.Log("lock" + Row + ":" + Clo);
-                    gameObject.GetComponent<Rigidbody>().constraints =
-                        RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
-                }
+                //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                gameObject.AddComponent<DragObj>();
+                //将形成铰链网络的功能脚本添加到粒子上
+                gameObject.AddComponent<HingeGrid>(); 
                 break;
             case 6:
-                // 给每个粒子添加light组件
-                // 测试组件的属性效果
-                gameObject.AddComponent<Light>();
-                gameObject.GetComponent<Light>().color = Col ;
-                //gameObject.GetComponent<Light>().
+                // 点击爆炸粒子
+            gameObject.AddComponent<ParticlesBoom>();
                 break;
             case 7:
+                //点击颜料溅开的测试
+            gameObject.AddComponent<PigmentBoom>();
+
                 break;
             case 8:
                 break;
