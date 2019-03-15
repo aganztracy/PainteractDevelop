@@ -56,6 +56,8 @@ public class ParticlesBoom : MonoBehaviour {
             var Pmain = P.main;
             var Pshape = P.shape;
             var Pemission = P.emission;
+            var Ptrails = P.trails;
+
             Pemission.rateOverTime = 5.0f;
 
             Pmain.maxParticles = 10;
@@ -63,11 +65,18 @@ public class ParticlesBoom : MonoBehaviour {
             //Pmain.gravityModifier = 0.8f;
             Pmain.startSize = 100f;
             Pmain.startSpeed = 10f;
+            Pmain.gravityModifier = 0.4f;
             Pmain.loop = true;
             Pmain.startLifetime = 50;
 
             Pshape.sprite = sp;
             Pshape.shapeType =  ParticleSystemShapeType.Sphere;
+
+            Ptrails.enabled = true;
+            Ptrails.ratio = 0.5f;
+             var psr = GetComponent<ParticleSystemRenderer>();
+             psr.trailMaterial = Pmaterial;
+             Ptrails.inheritParticleColor = true;
 
             //销毁原粒子
             Destroy (gameObject);
