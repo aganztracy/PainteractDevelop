@@ -36,7 +36,7 @@ public class MyMouseEvent : MonoBehaviour
                 switch (Control)
                 {
                     case 1:
-                        DotFlowOBJ.GetComponent<DotFlowControl>().ChangeFeild(mouseDirec);//change vectorfeild
+                        // DotFlowOBJ.GetComponent<DotFlowController>().ChangeFeild(mouseDirec);//change vectorfeild
                         break;
                     case 2:
 
