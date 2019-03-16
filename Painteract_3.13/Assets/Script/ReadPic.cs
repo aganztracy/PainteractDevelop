@@ -98,13 +98,21 @@ public class ReadPic : MonoBehaviour {
 
     }
 
-    public GameObject CreateSprite (int y, int x, int row, int clo, Color col) {
+    public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
         //将粒子对象改成球体
-        GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-        pixShape.GetComponent<Renderer> ().material.color = col;
+        // GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
+        //将粒子对象改为cube by z
+        GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
+        float hue, saturate, brightness; //brightness 的值是0-1
+        Color.RGBToHSV (col, out hue, out saturate, out brightness);
+        float brightScaleFactor = brightness * 5.0f;  //长短不一
+        // float brightScaleFactor = 1.0f;//长短一样
+
+        pixShape.GetComponent<Renderer> ().material.color = col;
         //GameObject pixShape = new GameObject();
         //pixShape.AddComponent<SpriteRenderer>();
+
         //发光效果尝试
         //pixShape.GetComponent<Renderer>().material = Resources.Load <Material>("Assets/Resources/Materials/emission");
         //pixShape.AddComponent<TrailRenderer>();
@@ -115,12 +123,37 @@ public class ReadPic : MonoBehaviour {
         pixShape.GetComponent<MyPixel> ().Clo = clo;
         pixShape.GetComponent<MyPixel> ().Col = col;
 
+        //test 3d position by z
+
+        ///-无效果0----------------------------
+        // float z=10.0f;
+        ///-效果1可----------------------------
+        // float z = Mathf.Sin(Mathf.Sqrt(x*x+y*y))*100; //比较混乱的城市效果
+        ///-效果2可---------------------------
+        // float z = Mathf.Sin (Mathf.Sqrt (clo * clo + row * row)) * 100; //有规律的波纹效果1，用其他函数也可以变成其他类型的波纹
+        ///--效果3可---------------------------
+        // float u = ExtensionMethods.Map (row, 0, rowNum,-10, 10);
+        // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
+        // float z = Mathf.Cos (Mathf.Sqrt (u * u + v * v)) * 100; //有规律的波纹效果2
         
-        //test 3d position
-        int z=10;
-        pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y,z);
+        ///-卷曲效果零食可-------------------------------
+        float u = ExtensionMethods.Map (row, 0, rowNum, -0, 5);//后面这两个参数对形状影响很大
+        float v = ExtensionMethods.Map (clo, 0, cloNum, -1, 1);
+        x = v*100*5;
+        y = Mathf.Sin (u) * Mathf.Cos (v)*100*5;
+        float z = Mathf.Cos (u) * Mathf.Cos (v)*100*5;
+        ///---效果4---？---------------------------
+        // float u = ExtensionMethods.Map (row, 0, rowNum, 10, 52);
+        // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
+        // x = 0.75f * v * 100;
+        // y = Mathf.Sin (u) * v * 100;
+        // float z = Mathf.Cos (u) * Mathf.Cos (v) * 500;
+        //--------------------------------------
+
+        pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
         pixShape.name = row + "," + clo;
 
+        ///粒子的拖尾
         //SpriteRenderer spr = pixShape.GetComponent<SpriteRenderer>();
 
         //TrailRenderer trialr = pixShape.GetComponent<TrailRenderer>();
@@ -133,9 +166,9 @@ public class ReadPic : MonoBehaviour {
         //spr.sprite = sp;
 
         pixShape.transform.SetParent (MyPixelsTF);
-        pixShape.transform.localScale = new Vector3 (pixScale, pixScale, pixScale);
-        pixShape.transform.localPosition = new Vector3 (x, y, 10f); //Sets the coordinates relative to the parent object 
-
+        pixShape.transform.localScale = new Vector3 (pixScale, pixScale, pixScale * brightScaleFactor);
+        ///1.Sets the coordinates relative to the parent object 2.用长方体表示时，平移半个高度保持一面是平整的
+        pixShape.transform.localPosition = new Vector3 (x, y, z - pixScale * brightScaleFactor * 0.5f); 
         return pixShape;
     }
     Texture2D ScaleTexture (Texture2D source, int targetWidth, int targetHeight) {
@@ -188,9 +221,7 @@ public class ReadPic : MonoBehaviour {
             CanvasTF.GetChild (8).gameObject.SetActive (false);
             //不显示功能选择按钮组
             CanvasTF.GetChild (9).gameObject.SetActive (false);
-
         }
-
     }
 
     //bei  18/10/19
@@ -198,7 +229,6 @@ public class ReadPic : MonoBehaviour {
         if (OrinImageBg) {
             OrinImageBg.texture = null;
         }
-
         //不显示处理图片和取消按钮
         CanvasTF.GetChild (0).gameObject.SetActive (true);
         CanvasTF.GetChild (1).gameObject.SetActive (true);
@@ -240,5 +270,12 @@ public class ReadPic : MonoBehaviour {
     }
     public void SetControlto8 () {
         Control = 8;
+    }
+
+}
+
+public static class ExtensionMethods { //一个扩展的静态类，可以直接用类名调用方法，这里的方法是自定义的。方法不多，暂时存放在这。
+    public static float Map (this float value, float from1, float to1, float from2, float to2) {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 }
