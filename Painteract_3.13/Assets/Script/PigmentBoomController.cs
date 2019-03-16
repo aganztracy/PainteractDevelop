@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PigmentBoom : MonoBehaviour {
-	///
-	/// 颜料喷溅效果by北
+public class PigmentBoomController : MonoBehaviour {
+
+///
+/// 	/// 颜料喷溅效果by北
 	/// 点击粒子后在粒子位置生成粒子颜色的模拟颜料喷溅效果的sprite（多个随机或按顺序出现）
 	/// 然后原粒子会被销毁
 	/// 模拟粒子被戳破的效果

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpringGrid : MonoBehaviour {
+public class Spring3DController : MonoBehaviour {
 
 	//链接关节游戏对象
 	GameObject connectedObjRow = null;
@@ -16,8 +16,14 @@ public class SpringGrid : MonoBehaviour {
 	GameObject CanvasOBJ;
 	//定义继承的参数
 	int Row;
-    int Clo;
-    Color Col;
+	int Clo;
+	Color Col;
+
+	int RowNum;
+	int CloNum;
+
+	float PosX;
+	float PosY;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +33,10 @@ public class SpringGrid : MonoBehaviour {
 		Row = MyPixelOBJ.Row;
 		Clo = MyPixelOBJ.Clo;
 		Col = MyPixelOBJ.Col;
+		RowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
+		CloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
+		PosX = MyPixelOBJ.PosXY.x;
+		PosY = MyPixelOBJ.PosXY.y;
 
 		// 给每个粒子添加刚体组件
 		gameObject.AddComponent<Rigidbody> ();
@@ -45,6 +55,7 @@ public class SpringGrid : MonoBehaviour {
 			//连接到下方一个连接粒子
 			connectedObjRow = CanvasOBJ.GetComponent<ReadPic> ().pixArray[Row - 1, Clo];
 			jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody> ();
+
 		}
 
 		if (Row != 0 && Clo != 0) { // 一般粒子元，和其左方和下方的粒子连接
@@ -63,7 +74,7 @@ public class SpringGrid : MonoBehaviour {
 			jointComponentClo.connectedBody = connectedObjClo.GetComponent<Rigidbody> ();
 		}
 
-		if (Row == CanvasOBJ.GetComponent<ReadPic> ().rowNum - 1) //最上方一行锁定
+		if (Row == RowNum - 1) //最上方一行锁定
 
 		{
 			//Debug.Log("my row is" + Row + "and my clo is" + Clo);
@@ -72,11 +83,14 @@ public class SpringGrid : MonoBehaviour {
 				RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
 		}
 
+
+		gameObject.transform.localPosition = new Vector3 (PosX, PosY, PosX/10+PosY/10);
 	}
+
+	
 
 	// Update is called once per frame
 	void Update () {
 
 	}
-
 }

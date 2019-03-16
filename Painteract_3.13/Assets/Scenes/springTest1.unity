@@ -1361,49 +1361,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 394753844}
   m_CullTransparentMesh: 0
---- !u!1 &419161069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 419161071}
-  - component: {fileID: 419161070}
-  m_Layer: 0
-  m_Name: DotFlow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &419161070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 419161069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec777c4aedd491049b9f6c27112bf9f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scl: 10
-  Cols: 0
-  Rows: 0
---- !u!4 &419161071
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 419161069}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.96, y: 3.5, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &420390686
 GameObject:
   m_ObjectHideFlags: 0
@@ -3735,7 +3692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PainterCamera: {fileID: 1282727687}
-  DotFlowOBJ: {fileID: 419161069}
+  DotFlowOBJ: {fileID: 0}
   CanvasOBJ: {fileID: 506439512}
 --- !u!81 &1282727685
 AudioListener:

@@ -24,8 +24,8 @@ public class ReadPic : MonoBehaviour {
 
     public GameObject[, ] pixArray;
     public Color[, ] pixColors;
-    Sprite sp;
-    Material spMaterial;
+    // Sprite sp;
+    // Material spMaterial;
 
     //--------------------------功能模式控制变量--------------------------------
     public int Control = 1;
@@ -35,8 +35,8 @@ public class ReadPic : MonoBehaviour {
 
     void Start () {
         CanvasTF = GameObject.FindWithTag ("Canvas").transform;
-        sp = (Sprite) Resources.Load ("sprites/circle", typeof (Sprite)) as Sprite;
-        spMaterial = Resources.Load ("Material/1") as Material;
+        // sp = (Sprite)Resources.Load("sprites/circle", typeof(Sprite)) as Sprite;
+        // spMaterial = Resources.Load("Material/1") as Material;
     }
     public void AddHead () {
         OpenFileDialog od = new OpenFileDialog ();
@@ -57,7 +57,7 @@ public class ReadPic : MonoBehaviour {
         Color[] pix = Img.GetPixels (0, 0, width, height);
         pixScale = (int) Mathf.Floor (myScreemWidth / linePixNum); //像素直径是屏幕宽度除以列像素数
         //align to center
-        MyPixelsTF.transform.localPosition = new Vector3 ((myScreemWidth - width) * 0.5f, (myScreemHeight - height) * 0.5f, 1);
+        MyPixelsTF.transform.position = new Vector3 ((myScreemWidth - width) * 0.5f, (myScreemHeight - height) * 0.5f, 1);
 
         rowNum = (int) Mathf.Floor (height / pixScale);
         cloNum = (int) Mathf.Floor (width / pixScale);
@@ -114,7 +114,11 @@ public class ReadPic : MonoBehaviour {
         pixShape.GetComponent<MyPixel> ().Row = row;
         pixShape.GetComponent<MyPixel> ().Clo = clo;
         pixShape.GetComponent<MyPixel> ().Col = col;
-        pixShape.GetComponent<MyPixel> ().PosXY = new Vector2 (x, y);
+
+        
+        //test 3d position
+        int z=10;
+        pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y,z);
         pixShape.name = row + "," + clo;
 
         //SpriteRenderer spr = pixShape.GetComponent<SpriteRenderer>();
