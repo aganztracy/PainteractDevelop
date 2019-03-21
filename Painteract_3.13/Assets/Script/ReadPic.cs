@@ -97,13 +97,19 @@ public class ReadPic : MonoBehaviour {
         CanvasTF.GetChild (9).gameObject.SetActive (false);
 
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
-        if( Control == 3){
-        GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-        MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
+        if (Control == 3) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
         }
 
-        Debug.Log ("Music Visualization setup");
+       // Debug.Log ("Music Visualization setup");
 
+        if (Control == 5) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<MusicVisualization2Controller> ();
+        }
+
+       // Debug.Log ("Music Visualization2 setup");
 
     }
 

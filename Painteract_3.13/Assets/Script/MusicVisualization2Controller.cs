@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent (typeof (AudioSource))]
-public class MusicVisualizationController : MonoBehaviour {
+public class MusicVisualization2Controller : MonoBehaviour {
 
 	AudioSource audio;
 
@@ -20,7 +18,7 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	public GameObject pixel_i; //显示当前粒子对象\
 
-	public Vector3 pixelPosVec;
+	public Vector3 pixelScaleVec;
 
 	// Use this for initialization
 	void Start () {
@@ -59,11 +57,10 @@ public class MusicVisualizationController : MonoBehaviour {
 			pixel_i = gameObject.transform.GetChild (i).gameObject;
 			//频谱时越向后越小的，为避免后面的数据变化不明显，故在扩大samples[i]时，乘以50+i * i*0.5f
 			//Vector3 pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (musicData[i+1] * 10000000000, 0, 300));
-			pixelPosVec = new Vector3 (pixel_i.transform.localPosition.x, pixel_i.transform.localPosition.y, Mathf.Clamp (samples[i] * (10000 + i * i * 0.5f), 0, 100));
+			pixelScaleVec = new Vector3 (pixScale_, pixScale_, Mathf.Clamp (samples[i] * (10000 + i * i * 10.5f), 0, 500)+pixScale_);
 
-			pixel_i.transform.localPosition = pixelPosVec;
+			pixel_i.transform.localScale = pixelScaleVec;
 
 		}
 	}
-
 }

@@ -12,8 +12,6 @@ public class MyPixel : MonoBehaviour {
 
     public Vector3 PosXY;
 
-    
-
     // public GameObject DotFlowOBJ;
 
     public GameObject CanvasOBJ; // 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
@@ -32,7 +30,8 @@ public class MyPixel : MonoBehaviour {
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-                
+                //将形成弹簧网络的功能脚本添加到粒子上
+                gameObject.AddComponent<SpringGridController> ();
                 break;
             case 4:
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
@@ -41,13 +40,13 @@ public class MyPixel : MonoBehaviour {
                 gameObject.AddComponent<SpringGridController> ();
                 break;
             case 5:
-                //将麦克风声音可视化相关的脚本添加到粒子上
-                if (Row == 0 && Clo == 0) {
-                    gameObject.AddComponent<MicrophoneVisualizationController> ();
-                }
+                // //将麦克风声音可视化相关的脚本添加到粒子上
+                // if (Row == 0 && Clo == 0) {
+                //     gameObject.AddComponent<MicrophoneVisualizationController> ();
+                // }
 
-                //将形成弹簧网络的功能脚本添加到粒子上
-                gameObject.AddComponent<SpringGridController> ();
+                // //将形成弹簧网络的功能脚本添加到粒子上
+                // gameObject.AddComponent<SpringGridController> ();
 
                 break;
             case 6:
