@@ -12,7 +12,7 @@ public class ReadPic : MonoBehaviour {
     public RawImage OrinImageBg;
     public Transform MyPixelsTF;
     //parameters
-    private int pixScale; //diameter of pixel
+    public int pixScale; //diameter of pixel
     private int linePixNum = 25; //number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
@@ -96,6 +96,15 @@ public class ReadPic : MonoBehaviour {
         //不显示功能选择按钮组
         CanvasTF.GetChild (9).gameObject.SetActive (false);
 
+        //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
+        if( Control == 3){
+        GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+        MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
+        }
+
+        Debug.Log ("Music Visualization setup");
+
+
     }
 
     public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
@@ -106,8 +115,9 @@ public class ReadPic : MonoBehaviour {
         GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
         float hue, saturate, brightness; //brightness 的值是0-1
         Color.RGBToHSV (col, out hue, out saturate, out brightness);
-        float brightScaleFactor = brightness * 5.0f;  //长短不一
-        // float brightScaleFactor = 1.0f;//长短一样
+
+        //float brightScaleFactor = brightness * 5.0f;  //长短不一
+        float brightScaleFactor = 1.0f; //长短一样
 
         pixShape.GetComponent<Renderer> ().material.color = col;
         //GameObject pixShape = new GameObject();
@@ -126,7 +136,7 @@ public class ReadPic : MonoBehaviour {
         //test 3d position by z
 
         ///-无效果0----------------------------
-        // float z=10.0f;
+        float z = 10.0f;
         ///-效果1可----------------------------
         // float z = Mathf.Sin(Mathf.Sqrt(x*x+y*y))*100; //比较混乱的城市效果
         ///-效果2可---------------------------
@@ -135,13 +145,13 @@ public class ReadPic : MonoBehaviour {
         // float u = ExtensionMethods.Map (row, 0, rowNum,-10, 10);
         // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
         // float z = Mathf.Cos (Mathf.Sqrt (u * u + v * v)) * 100; //有规律的波纹效果2
-        
+
         ///-卷曲效果零食可-------------------------------
-        float u = ExtensionMethods.Map (row, 0, rowNum, -0, 5);//后面这两个参数对形状影响很大
-        float v = ExtensionMethods.Map (clo, 0, cloNum, -1, 1);
-        x = v*100*5;
-        y = Mathf.Sin (u) * Mathf.Cos (v)*100*5;
-        float z = Mathf.Cos (u) * Mathf.Cos (v)*100*5;
+        // float u = ExtensionMethods.Map (row, 0, rowNum, -0, 5);//后面这两个参数对形状影响很大
+        // float v = ExtensionMethods.Map (clo, 0, cloNum, -1, 1);
+        // x = v*100*5;
+        // y = Mathf.Sin (u) * Mathf.Cos (v)*100*5;
+        // float z = Mathf.Cos (u) * Mathf.Cos (v)*100*5;
         ///---效果4---？---------------------------
         // float u = ExtensionMethods.Map (row, 0, rowNum, 10, 52);
         // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
@@ -168,7 +178,7 @@ public class ReadPic : MonoBehaviour {
         pixShape.transform.SetParent (MyPixelsTF);
         pixShape.transform.localScale = new Vector3 (pixScale, pixScale, pixScale * brightScaleFactor);
         ///1.Sets the coordinates relative to the parent object 2.用长方体表示时，平移半个高度保持一面是平整的
-        pixShape.transform.localPosition = new Vector3 (x, y, z - pixScale * brightScaleFactor * 0.5f); 
+        pixShape.transform.localPosition = new Vector3 (x, y, z - pixScale * brightScaleFactor * 0.5f);
         return pixShape;
     }
     Texture2D ScaleTexture (Texture2D source, int targetWidth, int targetHeight) {
@@ -255,6 +265,7 @@ public class ReadPic : MonoBehaviour {
     }
     public void SetControlto3 () {
         Control = 3;
+
     }
     public void SetControlto4 () {
         Control = 4;
