@@ -102,14 +102,14 @@ public class ReadPic : MonoBehaviour {
             MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
         }
 
-       // Debug.Log ("Music Visualization setup");
+        // Debug.Log ("Music Visualization setup");
 
         if (Control == 5) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<MusicVisualization2Controller> ();
         }
 
-       // Debug.Log ("Music Visualization2 setup");
+        // Debug.Log ("Music Visualization2 setup");
 
     }
 
@@ -287,6 +287,11 @@ public class ReadPic : MonoBehaviour {
     }
     public void SetControlto8 () {
         Control = 8;
+
+        if (Control == 8) {
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
+        }
     }
 
 }

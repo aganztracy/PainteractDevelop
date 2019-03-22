@@ -29,7 +29,7 @@ public class MusicVisualizationController : MonoBehaviour {
 		//千万别忘记play()！！！！
 		audio.Play ();
 
-		clipsample_1 = Resources.Load<AudioClip> ("audioclip_1"); //加载音频资源
+		clipsample_1 = Resources.Load<AudioClip> ("audio/audioclip_1"); //加载音频资源
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
@@ -56,7 +56,7 @@ public class MusicVisualizationController : MonoBehaviour {
 		audio.GetSpectrumData (samples, 0, FFTWindow.BlackmanHarris);
 
 		for (int i = 0; i < rowNum*cloNum; i++) {
-			pixel_i = gameObject.transform.GetChild (i).gameObject;
+			pixel_i = gameObject.transform.GetChild (i+1).gameObject;
 			//频谱时越向后越小的，为避免后面的数据变化不明显，故在扩大samples[i]时，乘以50+i * i*0.5f
 			//Vector3 pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (musicData[i+1] * 10000000000, 0, 300));
 			pixelPosVec = new Vector3 (pixel_i.transform.localPosition.x, pixel_i.transform.localPosition.y, Mathf.Clamp (samples[i] * (10000 + i * i * 0.5f), 0, 100));

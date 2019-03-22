@@ -59,12 +59,17 @@ public class MyPixel : MonoBehaviour {
 
                 break;
             case 8:
-                //弹簧三维连接测试
-                //将鼠标拖拽移动粒子相关的脚本添加到粒子上
-                gameObject.AddComponent<DragObj> ();
-                //将形成弹簧网络的功能脚本添加到粒子上
-                gameObject.AddComponent<Spring3DController> ();
-                gameObject.AddComponent<ParticleBoomController> ();
+                // //弹簧三维连接测试
+                // //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                // gameObject.AddComponent<DragObj> ();
+                // //将形成弹簧网络的功能脚本添加到粒子上
+                // gameObject.AddComponent<Spring3DController> ();
+                // gameObject.AddComponent<ParticleBoomController> ();
+
+                // 给每个粒子添加刚体组件
+		        gameObject.AddComponent<Rigidbody> ();
+                gameObject.AddComponent<Rigidbody> ().mass = 10;
+                gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
                 break;
 
             default:

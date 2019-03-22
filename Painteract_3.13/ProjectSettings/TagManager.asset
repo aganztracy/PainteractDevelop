@@ -9,6 +9,8 @@ TagManager:
   - Cams
   - functionChooseButton
   - MyPixels
+  - BoxCollider
+  - BeverageBoxs
   layers:
   - Default
   - TransparentFX
