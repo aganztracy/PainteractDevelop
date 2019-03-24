@@ -11,7 +11,7 @@ public class MusicVisualization2Controller : MonoBehaviour {
 
 	GameObject CanvasOBJ;
 
-	int pixScale_; //获取粒子原大小数据变量
+	int pixScale; //获取粒子原大小数据变量
 	int rowNum;
 	int cloNum;
 
@@ -32,7 +32,7 @@ public class MusicVisualization2Controller : MonoBehaviour {
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
-		pixScale_ = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
+		pixScale = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
 
@@ -49,7 +49,7 @@ public class MusicVisualization2Controller : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Visualization (pixScale_);
+		Visualization (pixScale);
 
 	}
 
@@ -64,7 +64,7 @@ public class MusicVisualization2Controller : MonoBehaviour {
 			pixel_i = gameObject.transform.GetChild (i).gameObject;
 			//频谱时越向后越小的，为避免后面的数据变化不明显，故在扩大samples[i]时，乘以50+i * i*0.5f
 			//Vector3 pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (musicData[i+1] * 10000000000, 0, 300));
-			pixelScaleVec = new Vector3 (pixScale_, pixScale_, Mathf.Clamp (samples[i] * (10000 + i * i * 10.5f), 0, 500)+pixScale_);
+			pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (samples[i] * (10000 + i * i * 10.5f), 0, 500)+pixScale);
 
 			pixel_i.transform.localScale = pixelScaleVec;
 
