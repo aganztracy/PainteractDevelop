@@ -15,9 +15,8 @@ public class AudioVisualization : MonoBehaviour
     {
         GameObject tempCube;
         audio = GetComponent<AudioSource>();//获取声源组件
-        //千万别忘记play()！！！！
-        audio.Play();
-        
+
+
         linerenderer = GetComponent<LineRenderer>();//获取画线组件
         linerenderer.positionCount = samples.Length;//设定线段的片段数量
         cubeTransform = new Transform[samples.Length];//设定数组长度

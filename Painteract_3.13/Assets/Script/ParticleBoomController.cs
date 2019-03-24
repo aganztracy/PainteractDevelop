@@ -32,7 +32,7 @@ public class ParticleBoomController : MonoBehaviour {
 		Vector3 offset = transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, ScreenSpace.z));
 
 		//当鼠标左键按下时  
-		while (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0)) {
 			//Debug.Log("particleboom!");   //done 
 
 			//得到现在鼠标的2维坐标系位置  
@@ -47,9 +47,11 @@ public class ParticleBoomController : MonoBehaviour {
 			particleOBJ.GetComponent<Renderer> ().material = Pmaterial;
 
 			ParticleSystem P = particleOBJ.GetComponent<ParticleSystem> (); // 实例化粒子系统对象
-			particleOBJ.transform.SetParent (CanvasOBJ.GetComponent<ReadPic> ().MyPixelsTF);
-			particleOBJ.transform.localPosition = new Vector3 (MyPixelOBJ.PosXY.x, MyPixelOBJ.PosXY.y, 10f); //Sets the coordinates relative to the parent object 
-
+			//particleOBJ.transform.SetParent (CanvasOBJ.GetComponent<ReadPic> ().MyPixelsTF);
+			particleOBJ.transform.SetParent (gameObject.transform); //变为粒子的子物体
+			//particleOBJ.transform.localPosition = new Vector3 (MyPixelOBJ.PosXY.x, MyPixelOBJ.PosXY.y, 10f); //Sets the coordinates relative to the parent object 
+			particleOBJ.transform.localPosition = new Vector3 (0, 0, 0); //Sets the coordinates relative to the parent object 
+			particleOBJ.transform.localScale = new Vector3(1,1,1);
 			Debug.Log ("addmaterial finished!"); //no
 			//实例化粒子系统上各属性模块
 
@@ -69,6 +71,7 @@ public class ParticleBoomController : MonoBehaviour {
 			Pmain.gravityModifier = 0.4f;
 			Pmain.loop = true;
 			Pmain.startLifetime = 50;
+
 			//发射器形状属性
 			Pshape.sprite = sp;
 			Pshape.shapeType = ParticleSystemShapeType.Sphere;
@@ -80,7 +83,8 @@ public class ParticleBoomController : MonoBehaviour {
 			Ptrails.inheritParticleColor = true;
 
 			//销毁原粒子
-			Destroy (gameObject);
+			//Destroy (gameObject);
+
 			//Destroy(P);
 
 			//这个很主要  
