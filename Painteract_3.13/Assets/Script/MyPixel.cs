@@ -30,16 +30,32 @@ public class MyPixel : MonoBehaviour {
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-                //将形成弹簧网络的功能脚本添加到粒子上
-                gameObject.AddComponent<SpringGridController> ();
+
                 break;
             case 4:
+
+                break;
+            case 5:
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            case 8:
+
+                break;
+            case 9:
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<SpringGridController> ();
                 break;
-            case 5:
+            case 10:
+                //音乐可视化2
+                break;
+            case 11:
                 // //将麦克风声音可视化相关的脚本添加到粒子上
                 // if (Row == 0 && Clo == 0) {
                 //     gameObject.AddComponent<MicrophoneVisualizationController> ();
@@ -49,27 +65,31 @@ public class MyPixel : MonoBehaviour {
                 // gameObject.AddComponent<SpringGridController> ();
 
                 break;
-            case 6:
+            case 12:
                 // 点击爆炸粒子
                 gameObject.AddComponent<ParticleBoomController> ();
                 break;
-            case 7:
+            case 13:
                 //点击颜料溅开的测试
                 gameObject.AddComponent<PigmentBoomController> ();
+                break;
+            case 14:
+                //弹簧三维连接测试
+                //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                gameObject.AddComponent<DragObj> ();
+                //将形成弹簧网络的功能脚本添加到粒子上
+                gameObject.AddComponent<Spring3DController> ();
+                gameObject.AddComponent<ParticleBoomController> ();
 
                 break;
-            case 8:
-                // //弹簧三维连接测试
-                // //将鼠标拖拽移动粒子相关的脚本添加到粒子上
-                // gameObject.AddComponent<DragObj> ();
-                // //将形成弹簧网络的功能脚本添加到粒子上
-                // gameObject.AddComponent<Spring3DController> ();
-                // gameObject.AddComponent<ParticleBoomController> ();
-
+            case 15:
                 // 给每个粒子添加刚体组件
-		        gameObject.AddComponent<Rigidbody> ();
+                gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<Rigidbody> ().mass = 10;
                 gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
+                break;
+            case 16:
+
                 break;
 
             default:

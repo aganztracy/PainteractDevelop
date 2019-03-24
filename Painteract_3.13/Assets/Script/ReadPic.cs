@@ -97,14 +97,14 @@ public class ReadPic : MonoBehaviour {
         CanvasTF.GetChild (9).gameObject.SetActive (false);
 
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
-        if (Control == 3||Control == 6) {
+        if (Control == 11) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
         }
 
         // Debug.Log ("Music Visualization setup");
 
-        if (Control == 5) {
+        if (Control == 10) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<MusicVisualization2Controller> ();
         }
@@ -287,11 +287,39 @@ public class ReadPic : MonoBehaviour {
     }
     public void SetControlto8 () {
         Control = 8;
+    }
+    public void SetControlto9 () {
+        Control = 9;
+    }
+
+    public void SetControlto10 () {
+        Control = 10;
+    }
+    public void SetControlto11 () {
+        Control = 11;
+
+    }
+    public void SetControlto12 () {
+        Control = 12;
+    }
+    public void SetControlto13 () {
+        Control = 13;
+    }
+
+    public void SetControlto14 () {
+        Control = 14;
+    }
+    public void SetControlto15 () {
+        Control = 15;
+
 
         if (Control == 8) {
             GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
             BeverageBoxsOBJ.AddComponent<BeveragesController> ();
         }
+    }
+    public void SetControlto16 () {
+        Control = 16;
     }
 
 }

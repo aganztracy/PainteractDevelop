@@ -8,11 +8,11 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	AudioSource audio;
 
-	public float[] samples = new float[512]; //存放频谱数据的数组长度
+	public float[] samples = new float[1024]; //存放频谱数据的数组长度
 
 	GameObject CanvasOBJ;
 
-	int pixScale_; //获取粒子原大小数据变量
+	int pixScale; //获取粒子原大小数据变量
 	int rowNum;
 	int cloNum;
 
@@ -33,18 +33,18 @@ public class MusicVisualizationController : MonoBehaviour {
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
-		pixScale_ = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
+		pixScale = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
 
-		Debug.Log ("bei:pixSale = " + pixScale_);
+		Debug.Log ("bei:pixSale = " + pixScale);
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		Visualization (pixScale_);
+		Visualization (pixScale);
 
 	}
 
