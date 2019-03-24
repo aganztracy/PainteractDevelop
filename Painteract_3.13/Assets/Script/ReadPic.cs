@@ -311,12 +311,8 @@ public class ReadPic : MonoBehaviour {
     }
     public void SetControlto15 () {
         Control = 15;
-
-
-        if (Control == 8) {
-            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
-            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
-        }
+        GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+        BeverageBoxsOBJ.AddComponent<BeveragesController> ();
     }
     public void SetControlto16 () {
         Control = 16;
