@@ -8,7 +8,8 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	AudioSource audio;
 
-	public float[] samples = new float[1024]; //存放频谱数据的数组长度
+	public float[] samples; //存放频谱数据的数组长度
+	int samplesLength = 512;//默认的samples数组大小，若小会在start中扩容
 
 	GameObject CanvasOBJ;
 
@@ -37,7 +38,13 @@ public class MusicVisualizationController : MonoBehaviour {
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
 
-		Debug.Log ("bei:pixSale = " + pixScale);
+		Debug.Log ("bei:pixSale = " + pixScale+" row:clo="+rowNum+":"+cloNum);
+
+		while(samplesLength<rowNum*cloNum){//判定音频频谱数组长度若小于粒子数目则增大两倍
+			samplesLength *=2;
+		}
+
+		samples = new float[samplesLength];//定义音频频谱数组长度
 
 	}
 
