@@ -13,6 +13,7 @@ public class ReadPic : MonoBehaviour {
     public Transform MyPixelsTF;
     //parameters
     public int pixScale; //diameter of pixel
+
     private int linePixNum = 25; //number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
@@ -97,7 +98,7 @@ public class ReadPic : MonoBehaviour {
         CanvasTF.GetChild (9).gameObject.SetActive (false);
 
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
-        if (Control == 11) {
+        if (Control == 11 || Control == 12) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
         }
@@ -110,15 +111,19 @@ public class ReadPic : MonoBehaviour {
         }
 
         // Debug.Log ("Music Visualization2 setup");
+        if (Control == 16) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<WobblyGridController> ();
+        }
 
     }
 
     public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
         //将粒子对象改成球体
-        // GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+         GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
         //将粒子对象改为cube by z
-        GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
+        //GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
         float hue, saturate, brightness; //brightness 的值是0-1
         Color.RGBToHSV (col, out hue, out saturate, out brightness);
 
@@ -260,6 +265,29 @@ public class ReadPic : MonoBehaviour {
         CanvasTF.GetChild (8).gameObject.SetActive (true);
         //显示功能选择按钮组
         CanvasTF.GetChild (9).gameObject.SetActive (true);
+
+        //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
+
+        if (Control == 10) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MusicVisualization2Controller MVComponent = MyPixelsOBJ.GetComponent<MusicVisualization2Controller> ();
+            MVComponent.StopMusic ();
+            Destroy (MVComponent);
+        }
+
+        if (Control == 11 || Control == 12) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MusicVisualizationController MVComponent = MyPixelsOBJ.GetComponent<MusicVisualizationController> ();
+            MVComponent.StopMusic ();
+            Destroy (MVComponent);
+        }
+
+        if (Control == 16) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            WobblyGridController WGComponent = MyPixelsOBJ.GetComponent<WobblyGridController> ();
+            Destroy (WGComponent);
+        }
+
     }
 
     public void SetControlto1 () {

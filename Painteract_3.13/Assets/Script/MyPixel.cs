@@ -81,6 +81,8 @@ public class MyPixel : MonoBehaviour {
                 gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
                 break;
             case 16://=========================================================
+            
+                //gameObject.AddComponent<WobblyGridController> ();            
 
                 break;
 

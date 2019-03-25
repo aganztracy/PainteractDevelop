@@ -70,4 +70,8 @@ public class MusicVisualization2Controller : MonoBehaviour {
 
 		}
 	}
+
+		public void StopMusic(){
+		audio.Stop();
+	}
 }
