@@ -14,6 +14,7 @@ public class NoiseFlowField : MonoBehaviour {
 	public GameObject _particlePrefab;
 	public int _amountOfParticles;
 	public List<FlowFieldParticle> _particles;
+	public List<MeshRenderer> _particleMeshRenderer;
 
 	public float _spawnRadius;
 	public float _particleScale, _particleMoveSpeed, _particleRotateSpeed;
@@ -36,10 +37,15 @@ public class NoiseFlowField : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	//Awake() Awake is called when the script instance is being loaded.
+	//说明会在AudioFlowField.cs中的start()函数执行之后执行
+
+	void Awake() {
 		_flowfieldDirection = new Vector3[_girdSize.x, _girdSize.y, _girdSize.z];
 		_fastNoise = new FastNoise ();
 		_particles = new List<FlowFieldParticle> ();
+		_particleMeshRenderer = new List<MeshRenderer>();
+
 		for (int i = 0; i < _amountOfParticles; i++) {
 
 			int attempt = 0;
@@ -60,6 +66,7 @@ public class NoiseFlowField : MonoBehaviour {
 					particleInstance.transform.parent = this.transform;
 					particleInstance.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
 					_particles.Add (particleInstance.GetComponent<FlowFieldParticle> ());
+					_particleMeshRenderer.Add(particleInstance.GetComponent<MeshRenderer>());
 					break;
 				}
 				if (!isVaild) {
@@ -144,7 +151,7 @@ public class NoiseFlowField : MonoBehaviour {
 			);
 			p.ApplyRotation (_flowfieldDirection[particlePos.x, particlePos.y, particlePos.z], _particleRotateSpeed);
 			p._moveSpeed = _particleMoveSpeed;
-			p.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
+			//p.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
 		}
 	}
 	private void OnDrawGizmos () {
