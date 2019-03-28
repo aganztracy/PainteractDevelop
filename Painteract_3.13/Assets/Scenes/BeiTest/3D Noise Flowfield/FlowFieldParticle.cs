@@ -13,7 +13,7 @@ public class FlowFieldParticle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.position += transform.forward  * _moveSpeed * Time.deltaTime;
+		this.transform.position = this.transform.position + transform.forward  * _moveSpeed * Time.deltaTime;;
 		
 	}
 

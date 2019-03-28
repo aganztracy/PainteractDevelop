@@ -5690,6 +5690,7 @@ GameObject:
   - component: {fileID: 1556136294}
   - component: {fileID: 1556136293}
   - component: {fileID: 1556136296}
+  - component: {fileID: 1556136295}
   m_Layer: 0
   m_Name: MyPixels
   m_TagString: MyPixels
@@ -5721,6 +5722,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1556136295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1556136292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d5a582bede6294b8014d2aac6f72c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioclip: {fileID: 0}
+  _useMicrophone: 0
+  _selectedDevice: 
+  _mixerGroupMicrophone: {fileID: 0}
+  _mixerGroupMaster: {fileID: 0}
+  _audioProfile: 0
+  channel: 0
 --- !u!82 &1556136296
 AudioSource:
   m_ObjectHideFlags: 0

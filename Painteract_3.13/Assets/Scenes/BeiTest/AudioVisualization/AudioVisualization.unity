@@ -1152,6 +1152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d5a582bede6294b8014d2aac6f72c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioclip: {fileID: 0}
+  _useMicrophone: 1
+  _selectedDevice: 
   _audioProfile: 5
   channel: 0
 --- !u!1 &1546776720

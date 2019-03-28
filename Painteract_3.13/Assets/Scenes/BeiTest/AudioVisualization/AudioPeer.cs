@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent (typeof (AudioSource))]
 public class AudioPeer : MonoBehaviour {
 	AudioSource _audioSource;
+
+	//Microphone input
+	public AudioClip _audioclip;
+	public bool _useMicrophone;
+	public string _selectedDevice;
+	//different input use different audio mixer group (master/microphone)
+	public AudioMixerGroup _mixerGroupMicrophone, _mixerGroupMaster;
+
 	// float[] _samples = new float[512];
-	private float[] _samplesLeft = new float[512];
-	private float[] _samplesRight = new float[512];
+	private float[] _samplesLeft;
+	private float[] _samplesRight;
+	public static int _samplesLength = 512;
 
 	//audio 8
 	private float[] _freqBand = new float[8];
@@ -42,6 +52,9 @@ public class AudioPeer : MonoBehaviour {
  // Use this for initialization
  void Start () {
 
+ _samplesLeft = new float[_samplesLength];
+ _samplesRight = new float[_samplesLength];
+
  _audioBand = new float[8];
  _audioBandBuffer = new float[8];
  _audioBand64 = new float[64];
@@ -49,6 +62,32 @@ public class AudioPeer : MonoBehaviour {
 
  _audioSource = GetComponent<AudioSource> ();
  AudioProfile (_audioProfile);
+
+ _audioclip = Resources.Load<AudioClip> ("audio/audioclip_1");
+
+ //Microphone input
+
+ if (_useMicrophone) {
+
+ if (Microphone.devices.Length > 0) {
+
+ _selectedDevice = Microphone.devices[0].ToString ();
+ _audioSource.outputAudioMixerGroup = _mixerGroupMicrophone;
+ _audioSource.clip = Microphone.Start (_selectedDevice, true, 10, AudioSettings.outputSampleRate);
+
+ } else {
+ _useMicrophone = false;
+			}
+
+		}
+
+		if (!_useMicrophone) {
+			_audioSource.outputAudioMixerGroup = _mixerGroupMaster;
+			_audioSource.clip = _audioclip;
+		}
+
+		_audioSource.Play ();
+
 	}
 
 	// Update is called once per frame
