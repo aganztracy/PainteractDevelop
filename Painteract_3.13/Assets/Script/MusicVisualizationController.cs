@@ -8,7 +8,6 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	AudioSource audio;
 
-	public float[] samples = new float[512]; //存放频谱数据的数组长度
 
 	GameObject CanvasOBJ;
 
