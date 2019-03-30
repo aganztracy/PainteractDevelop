@@ -8,11 +8,12 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	AudioSource audio;
 
-	public float[] samples = new float[1024]; //存放频谱数据的数组长度
+	public float[] samples; //存放频谱数据的数组长度
+	int samplesLength = 512;//默认的samples数组大小，若小会在start中扩容
 
 	GameObject CanvasOBJ;
 
-	int pixScale_; //获取粒子原大小数据变量
+	int pixScale; //获取粒子原大小数据变量
 	int rowNum;
 	int cloNum;
 
@@ -33,19 +34,25 @@ public class MusicVisualizationController : MonoBehaviour {
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
-		pixScale_ = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
+		pixScale = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
 		Debug.Log(rowNum+"-------"+cloNum);
 
-		Debug.Log ("bei:pixSale = " + pixScale_);
+		Debug.Log ("bei:pixSale = " + pixScale+" row:clo="+rowNum+":"+cloNum);
+
+		while(samplesLength<rowNum*cloNum){//判定音频频谱数组长度若小于粒子数目则增大两倍
+			samplesLength *=2;
+		}
+
+		samples = new float[samplesLength];//定义音频频谱数组长度
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		Visualization (pixScale_);
+		Visualization (pixScale);
 
 	}
 
@@ -65,6 +72,10 @@ public class MusicVisualizationController : MonoBehaviour {
 			pixel_i.transform.localPosition = pixelPosVec;
 
 		}
+	}
+
+	public void StopMusic(){
+		audio.Stop();
 	}
 
 }

@@ -17,7 +17,7 @@ public class ParticleBoomController : MonoBehaviour {
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
 		//Pmaterial = Resources.Load ("Material/particle") as Material;
 		Pmaterial = Resources.Load ("Material/P") as Material;
-		sp = (Sprite) Resources.Load ("sprites/circle", typeof (Sprite)) as Sprite;
+		sp = (Sprite) Resources.Load ("Sprites/circle", typeof (Sprite)) as Sprite;
 	}
 
 	// Update is called once per frame
@@ -71,6 +71,7 @@ public class ParticleBoomController : MonoBehaviour {
 			Pmain.gravityModifier = 0.4f;
 			Pmain.loop = true;
 			Pmain.startLifetime = 50;
+			Pmain.simulationSpace = ParticleSystemSimulationSpace.World;
 
 			//发射器形状属性
 			Pshape.sprite = sp;
