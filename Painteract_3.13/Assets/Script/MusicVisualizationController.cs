@@ -8,6 +8,7 @@ public class MusicVisualizationController : MonoBehaviour {
 
 	AudioSource audio;
 
+	public float[] samples = new float[1024]; //存放频谱数据的数组长度
 
 	GameObject CanvasOBJ;
 
@@ -35,6 +36,7 @@ public class MusicVisualizationController : MonoBehaviour {
 		pixScale_ = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
+		Debug.Log(rowNum+"-------"+cloNum);
 
 		Debug.Log ("bei:pixSale = " + pixScale_);
 
