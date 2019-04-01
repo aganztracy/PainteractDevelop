@@ -3,23 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioVisualizationController : MonoBehaviour {
+	AudioSource audio;
+	AudioPeer audioPeerOBJ;
+	public AudioClip clipsample_1; //显示当前音频片段
 
 	int samplesLength = 512; //默认的samples数组大小，若小会在start中扩容
 
-	GameObject CanvasOBJ;	
+	GameObject CanvasOBJ;
 
 	int pixScale; //获取粒子原大小数据变量
 	int rowNum;
 	int cloNum;
 
-	public AudioClip clipsample_1; //显示当前音频片段
+	public GameObject pixel_i; //显示当前粒子对象
+	public Vector3 pixelPosVec; //粒子位置变量
+	public Vector3 pixelScaleVec;//粒子大小变量
 
-	public GameObject pixel_i; //显示当前粒子对象\
+	[Range (1, 500)]
+	public float SamplesScale; //控制将获得频谱数组值放大的倍数
 
-	public Vector3 pixelPosVec;
+	//choice
+	public bool changePixelScale;
+	public bool changePixelPostion;
+
+	public bool useMicrophone;
 
 	// Use this for initialization
 	void Start () {
+
+		audioPeerOBJ = gameObject.GetComponent<AudioPeer> ();
+
+		if (useMicrophone) {
+
+			audioPeerOBJ._useMicrophone = true;
+		}
+
+		audio = GetComponent<AudioSource> ();
+		//千万别忘记play()！！！！
+		//audio.Play ();
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
@@ -35,10 +56,39 @@ public class AudioVisualizationController : MonoBehaviour {
 
 		AudioPeer._samplesLength = samplesLength;
 
+		SamplesScale = 1;
+
 	}
 
 	// Update is called once per frame
 	void Update () {
 
+		int bandscount = 0;
+
+		for (int i = 0; i < rowNum * cloNum; i++) {
+			pixel_i = gameObject.transform.GetChild (i).gameObject;
+			//频谱时越向后越小的，为避免后面的数据变化不明显，故在扩大samples[i]时，乘以50+i * i*0.5f
+			//Vector3 pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (musicData[i+1] * 10000000000, 0, 300));
+
+			if (changePixelPostion) {
+				pixelPosVec = new Vector3 (pixel_i.transform.localPosition.x, pixel_i.transform.localPosition.y, AudioPeer._audioBandBuffer64[bandscount] * SamplesScale);
+				pixel_i.transform.localPosition = pixelPosVec;
+			}
+
+			if (changePixelScale) {
+				pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp ( AudioPeer._samplesStereo[i] *  (100 + i * i * 0.5f) * SamplesScale, 0, 500) + pixScale);
+				pixel_i.transform.localScale = pixelScaleVec;
+			}
+
+			bandscount++;
+			if (bandscount == 63) {
+				bandscount = 0;
+			}
+		}
+
+	}
+
+	public void StopMusic () {
+		audio.Stop ();
 	}
 }
