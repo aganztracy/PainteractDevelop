@@ -17,6 +17,7 @@ public class AudioPeer : MonoBehaviour {
 	// float[] _samples = new float[512];
 	private float[] _samplesLeft;
 	private float[] _samplesRight;
+	public static float[] _samplesStereo;
 	public static int _samplesLength = 512;
 
 	//audio 8
@@ -54,11 +55,15 @@ public class AudioPeer : MonoBehaviour {
 
  _samplesLeft = new float[_samplesLength];
  _samplesRight = new float[_samplesLength];
+ _samplesStereo = new float [_samplesLength];
 
  _audioBand = new float[8];
  _audioBandBuffer = new float[8];
  _audioBand64 = new float[64];
  _audioBandBuffer64 = new float[64];
+
+_mixerGroupMicrophone = Resources.Load<AudioMixerGroup>("Audio/AudioMixer/Microphone");
+
 
  _audioSource = GetComponent<AudioSource> ();
  AudioProfile (_audioProfile);
@@ -93,6 +98,7 @@ public class AudioPeer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetSpectrumAudioSource ();
+		GetStereoSpectrumAudioSource();
 		MakeFrequenctBands ();
 		MakeFrequenctBands64 ();
 		BandBuffer ();
@@ -154,6 +160,13 @@ public class AudioPeer : MonoBehaviour {
 		//第二个参数0代表的是左声道，1是右声道
 		_audioSource.GetSpectrumData (_samplesLeft, 0, FFTWindow.Blackman);
 		_audioSource.GetSpectrumData (_samplesRight, 1, FFTWindow.Blackman);
+	}
+
+	void GetStereoSpectrumAudioSource(){
+
+		for(int i = 0;i< _samplesLength;i++){
+			_samplesStereo[i] = _samplesLeft[i] + _samplesRight[i];
+		}
 	}
 
 	void BandBuffer () {

@@ -100,14 +100,21 @@ public class ReadPic : MonoBehaviour {
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
         if (Control == 11 || Control == 12) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MyPixelsOBJ.AddComponent<MusicVisualizationController> ();
+            MyPixelsOBJ.AddComponent<AudioPeer> ();
+            MyPixelsOBJ.AddComponent<AudioVisualizationController> ();
+            AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
+            AudioVisualizationController AVCComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController>();
+            AVCComponent.changePixelScale = true;
         }
 
         // Debug.Log ("Music Visualization setup");
 
         if (Control == 10) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MyPixelsOBJ.AddComponent<MusicVisualization2Controller> ();
+            MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
+            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController>();
+            //APComponent._useMicrophone = true;
+
         }
 
         // Debug.Log ("Music Visualization2 setup");
@@ -120,7 +127,7 @@ public class ReadPic : MonoBehaviour {
 
     public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
         //将粒子对象改成球体
-         GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+        GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
         //将粒子对象改为cube by z
         //GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
@@ -270,16 +277,18 @@ public class ReadPic : MonoBehaviour {
 
         if (Control == 10) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MusicVisualization2Controller MVComponent = MyPixelsOBJ.GetComponent<MusicVisualization2Controller> ();
-            MVComponent.StopMusic ();
-            Destroy (MVComponent);
+            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
+            Destroy (NFComponent);
+
         }
 
         if (Control == 11 || Control == 12) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MusicVisualizationController MVComponent = MyPixelsOBJ.GetComponent<MusicVisualizationController> ();
-            MVComponent.StopMusic ();
-            Destroy (MVComponent);
+            AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
+            AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
+            AVComponent.StopMusic ();
+            Destroy (AVComponent);
+            Destroy (APComponent);
         }
 
         if (Control == 16) {
