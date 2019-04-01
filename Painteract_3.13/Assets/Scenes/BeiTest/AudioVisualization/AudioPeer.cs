@@ -62,13 +62,13 @@ public class AudioPeer : MonoBehaviour {
  _audioBand64 = new float[64];
  _audioBandBuffer64 = new float[64];
 
-_mixerGroupMicrophone = Resources.Load<AudioMixerGroup>("Audio/AudioMixer/Microphone");
+_mixerGroupMicrophone = Resources.Load<AudioMixerGroup>("Audios/AudioMixer/Microphone");
 
 
  _audioSource = GetComponent<AudioSource> ();
  AudioProfile (_audioProfile);
 
- _audioclip = Resources.Load<AudioClip> ("audio/audioclip_1");
+ _audioclip = Resources.Load<AudioClip> ("Audios/audioclip_1");
 
  //Microphone input
 
