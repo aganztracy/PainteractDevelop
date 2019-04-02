@@ -5,12 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Canvas
-  - processButton
   - Cams
-  - functionChooseButton
   - MyPixels
   - BoxCollider
   - BeverageBoxs
+  - HomePageCanvas
+  - SetupPageCanvas
+  - processButton
+  - ImagePageCanvas
+  - ChoosePageCanvas
   layers:
   - Default
   - TransparentFX

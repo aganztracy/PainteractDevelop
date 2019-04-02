@@ -607,6 +607,10 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -627,10 +631,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 2
-  cloudProjectId: 83bf5328-62ff-485e-a6b6-4cde2829e862
+  cloudProjectId: 65cde5cf-5a47-441d-a2fb-7542134d279f
   framebufferDepthMemorylessMode: 0
-  projectName: ztq921
-  organizationId: ztracy
+  projectName: ztq921 (3)
+  organizationId: beige00
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -11,6 +11,7 @@ public class ReadPic : MonoBehaviour {
     public static Color[, ] ImageColor2d;
     public RawImage OrinImageBg;
     public Transform MyPixelsTF;
+    public GameObject MyPixelsOBJ;
     //parameters
     public int pixScale; //diameter of pixel
 
@@ -36,8 +37,9 @@ public class ReadPic : MonoBehaviour {
 
     void Start () {
         CanvasTF = GameObject.FindWithTag ("Canvas").transform;
+        MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
         // sp = (Sprite)Resources.Load("Sprites/circle", typeof(Sprite)) as Sprite;
-        spMaterial = Resources.Load("Materials/AtomMaterial") as Material;
+        spMaterial = Resources.Load ("Materials/AtomMaterial") as Material;
     }
     public void AddHead () {
         OpenFileDialog od = new OpenFileDialog ();
@@ -77,25 +79,6 @@ public class ReadPic : MonoBehaviour {
             }
         }
         OrinImageBg.gameObject.SetActive (false);
-        //---------------------------------------------------------------------temp-----------
-        //ca.SetActive(true);
-
-        // Debug.Log(pixArray);
-
-        //bei  18/10/19
-        //以某种方式打开图片后，就不显示打开图片按钮
-        CanvasTF.GetChild (0).gameObject.SetActive (false);
-        CanvasTF.GetChild (1).gameObject.SetActive (false);
-        //并且显示处理图片和取消按钮
-        CanvasTF.GetChild (2).gameObject.SetActive (false);
-        CanvasTF.GetChild (3).gameObject.SetActive (false);
-        //显示变换按钮和首页按钮
-        CanvasTF.GetChild (4).gameObject.SetActive (true);
-        CanvasTF.GetChild (5).gameObject.SetActive (true);
-        //显示主页名称logo
-        CanvasTF.GetChild (8).gameObject.SetActive (false);
-        //不显示功能选择按钮组
-        CanvasTF.GetChild (9).gameObject.SetActive (false);
 
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
         if (Control == 11 || Control == 12) {
@@ -103,7 +86,7 @@ public class ReadPic : MonoBehaviour {
             MyPixelsOBJ.AddComponent<AudioPeer> ();
             MyPixelsOBJ.AddComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
-            AudioVisualizationController AVCComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController>();
+            AudioVisualizationController AVCComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AVCComponent.changePixelScale = true;
         }
 
@@ -112,7 +95,7 @@ public class ReadPic : MonoBehaviour {
         if (Control == 10) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
-            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController>();
+            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
             //APComponent._useMicrophone = true;
 
         }
@@ -137,9 +120,9 @@ public class ReadPic : MonoBehaviour {
         //float brightScaleFactor = brightness * 5.0f;  //长短不一
         float brightScaleFactor = 1.0f; //长短一样
 
-        pixShape.GetComponent<Renderer>().material = spMaterial;
+        pixShape.GetComponent<Renderer> ().material = spMaterial;
 
-        pixShape.GetComponent<Renderer> ().material.SetColor("_EmissionColor",col);
+        pixShape.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", col);
         //GameObject pixShape = new GameObject();
         //pixShape.AddComponent<SpriteRenderer>();
 
@@ -233,23 +216,12 @@ public class ReadPic : MonoBehaviour {
             Img = ResizePic (www.texture);
 
             //bei  18/10/19
-            CanvasTF.GetChild (6).gameObject.SetActive (true);
+            OrinImageBg.gameObject.SetActive (true);
             //让显示图片的UI控件一开始先隐藏，当打开图片之后再激活
             //因为控件背景为白色才能正常显示图片，但背景为黑
 
             OrinImageBg.texture = Img;
 
-            //bei  18/10/19
-            //以某种方式打开图片后，就不显示打开图片按钮
-            CanvasTF.GetChild (0).gameObject.SetActive (false);
-            CanvasTF.GetChild (1).gameObject.SetActive (false);
-            //并且显示处理图片和取消按钮
-            CanvasTF.GetChild (2).gameObject.SetActive (true);
-            CanvasTF.GetChild (3).gameObject.SetActive (true);
-            //不显示主页名称logo
-            CanvasTF.GetChild (8).gameObject.SetActive (false);
-            //不显示功能选择按钮组
-            CanvasTF.GetChild (9).gameObject.SetActive (false);
         }
     }
 
@@ -258,21 +230,6 @@ public class ReadPic : MonoBehaviour {
         if (OrinImageBg) {
             OrinImageBg.texture = null;
         }
-        //不显示处理图片和取消按钮
-        CanvasTF.GetChild (0).gameObject.SetActive (true);
-        CanvasTF.GetChild (1).gameObject.SetActive (true);
-        //并且显示打开图片按钮
-        CanvasTF.GetChild (2).gameObject.SetActive (false);
-        CanvasTF.GetChild (3).gameObject.SetActive (false);
-        //不显示缺省rawimage
-        CanvasTF.GetChild (6).gameObject.SetActive (false);
-        //不显示变换按钮和首页按钮
-        CanvasTF.GetChild (4).gameObject.SetActive (false);
-        CanvasTF.GetChild (5).gameObject.SetActive (false);
-        //不显示主页名称logo
-        CanvasTF.GetChild (8).gameObject.SetActive (true);
-        //显示功能选择按钮组
-        CanvasTF.GetChild (9).gameObject.SetActive (true);
 
         //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
 
@@ -300,60 +257,84 @@ public class ReadPic : MonoBehaviour {
 
     }
 
+    public void RefreshProcess () {
+
+        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        PicProcess ();
+    }
+
     public void SetControlto1 () {
         Control = 1;
+        RefreshProcess ();
+
     }
 
     public void SetControlto2 () {
         Control = 2;
+        RefreshProcess ();
     }
     public void SetControlto3 () {
         Control = 3;
+        RefreshProcess ();
 
     }
     public void SetControlto4 () {
         Control = 4;
+        RefreshProcess ();
     }
     public void SetControlto5 () {
         Control = 5;
+        RefreshProcess ();
     }
     public void SetControlto6 () {
         Control = 6;
+        RefreshProcess ();
     }
     public void SetControlto7 () {
         Control = 7;
+        RefreshProcess ();
     }
     public void SetControlto8 () {
         Control = 8;
+        RefreshProcess ();
     }
     public void SetControlto9 () {
         Control = 9;
+        RefreshProcess ();
     }
 
     public void SetControlto10 () {
         Control = 10;
+        RefreshProcess ();
     }
     public void SetControlto11 () {
         Control = 11;
+        RefreshProcess ();
 
     }
     public void SetControlto12 () {
         Control = 12;
+        RefreshProcess ();
     }
     public void SetControlto13 () {
         Control = 13;
+        RefreshProcess ();
     }
 
     public void SetControlto14 () {
         Control = 14;
+        RefreshProcess ();
     }
     public void SetControlto15 () {
         Control = 15;
+        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
         BeverageBoxsOBJ.AddComponent<BeveragesController> ();
+        PicProcess ();
     }
     public void SetControlto16 () {
         Control = 16;
+        RefreshProcess ();
     }
 
 }

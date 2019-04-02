@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MotaPost-processing Profile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 114590503239137622}
---- !u!114 &114590503239137622
+  - {fileID: 114525149056815250}
+--- !u!114 &114525149056815250
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,19 +32,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 34.43
+    value: 5.2
   threshold:
     overrideState: 0
-    value: 0
+    value: 1
   softKnee:
-    overrideState: 1
-    value: 0.757
+    overrideState: 0
+    value: 0.5
   clamp:
     overrideState: 0
-    value: 77
+    value: 65472
   diffusion:
-    overrideState: 1
-    value: 3.82
+    overrideState: 0
+    value: 7
   anamorphicRatio:
     overrideState: 0
     value: 0
