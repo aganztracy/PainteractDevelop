@@ -23,6 +23,11 @@ public class MyPixel : MonoBehaviour {
         Control = CanvasOBJ.GetComponent<ReadPic> ().Control;
 
         switch (Control) {
+
+            /// <summary>
+            /// Flow 类别效果
+            /// 1-8
+            /// </summary>
             case 1:
                 gameObject.AddComponent<DotFlowController> ();
                 break;
@@ -46,28 +51,29 @@ public class MyPixel : MonoBehaviour {
             case 8:
 
                 break;
-            case 9: //=========================================================可拖拽弹簧网格
+
+            /// <summary>
+            /// Music 类别效果
+            /// 9
+            /// </summary>
+
+            case 9: //=========================================================音乐可视化
+
+                break;
+
+
+            /// <summary>
+            /// Physic 类别效果
+            /// 10-13
+            /// </summary>
+            case 10: //=========================================================可拖拽弹簧网格
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<SpringGridController> ();
-                break;
-            case 10: //=========================================================3D Noise Flow Field
-                gameObject.AddComponent<FlowFieldParticle> ();
 
                 break;
-            case 11: //=========================================================音乐可视化
-
-                break;
-            case 12: //=========================================================爆炸粒子系统效果
-                // 点击爆炸粒子
-                gameObject.AddComponent<ParticleBoomController> ();
-                break;
-            case 13: //=========================================================颜料溅开效果
-                //点击颜料溅开的测试
-                gameObject.AddComponent<PigmentBoomController> ();
-                break;
-            case 14: //=========================================================三维粒子效果
+            case 11: //=========================================================三维粒子效果
                 //弹簧三维连接测试
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
                 gameObject.AddComponent<DragObj> ();
@@ -75,16 +81,34 @@ public class MyPixel : MonoBehaviour {
                 gameObject.AddComponent<Spring3DController> ();
 
                 break;
-            case 15: //=========================================================粒子饮料效果
+            case 12: //=========================================================粒子饮料效果
                 // 给每个粒子添加刚体组件
                 gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<Rigidbody> ().mass = 10;
                 gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
                 break;
-            case 16: //=========================================================
+            case 13: //=========================================================
 
                 //gameObject.AddComponent<WobblyGridController> ();            
 
+                break;
+
+            /// <summary>
+            /// Other 类别效果
+            /// 14-16
+            /// </summary>
+            case 14: //=========================================================3D Noise Flow Field
+                gameObject.AddComponent<FlowFieldParticle> ();
+
+                break;
+
+            case 15: //=========================================================爆炸粒子系统效果
+                // 点击爆炸粒子
+                gameObject.AddComponent<ParticleBoomController> ();
+                break;
+            case 16: //=========================================================颜料溅开效果
+                //点击颜料溅开的测试
+                gameObject.AddComponent<PigmentBoomController> ();
                 break;
 
             default:

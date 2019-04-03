@@ -14,6 +14,8 @@ TagManager:
   - processButton
   - ImagePageCanvas
   - ChoosePageCanvas
+  - ScrollViewCanvas
+  - FirstButtonPanel
   layers:
   - Default
   - TransparentFX

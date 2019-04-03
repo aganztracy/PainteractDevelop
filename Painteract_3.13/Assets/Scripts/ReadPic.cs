@@ -80,31 +80,7 @@ public class ReadPic : MonoBehaviour {
         }
         OrinImageBg.gameObject.SetActive (false);
 
-        //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
-        if (Control == 11 || Control == 12) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MyPixelsOBJ.AddComponent<AudioPeer> ();
-            MyPixelsOBJ.AddComponent<AudioVisualizationController> ();
-            AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
-            AudioVisualizationController AVCComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
-            AVCComponent.changePixelScale = true;
-        }
-
-        // Debug.Log ("Music Visualization setup");
-
-        if (Control == 10) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
-            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
-            //APComponent._useMicrophone = true;
-
-        }
-
-        // Debug.Log ("Music Visualization2 setup");
-        if (Control == 16) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
-            MyPixelsOBJ.AddComponent<WobblyGridController> ();
-        }
+        InstantiateController();//效果脚本初始化
 
     }
 
@@ -231,16 +207,56 @@ public class ReadPic : MonoBehaviour {
             OrinImageBg.texture = null;
         }
 
+        DestroyController ();//去除效果脚本
+
+    }
+
+    public void RefreshProcess () { //去除前一效果产生的所有对象，进行新处理
+
+        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        PicProcess ();
+    }
+
+    public void InstantiateController(){//效果添加在MyPixelsOBJ上的功能脚本
+
+        //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
+        if (Control == 9) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<AudioPeer> ();
+            MyPixelsOBJ.AddComponent<AudioVisualizationController> ();
+            AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
+            AudioVisualizationController AVCComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
+            AVCComponent.changePixelScale = true;
+        }
+
+        // Debug.Log ("Music Visualization setup");
+
+        if (Control == 14) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
+            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
+
+        }
+
+        // Debug.Log ("Music Visualization2 setup");
+        if (Control == 13) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+            MyPixelsOBJ.AddComponent<WobblyGridController> ();
+        }
+    }
+
+    public void DestroyController () {//在切换效果或退出效果时，消除效果添加在MyPixelsOBJ上的功能脚本
+
         //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
 
-        if (Control == 10) {
+        if (Control == 14) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
             Destroy (NFComponent);
 
         }
 
-        if (Control == 11 || Control == 12) {
+        if (Control == 9) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
@@ -249,7 +265,7 @@ public class ReadPic : MonoBehaviour {
             Destroy (APComponent);
         }
 
-        if (Control == 16) {
+        if (Control == 13) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             WobblyGridController WGComponent = MyPixelsOBJ.GetComponent<WobblyGridController> ();
             Destroy (WGComponent);
@@ -257,84 +273,22 @@ public class ReadPic : MonoBehaviour {
 
     }
 
-    public void RefreshProcess () {
+    public void SetControlTo (int targetControl) { //每个效果按钮按下时的响应函数
 
-        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        PicProcess ();
-    }
+        DestroyController ();
 
-    public void SetControlto1 () {
-        Control = 1;
-        RefreshProcess ();
+        Control = targetControl;
 
-    }
+        if (targetControl == 12) {
+            MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
+            PicProcess ();
+        } else {
+            RefreshProcess ();
+            Debug.Log ("RefreshProcess ();" + targetControl);
+        }
 
-    public void SetControlto2 () {
-        Control = 2;
-        RefreshProcess ();
-    }
-    public void SetControlto3 () {
-        Control = 3;
-        RefreshProcess ();
-
-    }
-    public void SetControlto4 () {
-        Control = 4;
-        RefreshProcess ();
-    }
-    public void SetControlto5 () {
-        Control = 5;
-        RefreshProcess ();
-    }
-    public void SetControlto6 () {
-        Control = 6;
-        RefreshProcess ();
-    }
-    public void SetControlto7 () {
-        Control = 7;
-        RefreshProcess ();
-    }
-    public void SetControlto8 () {
-        Control = 8;
-        RefreshProcess ();
-    }
-    public void SetControlto9 () {
-        Control = 9;
-        RefreshProcess ();
-    }
-
-    public void SetControlto10 () {
-        Control = 10;
-        RefreshProcess ();
-    }
-    public void SetControlto11 () {
-        Control = 11;
-        RefreshProcess ();
-
-    }
-    public void SetControlto12 () {
-        Control = 12;
-        RefreshProcess ();
-    }
-    public void SetControlto13 () {
-        Control = 13;
-        RefreshProcess ();
-    }
-
-    public void SetControlto14 () {
-        Control = 14;
-        RefreshProcess ();
-    }
-    public void SetControlto15 () {
-        Control = 15;
-        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
-        BeverageBoxsOBJ.AddComponent<BeveragesController> ();
-        PicProcess ();
-    }
-    public void SetControlto16 () {
-        Control = 16;
-        RefreshProcess ();
     }
 
 }

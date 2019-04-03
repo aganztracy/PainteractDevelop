@@ -78,7 +78,7 @@ public class Spring3DController : MonoBehaviour {
 
 		{
 			//Debug.Log("my row is" + Row + "and my clo is" + Clo);
-			Debug.Log ("lock" + Row + ":" + Clo);
+			//Debug.Log ("lock" + Row + ":" + Clo);
 			gameObject.GetComponent<Rigidbody> ().constraints =
 				RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
 		}
