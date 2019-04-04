@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
     Transform CanvasTF;
+    int Control;
 
     //所有界面  目前需要在
     public Canvas HomePageCanvas;
@@ -30,8 +31,10 @@ public class UIManager : MonoBehaviour {
     void Start () {
 
         CanvasTF = GameObject.FindWithTag ("Canvas").transform;
+        Control = CanvasTF.GetComponent<ReadPic> ().Control;
         FunctionButtonPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/FunctionButton");
         WarningWinPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/WarningWindow");
+
     }
 
     // Update is called once per frame
@@ -113,7 +116,7 @@ public class UIManager : MonoBehaviour {
     public void FlowFunctionScroll () {
 
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen && CurrentScrollKind=="Flow") {
+        if (isScrollOpen && CurrentScrollKind == "Flow") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -127,7 +130,7 @@ public class UIManager : MonoBehaviour {
 
     public void MusicFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen && CurrentScrollKind=="Music") {
+        if (isScrollOpen && CurrentScrollKind == "Music") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -139,7 +142,7 @@ public class UIManager : MonoBehaviour {
 
     public void PhysicFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen && CurrentScrollKind=="Physic") {
+        if (isScrollOpen && CurrentScrollKind == "Physic") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -151,7 +154,7 @@ public class UIManager : MonoBehaviour {
 
     public void OtherFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen && CurrentScrollKind=="Other") {
+        if (isScrollOpen && CurrentScrollKind == "Other") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -174,7 +177,6 @@ public class UIManager : MonoBehaviour {
 
                 GameObject tempButton;
                 tempButton = Instantiate (FunctionButtonPrefab, ScrollGrid.transform);
-                tempButton.AddComponent<ButtonCallBack> ();
                 tempButton.GetComponent<ButtonCallBack> ().Control = i;
             }
         }
@@ -185,7 +187,6 @@ public class UIManager : MonoBehaviour {
 
                 GameObject tempButton;
                 tempButton = Instantiate (FunctionButtonPrefab, ScrollGrid.transform);
-                tempButton.AddComponent<ButtonCallBack> ();
                 tempButton.GetComponent<ButtonCallBack> ().Control = i;
             }
 
@@ -196,7 +197,6 @@ public class UIManager : MonoBehaviour {
 
                 GameObject tempButton;
                 tempButton = Instantiate (FunctionButtonPrefab, ScrollGrid.transform);
-                tempButton.AddComponent<ButtonCallBack> ();
                 tempButton.GetComponent<ButtonCallBack> ().Control = i;
             }
 
@@ -207,7 +207,6 @@ public class UIManager : MonoBehaviour {
 
                 GameObject tempButton;
                 tempButton = Instantiate (FunctionButtonPrefab, ScrollGrid.transform);
-                tempButton.AddComponent<ButtonCallBack> ();
                 tempButton.GetComponent<ButtonCallBack> ().Control = i;
             }
 
@@ -245,10 +244,92 @@ public class UIManager : MonoBehaviour {
 
         GameObject tempWarningWindow;
         tempWarningWindow = Instantiate (WarningWinPrefab, CanvasTF);
-        tempWarningWindow.AddComponent<WarningWinCallBack> ();
         tempWarningWindow.GetComponent<WarningWinCallBack> ().CurrentPage = pageName;
     }
 
+    public void PropertyBarUp () {
 
+        Control = CanvasTF.GetComponent<ReadPic> ().Control;
+
+        
+
+        switch (Control) {
+
+            /// <summary>
+            /// Flow 类别效果
+            /// 1-8
+            /// </summary>
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            case 8:
+
+                break;
+
+                /// <summary>
+                /// Music 类别效果
+                /// 9
+                /// </summary>
+
+            case 9: //=========================================================音乐可视化
+
+                break;
+
+                /// <summary>
+                /// Physic 类别效果
+                /// 10-13
+                /// </summary>
+            case 10: //=========================================================可拖拽弹簧网格
+
+                break;
+            case 11: //=========================================================三维粒子效果
+
+                break;
+            case 12: //=========================================================粒子饮料效果
+
+                break;
+            case 13: //=========================================================WobblyGrid 
+
+                GameObject PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_1");
+                GameObject tempPorpertyBar;
+                tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+
+               // Debug.Log("PorpertyBarPrefab instantiate");
+
+                break;
+
+                /// <summary>
+                /// Other 类别效果
+                /// 14-16
+                /// </summary>
+            case 14: //=========================================================3D Noise Flow Field
+
+                break;
+
+            case 15: //=========================================================爆炸粒子系统效果
+                break;
+            case 16: //=========================================================颜料溅开效果
+                break;
+
+            default:
+                break;
+
+        }
+    }
 
 }

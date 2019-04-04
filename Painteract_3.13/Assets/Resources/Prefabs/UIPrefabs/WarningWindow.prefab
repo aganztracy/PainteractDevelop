@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 7993748748543671916}
   - component: {fileID: 3283179171833264386}
   - component: {fileID: 6767043624883209181}
+  - component: {fileID: 8584827461037777062}
   m_Layer: 5
   m_Name: WarningWindow
   m_TagString: Untagged
@@ -274,6 +275,21 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &8584827461037777062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7161660406387034438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd239eead864a24db7cbeebf9b92dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanvasOBJ: {fileID: 0}
+  MyPixelsOBJ: {fileID: 0}
+  CurrentPage: 
 --- !u!1 &7182537076973993043
 GameObject:
   m_ObjectHideFlags: 0

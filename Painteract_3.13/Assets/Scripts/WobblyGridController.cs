@@ -32,8 +32,12 @@ public class WobblyGridController : MonoBehaviour {
 		pixScale = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 
 		SpacingBetween = defaultSpacing;
-		GirdDivision = 6;
+		GirdDivision = 2;
 		isWave = true;
+
+		WaveScale = 0.5f;
+		Amplitude = 1;
+		Frequency = 1;
 
 		ChangeGrid (SpacingBetween);
 

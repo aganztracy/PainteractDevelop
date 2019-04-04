@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6949433685621358310}
   - component: {fileID: 6949433685621358329}
   - component: {fileID: 6949433685621358328}
+  - component: {fileID: 838783407053197685}
   m_Layer: 5
-  m_Name: Button1
+  m_Name: FunctionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,6 +130,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &838783407053197685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6949433685621358330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823f0a91e88914c41be5685cbb68fc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Control: 0
+  CanvasOBJ: {fileID: 0}
+  BtnText: {fileID: 0}
+  BtnImage: {fileID: 0}
 --- !u!1 &6949433685740840107
 GameObject:
   m_ObjectHideFlags: 0
