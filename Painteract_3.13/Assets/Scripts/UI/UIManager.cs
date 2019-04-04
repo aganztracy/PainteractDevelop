@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour {
     public GameObject ScrollGrid;
     public GameObject FunctionButtonPrefab;
     public bool isScrollOpen;
+    public string CurrentScrollKind;
 
     public GameObject WarningWinPrefab;
 
@@ -112,7 +113,7 @@ public class UIManager : MonoBehaviour {
     public void FlowFunctionScroll () {
 
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen) {
+        if (isScrollOpen && CurrentScrollKind=="Flow") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -126,7 +127,7 @@ public class UIManager : MonoBehaviour {
 
     public void MusicFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen) {
+        if (isScrollOpen && CurrentScrollKind=="Music") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -138,7 +139,7 @@ public class UIManager : MonoBehaviour {
 
     public void PhysicFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen) {
+        if (isScrollOpen && CurrentScrollKind=="Physic") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -150,7 +151,7 @@ public class UIManager : MonoBehaviour {
 
     public void OtherFunctionScroll () {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        if (isScrollOpen) {
+        if (isScrollOpen && CurrentScrollKind=="Other") {
             ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
@@ -164,6 +165,7 @@ public class UIManager : MonoBehaviour {
 
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = true;
         isScrollOpen = true;
+        CurrentScrollKind = kindIndex;
 
         ScrollUp ();
 
