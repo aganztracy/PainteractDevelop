@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class AttractorController : MonoBehaviour {
     float maxspeed = 10;
     Vector3 iniPos;
@@ -18,16 +19,19 @@ public class AttractorController : MonoBehaviour {
         acc = new Vector3 (0, 0, 0);
     }
     void Update () {
+
         this.vel += this.acc;
         this.vel = Vector3.ClampMagnitude (this.vel, this.maxspeed);
         this.pos += this.vel;
         this.acc *= 0;
         this.transform.position = this.pos;
 
+        if (!IsTouchedUI ()) {
         if (Input.GetMouseButton (0)) {
             this.Attract ();
         } else {
             this.Arrive ();
+        }
         }
 
     }
@@ -44,6 +48,7 @@ public class AttractorController : MonoBehaviour {
         // Debug.Log (steer);
         ApplyForce (steer);
     }
+
     void Attract () {
 
         float gmass = 20;
@@ -69,5 +74,18 @@ public class AttractorController : MonoBehaviour {
         if (a <= min) return min;
         else if (min < a && a < max) return a;
         else return max;
+    }
+
+    public bool IsTouchedUI () {
+        bool touchedUI = false;
+        if (UnityEngine.Application.isMobilePlatform) {
+            if (EventSystem.current.IsPointerOverGameObject (Input.GetTouch (0).fingerId)) {
+                touchedUI = true;
+            }
+        } else if (EventSystem.current.IsPointerOverGameObject ()) {
+            touchedUI = true;
+        }
+        return touchedUI;
+        Debug.Log (touchedUI);
     }
 }

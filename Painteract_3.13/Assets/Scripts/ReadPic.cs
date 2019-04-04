@@ -286,7 +286,6 @@ public class ReadPic : MonoBehaviour {
             PicProcess ();
         } else {
             RefreshProcess ();
-            Debug.Log ("RefreshProcess ();" + targetControl);
         }
 
     }

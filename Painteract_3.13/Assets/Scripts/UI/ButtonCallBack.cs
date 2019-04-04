@@ -20,16 +20,13 @@ public class ButtonCallBack : MonoBehaviour
         
         Button btn = this.GetComponent<Button> ();
         btn.onClick.AddListener (OnClick);
-
-        
-
         
     }
 
     private void OnClick(){
 
-
     CanvasOBJ.GetComponent<ReadPic>().SetControlTo(Control);
+    Debug.Log("SetControlTo(Control);"+Control);
 
     }
 

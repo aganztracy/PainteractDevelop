@@ -1046,12 +1046,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 621839517}
-        m_MethodName: SetControlto1
-        m_Mode: 1
+        m_MethodName: SetControlTo
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1248,6 +1248,7 @@ GameObject:
   - component: {fileID: 621839518}
   - component: {fileID: 621839517}
   - component: {fileID: 621839522}
+  - component: {fileID: 621839523}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas
@@ -1382,6 +1383,19 @@ MonoBehaviour:
   FunctionButtonPrefab: {fileID: 6949433685621358330, guid: 92750b388dbd1c74c9110e6b4766f8ab,
     type: 3}
   isScrollOpen: 0
+  WarningWinPrefab: {fileID: 0}
+--- !u!114 &621839523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621839516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2725acb8141e19249a54e421ef3e2bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &690151491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,8 +3383,8 @@ GameObject:
   - component: {fileID: 1681398931}
   - component: {fileID: 1681398930}
   m_Layer: 5
-  m_Name: ProcessButton
-  m_TagString: processButton
+  m_Name: GoToAdjustButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3435,17 +3449,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621839517}
-        m_MethodName: PicProcess
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 621839522}
         m_MethodName: ShowAdjustPage
         m_Mode: 1
@@ -3691,19 +3694,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621839517}
-        m_MethodName: Cancel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 621839522}
-        m_MethodName: ShowChoosePage
+        m_MethodName: AdjustPageBackWarning
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4073,19 +4065,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621839517}
-        m_MethodName: Cancel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 621839522}
-        m_MethodName: ShowHomePage
+        m_MethodName: ImagePageBackWarning
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4417,30 +4398,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 621839517}
-        m_MethodName: Cancel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1148596429}
-        m_MethodName: DestroyChildren
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 621839522}
-        m_MethodName: ShowHomePage
+        m_MethodName: ChoosePageBackWarning
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4540,7 +4499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
