@@ -10,7 +10,6 @@ public class RemoveAllController : MonoBehaviour
         {
 
             transform.GetChild(i).gameObject.GetComponent<MyPixel>().RemoveControllerComponent();
-            Debug.Log("RemoveAllControllerComponent");
         }
     }
 }

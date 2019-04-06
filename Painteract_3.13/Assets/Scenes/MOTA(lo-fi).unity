@@ -2295,6 +2295,7 @@ GameObject:
   - component: {fileID: 1148596430}
   - component: {fileID: 1148596429}
   - component: {fileID: 1148596428}
+  - component: {fileID: 1148596431}
   m_Layer: 0
   m_Name: MyPixels
   m_TagString: MyPixels
@@ -2424,6 +2425,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1148596431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148596427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0277014213ed11d46be82e6b63772c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1197222983
 GameObject:
   m_ObjectHideFlags: 0

@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour {
 
     public void FlowFunctionScroll () {
 
-        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Flow") {
             ScrollDown ();
             isScrollOpen = false;
@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void MusicFunctionScroll () {
-        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Music") {
             ScrollDown ();
             isScrollOpen = false;
@@ -143,7 +143,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PhysicFunctionScroll () {
-        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Physic") {
             ScrollDown ();
             isScrollOpen = false;
@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void OtherFunctionScroll () {
-        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Other") {
             ScrollDown ();
             isScrollOpen = false;

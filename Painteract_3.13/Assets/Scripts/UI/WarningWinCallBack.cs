@@ -32,7 +32,8 @@ public class WarningWinCallBack : MonoBehaviour {
 
             CanvasOBJ.GetComponent<ReadPic> ().Cancel ();
             CanvasOBJ.GetComponent<UIManager> ().ShowHomePage ();
-            // MyPixelsOBJ.GetComponent<DestroyAllChildren>().DestroyChildren();
+            MyPixelsOBJ.GetComponent<DestroyAllChildren>().DestroyChildren();
+
 
         }
         if (CurrentPage == "AdjustPage") {

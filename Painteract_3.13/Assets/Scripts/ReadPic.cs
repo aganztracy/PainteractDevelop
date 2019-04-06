@@ -15,7 +15,7 @@ public class ReadPic : MonoBehaviour {
     //parameters
     public int pixScale; //diameter of pixel
 
-    private int linePixNum = 3; //number of pixels in a line
+    private int linePixNum = 25; //number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
     Transform CanvasTF;
@@ -79,10 +79,10 @@ public class ReadPic : MonoBehaviour {
             }
         }
 
-        Debug.Log("CreateSprite finished");
+        Debug.Log ("CreateSprite finished");
         OrinImageBg.gameObject.SetActive (false);
 
-        InstantiateController();//效果脚本初始化
+        InstantiateController (); //效果脚本初始化
 
     }
 
@@ -161,6 +161,17 @@ public class ReadPic : MonoBehaviour {
         pixShape.transform.localPosition = new Vector3 (x, y, z - pixScale * brightScaleFactor * 0.5f);
         return pixShape;
     }
+
+    public void ResetPixelPosition () {
+
+        for (int y = 0, row = 0; row < rowNum; y = y + pixScale, row++) {
+            for (int x = 0, clo = 0; clo < cloNum; x = x + pixScale, clo++) {
+                pixArray[row, clo].transform.localPosition = pixArray[row, clo].GetComponent<MyPixel> ().PosXY;
+            }
+        }
+
+    }
+
     Texture2D ScaleTexture (Texture2D source, int targetWidth, int targetHeight) {
         Texture2D result = new Texture2D (targetWidth, targetHeight, source.format, false);
         float incX = (1.0f / (float) targetWidth);
@@ -209,22 +220,24 @@ public class ReadPic : MonoBehaviour {
             OrinImageBg.texture = null;
         }
 
-        DestroyController ();//去除效果脚本
+        DestroyController (); //去除效果脚本
 
     }
 
     public void RefreshProcess () { //去除前一效果产生的所有对象，进行新处理
 
-        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-        nMd();
-        Debug.Log(MyPixelsOBJ.transform.childCount);
-        PicProcess ();
-    }
-    void nMd(){
-        Debug.Log("why");
+        ResetPixelPosition ();
+        MyPixelsOBJ.GetComponent<RemoveAllController> ().RemoveAllControllerComponent ();
+        for (int i = MyPixelsOBJ.transform.childCount - 1; i >= 0; i--) { //重新进行MyPixel脚本的添加
+            // Destroy (MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ());
+            // MyPixelsOBJ.transform.GetChild (i).gameObject.AddComponent<MyPixel> ();
+            MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ().Restart();
+        }
+
+        InstantiateController ();
     }
 
-    public void InstantiateController(){//效果添加在MyPixelsOBJ上的功能脚本
+    public void InstantiateController () { //效果添加在MyPixelsOBJ上的功能脚本
 
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
         if (Control == 9) {
@@ -242,7 +255,7 @@ public class ReadPic : MonoBehaviour {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
-            Debug.Log("add noise.cs");
+            Debug.Log ("add noise.cs");
 
         }
 
@@ -253,7 +266,7 @@ public class ReadPic : MonoBehaviour {
         }
     }
 
-    public void DestroyController () {//在切换效果或退出效果时，消除效果添加在MyPixelsOBJ上的功能脚本
+    public void DestroyController () { //在切换效果或退出效果时，消除效果添加在MyPixelsOBJ上的功能脚本
 
         //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
 
@@ -288,12 +301,18 @@ public class ReadPic : MonoBehaviour {
         Control = targetControl;
 
         if (targetControl == 12) {
-            MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+            //MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+            MyPixelsOBJ.GetComponent<RemoveAllController> ().RemoveAllControllerComponent ();
             GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
             BeverageBoxsOBJ.AddComponent<BeveragesController> ();
-            PicProcess ();
+            for (int i = MyPixelsOBJ.transform.childCount - 1; i >= 0; i--) { //重新进行MyPixel脚本的添加
+                Destroy (MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ());
+                MyPixelsOBJ.transform.GetChild (i).gameObject.AddComponent<MyPixel> ();
+            }
+
         } else {
             RefreshProcess ();
+
         }
 
     }
