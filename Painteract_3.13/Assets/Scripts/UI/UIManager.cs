@@ -27,6 +27,10 @@ public class UIManager : MonoBehaviour {
 
     public GameObject WarningWinPrefab;
 
+    public GameObject PorpertyBarPrefab;
+    GameObject tempPorpertyBar;
+    public bool isPropertyOpen = false;
+
     // Start is called before the first frame update
     void Start () {
 
@@ -115,9 +119,8 @@ public class UIManager : MonoBehaviour {
 
     public void FlowFunctionScroll () {
 
-        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Flow") {
-            ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
             //Debug.Log ("CloseScrollView");
@@ -129,9 +132,8 @@ public class UIManager : MonoBehaviour {
     }
 
     public void MusicFunctionScroll () {
-        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Music") {
-            ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
         } else {
@@ -141,9 +143,8 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PhysicFunctionScroll () {
-        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Physic") {
-            ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
         } else {
@@ -153,9 +154,8 @@ public class UIManager : MonoBehaviour {
     }
 
     public void OtherFunctionScroll () {
-        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        // ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Other") {
-            ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
             ScrollDown ();
             isScrollOpen = false;
         } else {
@@ -219,6 +219,7 @@ public class UIManager : MonoBehaviour {
     }
 
     private void ScrollDown () {
+        ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
         GameObject.FindGameObjectWithTag ("FirstButtonPanel").GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 200);
     }
 
@@ -247,89 +248,101 @@ public class UIManager : MonoBehaviour {
         tempWarningWindow.GetComponent<WarningWinCallBack> ().CurrentPage = pageName;
     }
 
-    public void PropertyBarUp () {
+    public void PropertyBarOpen () {
 
         Control = CanvasTF.GetComponent<ReadPic> ().Control;
 
-        
+        if (isPropertyOpen) {
 
-        switch (Control) {
+            PropertyBarClose();
 
-            /// <summary>
-            /// Flow 类别效果
-            /// 1-8
-            /// </summary>
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-                break;
-            case 6:
-
-                break;
-            case 7:
-
-                break;
-            case 8:
-
-                break;
+        } else {
+            switch (Control) {
 
                 /// <summary>
-                /// Music 类别效果
-                /// 9
+                /// Flow 类别效果
+                /// 1-8
                 /// </summary>
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
 
-            case 9: //=========================================================音乐可视化
+                    break;
+                case 4:
 
-                break;
+                    break;
+                case 5:
+                    break;
+                case 6:
 
-                /// <summary>
-                /// Physic 类别效果
-                /// 10-13
-                /// </summary>
-            case 10: //=========================================================可拖拽弹簧网格
+                    break;
+                case 7:
 
-                break;
-            case 11: //=========================================================三维粒子效果
+                    break;
+                case 8:
 
-                break;
-            case 12: //=========================================================粒子饮料效果
+                    break;
 
-                break;
-            case 13: //=========================================================WobblyGrid 
+                    /// <summary>
+                    /// Music 类别效果
+                    /// 9
+                    /// </summary>
 
-                GameObject PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_1");
-                GameObject tempPorpertyBar;
-                tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+                case 9: //=========================================================音乐可视化
 
-               // Debug.Log("PorpertyBarPrefab instantiate");
+                    break;
 
-                break;
+                    /// <summary>
+                    /// Physic 类别效果
+                    /// 10-13
+                    /// </summary>
+                case 10: //=========================================================可拖拽弹簧网格
 
-                /// <summary>
-                /// Other 类别效果
-                /// 14-16
-                /// </summary>
-            case 14: //=========================================================3D Noise Flow Field
+                    break;
+                case 11: //=========================================================三维粒子效果
 
-                break;
+                    break;
+                case 12: //=========================================================粒子饮料效果
 
-            case 15: //=========================================================爆炸粒子系统效果
-                break;
-            case 16: //=========================================================颜料溅开效果
-                break;
+                    break;
+                case 13: //=========================================================WobblyGrid 
 
-            default:
-                break;
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_1");
+                    tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+                    isPropertyOpen = true;
+
+                    // Debug.Log("PorpertyBarPrefab instantiate");
+
+                    break;
+
+                    /// <summary>
+                    /// Other 类别效果
+                    /// 14-16
+                    /// </summary>
+                case 14: //=========================================================3D Noise Flow Field
+
+                    break;
+
+                case 15: //=========================================================爆炸粒子系统效果
+                    break;
+                case 16: //=========================================================颜料溅开效果
+                    break;
+
+                default:
+                    break;
+
+            }
 
         }
+
+    }
+
+    public void PropertyBarClose () {
+        Destroy(tempPorpertyBar);
+        isPropertyOpen = false;
+
     }
 
 }

@@ -52,7 +52,7 @@ public class ParticleBoomController : MonoBehaviour {
 			//particleOBJ.transform.localPosition = new Vector3 (MyPixelOBJ.PosXY.x, MyPixelOBJ.PosXY.y, 10f); //Sets the coordinates relative to the parent object 
 			particleOBJ.transform.localPosition = new Vector3 (0, 0, 0); //Sets the coordinates relative to the parent object 
 			particleOBJ.transform.localScale = new Vector3(1,1,1);
-			Debug.Log ("addmaterial finished!"); //no
+			//Debug.Log ("addmaterial finished!"); //no
 			//实例化粒子系统上各属性模块
 
 			var Pmain = P.main; //主属性模块

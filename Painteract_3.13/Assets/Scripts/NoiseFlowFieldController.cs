@@ -58,6 +58,7 @@ public class NoiseFlowFieldController : MonoBehaviour {
 
         _amountOfParticles = rowNum * cloNum;
         _particleScale = 10;
+        _spawnRadius = 10;
 
         _girdSize = new Vector3Int (cloNum, rowNum, 25);
         _cellsize = pixScale;
@@ -86,12 +87,14 @@ public class NoiseFlowFieldController : MonoBehaviour {
                     particleInstance.transform.position = randomPos;
                     particleInstance.transform.parent = this.transform;
                     particleInstance.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
-                    _particles.Add (particleInstance.GetComponent<FlowFieldParticle> ());
+                   var test = particleInstance.GetComponent<FlowFieldParticle> ();
+                    _particles.Add (test);
+                    // _particles.Add (particleInstance.GetComponent<FlowFieldParticle> ());
                     _particleMeshRenderer.Add (particleInstance.GetComponent<MeshRenderer> ());
                     break;
-                }
-                if (!isVaild) {
+                }else{
                     attempt++;
+                    
                 }
             }
 
@@ -103,8 +106,8 @@ public class NoiseFlowFieldController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        CalculateFlowfieldDirection ();
-        ParticleBehavior ();
+        // CalculateFlowfieldDirection ();
+        // ParticleBehavior ();
     }
 
     void CalculateFlowfieldDirection () {//计算网格内的方向场，粒子随着场运动

@@ -39,7 +39,7 @@ public class PigmentBoomController : MonoBehaviour {
 		//完成了两个步骤，1由于鼠标的坐标系是2维的，需要转化成3维的世界坐标系，2只有三维的情况下才能来计算鼠标位置与物体的距离，offset即是距离  
 		Vector3 offset = transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, ScreenSpace.z));
 
-		Debug.Log ("boom");
+		//Debug.Log ("boom");
 
 		//当鼠标左键按下时  
 		while (Input.GetMouseButton (0)) {

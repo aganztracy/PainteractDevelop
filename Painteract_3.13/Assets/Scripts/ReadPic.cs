@@ -15,7 +15,7 @@ public class ReadPic : MonoBehaviour {
     //parameters
     public int pixScale; //diameter of pixel
 
-    private int linePixNum = 25; //number of pixels in a line
+    private int linePixNum = 3; //number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
     Transform CanvasTF;
@@ -78,6 +78,8 @@ public class ReadPic : MonoBehaviour {
                 pixColors[row, clo] = ImageColor2d[y, x];
             }
         }
+
+        Debug.Log("CreateSprite finished");
         OrinImageBg.gameObject.SetActive (false);
 
         InstantiateController();//效果脚本初始化
@@ -214,7 +216,12 @@ public class ReadPic : MonoBehaviour {
     public void RefreshProcess () { //去除前一效果产生的所有对象，进行新处理
 
         MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        nMd();
+        Debug.Log(MyPixelsOBJ.transform.childCount);
         PicProcess ();
+    }
+    void nMd(){
+        Debug.Log("why");
     }
 
     public void InstantiateController(){//效果添加在MyPixelsOBJ上的功能脚本
@@ -235,6 +242,7 @@ public class ReadPic : MonoBehaviour {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
+            Debug.Log("add noise.cs");
 
         }
 
