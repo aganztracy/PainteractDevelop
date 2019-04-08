@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ReadPic : MonoBehaviour {
 
-    public static Texture2D Img = null;
+    public  Texture2D Img = null;//static
     public static Color[, ] ImageColor2d;
     public RawImage OrinImageBg;
     public Transform MyPixelsTF;
@@ -79,7 +79,6 @@ public class ReadPic : MonoBehaviour {
             }
         }
 
-        Debug.Log ("CreateSprite finished");
         OrinImageBg.gameObject.SetActive (false);
 
         InstantiateController (); //效果脚本初始化
@@ -224,17 +223,23 @@ public class ReadPic : MonoBehaviour {
 
     }
 
-    public void RefreshProcess () { //去除前一效果产生的所有对象，进行新处理
+    public void RefreshProcess_Destroy () { //去除前一效果产生的所有对象，进行新处理
+        MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        PicProcess ();
+
+    }
+
+    public void RefreshProcess_Remove () {
 
         ResetPixelPosition ();
         MyPixelsOBJ.GetComponent<RemoveAllController> ().RemoveAllControllerComponent ();
         for (int i = MyPixelsOBJ.transform.childCount - 1; i >= 0; i--) { //重新进行MyPixel脚本的添加
             // Destroy (MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ());
             // MyPixelsOBJ.transform.GetChild (i).gameObject.AddComponent<MyPixel> ();
-            MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ().Restart();
+            MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ().Restart ();
         }
-
         InstantiateController ();
+
     }
 
     public void InstantiateController () { //效果添加在MyPixelsOBJ上的功能脚本
@@ -250,6 +255,11 @@ public class ReadPic : MonoBehaviour {
         }
 
         // Debug.Log ("Music Visualization setup");
+        if (Control == 12) {
+            GameObject MyPixelsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            MyPixelsOBJ.AddComponent<BeveragesController> ();
+        }
+
 
         if (Control == 14) {
             GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
@@ -300,20 +310,7 @@ public class ReadPic : MonoBehaviour {
 
         Control = targetControl;
 
-        if (targetControl == 12) {
-            //MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
-            MyPixelsOBJ.GetComponent<RemoveAllController> ().RemoveAllControllerComponent ();
-            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
-            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
-            for (int i = MyPixelsOBJ.transform.childCount - 1; i >= 0; i--) { //重新进行MyPixel脚本的添加
-                Destroy (MyPixelsOBJ.transform.GetChild (i).gameObject.GetComponent<MyPixel> ());
-                MyPixelsOBJ.transform.GetChild (i).gameObject.AddComponent<MyPixel> ();
-            }
-
-        } else {
-            RefreshProcess ();
-
-        }
+        RefreshProcess_Destroy ();
 
     }
 

@@ -22,7 +22,7 @@ public class BeveragesController : MonoBehaviour {
 
 	int BoxScaleX, BoxScaleY, BoxScaleZ;//装粒子的盒子的大小数据
 
-	int WallScale = 300;//六面墙体的厚度：厚度太小粒子会穿过碰撞体掉出，太厚会导致碰撞体重叠后粒子的运动混乱
+	int WallScale = 100;//六面墙体的厚度：厚度太小粒子会穿过碰撞体掉出，太厚会导致碰撞体重叠后粒子的运动混乱 300
 
 	// Use this for initialization
 	void Start () {

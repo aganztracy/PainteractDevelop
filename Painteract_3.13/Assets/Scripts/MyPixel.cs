@@ -83,8 +83,8 @@ public class MyPixel : MonoBehaviour {
             case 12: //=========================================================粒子饮料效果
                 // 给每个粒子添加刚体组件
                 //gameObject.AddComponent<Rigidbody> ();
-                gameObject.AddComponent<Rigidbody> ().mass = 10;
-                gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
+                gameObject.GetComponent<Rigidbody> ().mass = 10;
+                gameObject.GetComponent<Rigidbody> ().drag = 0.01f;
                 break;
             case 13: //=========================================================WobblyGrid
 
@@ -115,22 +115,23 @@ public class MyPixel : MonoBehaviour {
         }
     }
 
-    public void Restart(){
+    public void Restart () {
 
-               switch (Control) {
+        switch (Control) {
 
             /// <summary>
             /// Flow 类别效果
             /// 1-8
             /// </summary>
             case 1:
-                gameObject.AddComponent<DotFlowController> ();
+
                 break;
             case 2:
+
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-
+                gameObject.AddComponent<DotFlowController> ();
                 break;
             case 4:
 
