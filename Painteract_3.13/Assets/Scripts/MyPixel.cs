@@ -29,13 +29,13 @@ public class MyPixel : MonoBehaviour {
             /// 1-8
             /// </summary>
             case 1:
-                gameObject.AddComponent<DotFlowController> ();
+                
                 break;
             case 2:
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-
+                gameObject.AddComponent<DotFlowController> ();
                 break;
             case 4:
 
@@ -75,6 +75,7 @@ public class MyPixel : MonoBehaviour {
             case 11: //=========================================================三维粒子效果
                 //弹簧三维连接测试
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<Spring3DController> ();
@@ -83,6 +84,7 @@ public class MyPixel : MonoBehaviour {
             case 12: //=========================================================粒子饮料效果
                 // 给每个粒子添加刚体组件
                 //gameObject.AddComponent<Rigidbody> ();
+                gameObject.AddComponent<Rigidbody> ();
                 gameObject.GetComponent<Rigidbody> ().mass = 10;
                 gameObject.GetComponent<Rigidbody> ().drag = 0.01f;
                 break;
@@ -171,6 +173,7 @@ public class MyPixel : MonoBehaviour {
             case 11: //=========================================================三维粒子效果
                 //弹簧三维连接测试
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
+                gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<Spring3DController> ();
@@ -179,6 +182,7 @@ public class MyPixel : MonoBehaviour {
             case 12: //=========================================================粒子饮料效果
                 // 给每个粒子添加刚体组件
                 //gameObject.AddComponent<Rigidbody> ();
+                gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<Rigidbody> ().mass = 10;
                 gameObject.AddComponent<Rigidbody> ().drag = 0.01f;
                 break;
