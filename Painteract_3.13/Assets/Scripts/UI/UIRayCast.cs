@@ -49,7 +49,7 @@ public class UIRayCast : MonoBehaviour {
             touchedUI = true;
         }
         return touchedUI;
-        Debug.Log(touchedUI);
+        // Debug.Log(touchedUI);
     }
 
     //教程说把原函数重载为如下函数后 可以在安卓平台上使用
@@ -65,7 +65,7 @@ public class UIRayCast : MonoBehaviour {
 
         return results.Count > 0;
 
-        Debug.Log(results.Count > 0);
+        // Debug.Log(results.Count > 0);
 
     }
 

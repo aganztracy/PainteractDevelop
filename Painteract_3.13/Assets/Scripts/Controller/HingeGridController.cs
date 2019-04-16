@@ -44,7 +44,7 @@ public class HingeGridController : MonoBehaviour {
 		if (Row == 0) { // 最下方一排，不进行连接
 
 		} else if (Clo == 0) { // 最左侧一排，只与其下方一排连接
-			Debug.Log ("my row is" + Row + "and my clo is" + Clo);
+			// Debug.Log ("my row is" + Row + "and my clo is" + Clo);
 			jointComponentRow = gameObject.AddComponent<HingeJoint> ();
 			//gameObject.GetComponent<HingeJoint>().useSpring = true;
 			gameObject.GetComponent<HingeJoint> ().useLimits = true;
@@ -56,7 +56,7 @@ public class HingeGridController : MonoBehaviour {
 		}
 
 		if (Row != 0 && Clo != 0) { // 一般粒子元，和其左方和下方的粒子连接
-			Debug.Log ("my row is" + Row + "and my clo is" + Clo);
+			// Debug.Log ("my row is" + Row + "and my clo is" + Clo);
 			jointComponentRow = gameObject.AddComponent<HingeJoint> ();
 			//gameObject.GetComponent<HingeJoint>().useSpring = true;
 			jointComponentClo = gameObject.AddComponent<HingeJoint> ();
@@ -75,8 +75,8 @@ public class HingeGridController : MonoBehaviour {
 		if (Row == CanvasOBJ.GetComponent<ReadPic> ().rowNum - 1) //最上方一行锁定
 
 		{
-			Debug.Log ("my row is" + Row + "and my Clo is" + Clo);
-			Debug.Log ("lock" + Row + ":" + Clo);
+			// Debug.Log ("my row is" + Row + "and my Clo is" + Clo);
+			// Debug.Log ("lock" + Row + ":" + Clo);
 			gameObject.GetComponent<Rigidbody> ().constraints =
 				RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
 		}

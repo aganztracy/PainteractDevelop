@@ -53,7 +53,7 @@ public class MicrophoneVisualizationController : MonoBehaviour {
 			gameObject.transform.localPosition = new Vector3 (PosX, PosY, volume * 10);
 		}
 
-		Debug.Log (volume);
+		// Debug.Log (volume);
 
 	}
 

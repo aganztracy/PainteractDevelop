@@ -32,7 +32,8 @@ public class ParticleBoomController : MonoBehaviour {
 		Vector3 offset = transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, ScreenSpace.z));
 
 		//当鼠标左键按下时  
-		if (Input.GetMouseButton (0)) {
+		// if (Input.GetMouseButton (0)) {
+		if (Input.touchCount == 1) {
 			//Debug.Log("particleboom!");   //done 
 
 			//得到现在鼠标的2维坐标系位置  

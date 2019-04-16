@@ -20,7 +20,8 @@ public class DragObj : MonoBehaviour {
         if (!IsTouchedUI ()) {
 
             //当鼠标左键按下时  
-            while (Input.GetMouseButton (0)) {
+            // while (Input.GetMouseButton (0)) {
+            while (Input.touchCount == 1) {
                 //得到现在鼠标的2维坐标系位置  
                 Vector3 curScreenSpace = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, ScreenSpace.z);
                 //将当前鼠标的2维位置转化成三维的位置，再加上鼠标的移动量  

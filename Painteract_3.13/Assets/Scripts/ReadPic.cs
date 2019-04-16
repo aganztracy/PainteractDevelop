@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ReadPic : MonoBehaviour {
 
-    public  Texture2D Img = null;//static
+    public Texture2D Img = null; //static
     public static Color[, ] ImageColor2d;
     public RawImage OrinImageBg;
     public Transform MyPixelsTF;
@@ -15,31 +15,35 @@ public class ReadPic : MonoBehaviour {
     //parameters
     public int pixScale; //diameter of pixel
 
-    private int linePixNum = 25; //number of pixels in a line
+    private int linePixNum = 10; //number of pixels in a line
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
-    Transform CanvasTF;
+    GameObject CanvasOBJ;
 
     //the row and clo number
     public int rowNum;
     public int cloNum;
 
     public GameObject[, ] pixArray;
-    public Color[, ] pixColors;
+    public Color[, ] pixColors; //
     // Sprite sp;
-    Material spMaterial;
+    // Material spMaterial;
 
     //--------------------------功能模式控制变量--------------------------------
     public int Control = 1;
 
+    public GameObject PixelPrefab;
     //test bei
     //public int pixScaleNum = pixScale;
 
     void Start () {
-        CanvasTF = GameObject.FindWithTag ("Canvas").transform;
+        CanvasOBJ = GameObject.FindWithTag ("Canvas");
         MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
         // sp = (Sprite)Resources.Load("Sprites/circle", typeof(Sprite)) as Sprite;
-        spMaterial = Resources.Load ("Materials/AtomMaterial") as Material;
+        // spMaterial = Resources.Load ("Materials/AtomMaterial") as Material;
+
+        PixelPrefab = (GameObject) Resources.Load ("Prefabs/PixelPrefab"); //球形prefab
+        // PixelPrefab = (GameObject) Resources.Load ("Prefabs/CubePixelPrefab"); //立方体形prefab
     }
     public void AddHead () {
         OpenFileDialog od = new OpenFileDialog ();
@@ -86,27 +90,16 @@ public class ReadPic : MonoBehaviour {
     }
 
     public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
-        //将粒子对象改成球体
-        GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-
-        //将粒子对象改为cube by z
-        //GameObject pixShape = GameObject.CreatePrimitive (PrimitiveType.Cube);
+        GameObject pixShape = Instantiate (PixelPrefab);
         float hue, saturate, brightness; //brightness 的值是0-1
         Color.RGBToHSV (col, out hue, out saturate, out brightness);
 
         //float brightScaleFactor = brightness * 5.0f;  //长短不一
         float brightScaleFactor = 1.0f; //长短一样
 
-        pixShape.GetComponent<Renderer> ().material = spMaterial;
+        // pixShape.GetComponent<Renderer> ().material = spMaterial;
 
         pixShape.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", col);
-        //GameObject pixShape = new GameObject();
-        //pixShape.AddComponent<SpriteRenderer>();
-
-        //发光效果尝试
-        //pixShape.AddComponent<TrailRenderer>();
-        pixShape.AddComponent<BoxCollider> ();
-        pixShape.AddComponent<MyPixel> ();
 
         pixShape.GetComponent<MyPixel> ().Row = row;
         pixShape.GetComponent<MyPixel> ().Clo = clo;
@@ -142,17 +135,15 @@ public class ReadPic : MonoBehaviour {
         pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
         pixShape.name = row + "," + clo;
 
-        ///粒子的拖尾
-        //SpriteRenderer spr = pixShape.GetComponent<SpriteRenderer>();
-
-        //TrailRenderer trialr = pixShape.GetComponent<TrailRenderer>();
-        //trialr.material = spMaterial;
-
-        //trialr.material.color = col;
-        //trialr.startWidth = pixScale;
-
-        //spr.color = col;
-        //spr.sprite = sp;
+        ///粒子的拖尾 渐变
+        TrailRenderer pixelTR = pixShape.GetComponent<TrailRenderer> ();
+        Gradient gradient = new Gradient ();
+        float alpha = 1.0f;
+        gradient.SetKeys (
+            new GradientColorKey[] { new GradientColorKey (col, 0.0f), new GradientColorKey (Color.white, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey (alpha, 0.0f), new GradientAlphaKey (alpha, 1.0f) }
+        );
+        pixelTR.colorGradient = gradient;
 
         pixShape.transform.SetParent (MyPixelsTF);
         pixShape.transform.localScale = new Vector3 (pixScale, pixScale, pixScale * brightScaleFactor);
@@ -162,7 +153,6 @@ public class ReadPic : MonoBehaviour {
     }
 
     public void ResetPixelPosition () {
-
         for (int y = 0, row = 0; row < rowNum; y = y + pixScale, row++) {
             for (int x = 0, clo = 0; clo < cloNum; x = x + pixScale, clo++) {
                 pixArray[row, clo].transform.localPosition = pixArray[row, clo].GetComponent<MyPixel> ().PosXY;
@@ -243,10 +233,34 @@ public class ReadPic : MonoBehaviour {
     }
 
     public void InstantiateController () { //效果添加在MyPixelsOBJ上的功能脚本
+        //向量场流动
+        if (Control == 1) {
+            MyPixelsOBJ.AddComponent<DotFlowController> ();
+            MyPixelsOBJ.AddComponent<FeildCheckMouse> ();
+            ///
+            /// test by z 4.7 10:51 will be delete if test done
+            /// 
+            /// 
+            // GameObject ztqTempPS = GameObject.Find ("Particle_test2");
+            // ztqTempPS.AddComponent<MyParticleController> ();
+        }
+        //暂时的粒子系统
+        if (Control == 3) {
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
 
+            GameObject ztqTempPS = GameObject.Find ("Particle_test2");
+            ztqTempPS.AddComponent<MyParticleController> ();
+            ztqTempPS.GetComponent<ParticleSystem> ().Play ();
+
+            MyPixelsOBJ.SetActive (false);
+
+        }
+        if (Control == 4) {
+
+        }
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
         if (Control == 9) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<AudioPeer> ();
             MyPixelsOBJ.AddComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
@@ -256,13 +270,11 @@ public class ReadPic : MonoBehaviour {
 
         // Debug.Log ("Music Visualization setup");
         if (Control == 12) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("BeverageBoxs");
-            MyPixelsOBJ.AddComponent<BeveragesController> ();
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeverageBoxsOBJ.AddComponent<BeveragesController> ();
         }
 
-
         if (Control == 14) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
             Debug.Log ("add noise.cs");
@@ -271,24 +283,54 @@ public class ReadPic : MonoBehaviour {
 
         // Debug.Log ("Music Visualization2 setup");
         if (Control == 13) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             MyPixelsOBJ.AddComponent<WobblyGridController> ();
         }
     }
 
     public void DestroyController () { //在切换效果或退出效果时，消除效果添加在MyPixelsOBJ上的功能脚本
+        if (Control == 1) {
+            DotFlowController DFComponent = MyPixelsOBJ.GetComponent<DotFlowController> ();
+            FeildCheckMouse FCComponent = MyPixelsOBJ.GetComponent<FeildCheckMouse> ();
+            Destroy (DFComponent);
+            Destroy (FCComponent);
+        }
+        if (Control == 3) {
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeveragesController BBoxComponent = BeverageBoxsOBJ.GetComponent<BeveragesController> ();
+            BBoxComponent.DestroyChildren ();
+            Destroy (BBoxComponent);
 
+            GameObject ztqTempPS = GameObject.Find ("Particle_test2");
+            MyParticleController MPCComponent = ztqTempPS.GetComponent<MyParticleController> ();
+
+            Destroy (MPCComponent);
+
+            ztqTempPS.GetComponent<ParticleSystem> ().Stop (); //为什么不执行？？？
+            ztqTempPS.GetComponent<ParticleSystem> ().enableEmission = false;
+            Debug.Log ("stop particles");
+
+            MyPixelsOBJ.SetActive (true);
+
+        }
+        if (Control == 4) {
+            // PicTranPixel PTCComponent=MyPixelsOBJ.GetComponent<PicTranPixel>();
+            // Destroy (PTCComponent);
+        }
         //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
+        if (Control == 12) {
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeveragesController BBoxComponent = BeverageBoxsOBJ.GetComponent<BeveragesController> ();
+            BBoxComponent.DestroyChildren ();
+            Destroy (BBoxComponent);
+        }
 
         if (Control == 14) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
             Destroy (NFComponent);
 
         }
 
         if (Control == 9) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
             AVComponent.StopMusic ();
@@ -297,7 +339,6 @@ public class ReadPic : MonoBehaviour {
         }
 
         if (Control == 13) {
-            GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
             WobblyGridController WGComponent = MyPixelsOBJ.GetComponent<WobblyGridController> ();
             Destroy (WGComponent);
         }

@@ -29,15 +29,16 @@ public class MyPixel : MonoBehaviour {
             /// 1-8
             /// </summary>
             case 1:
-                
+                gameObject.AddComponent<DotFlowController> ();
                 break;
             case 2:
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-                gameObject.AddComponent<DotFlowController> ();
+
                 break;
             case 4:
+                gameObject.AddComponent<PicTranPixel> ();
 
                 break;
             case 5:
@@ -100,7 +101,7 @@ public class MyPixel : MonoBehaviour {
                 /// </summary>
             case 14: //=========================================================3D Noise Flow Field
                 gameObject.AddComponent<FlowFieldParticle> ();
-                Debug.Log ("added____________________");
+                // Debug.Log ("added____________________");
                 break;
 
             case 15: //=========================================================爆炸粒子系统效果
@@ -126,14 +127,13 @@ public class MyPixel : MonoBehaviour {
             /// 1-8
             /// </summary>
             case 1:
-
+                gameObject.AddComponent<DotFlowController> ();
                 break;
             case 2:
-
                 gameObject.AddComponent<AttractorController> ();
                 break;
             case 3:
-                gameObject.AddComponent<DotFlowController> ();
+
                 break;
             case 4:
 
@@ -198,7 +198,7 @@ public class MyPixel : MonoBehaviour {
                 /// </summary>
             case 14: //=========================================================3D Noise Flow Field
                 gameObject.AddComponent<FlowFieldParticle> ();
-                Debug.Log ("added____________________");
+                // Debug.Log ("added____________________");
                 break;
 
             case 15: //=========================================================爆炸粒子系统效果

@@ -27,11 +27,12 @@ public class AttractorController : MonoBehaviour {
         this.transform.position = this.pos;
 
         if (!IsTouchedUI ()) {
-        if (Input.GetMouseButton (0)) {
-            this.Attract ();
-        } else {
-            this.Arrive ();
-        }
+            // if (Input.GetMouseButton (0)) {
+            if (Input.touchCount == 1) {
+                this.Attract ();
+            } else {
+                this.Arrive ();
+            }
         }
 
     }
@@ -86,6 +87,6 @@ public class AttractorController : MonoBehaviour {
             touchedUI = true;
         }
         return touchedUI;
-        Debug.Log (touchedUI);
+        // Debug.Log (touchedUI);
     }
 }

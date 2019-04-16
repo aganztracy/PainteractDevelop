@@ -42,7 +42,8 @@ public class PigmentBoomController : MonoBehaviour {
 		//Debug.Log ("boom");
 
 		//当鼠标左键按下时  
-		while (Input.GetMouseButton (0)) {
+		// while (Input.GetMouseButton (0)) {
+		while (Input.touchCount == 1) {
 			//得到现在鼠标的2维坐标系位置  
 			Vector3 curScreenSpace = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, ScreenSpace.z);
 			//将当前鼠标的2维位置转化成三维的位置  
@@ -54,11 +55,11 @@ public class PigmentBoomController : MonoBehaviour {
 			pigmentSpr.color = MyPixelOBJ.Col;
 
 			if (spChoice == 1) {
-				Debug.Log ("spChoice is" + spChoice);
+				// Debug.Log ("spChoice is" + spChoice);
 				pigmentSpr.sprite = sp1;
 				spChoice = 2;
 			} else {
-				Debug.Log ("spChoice is" + spChoice);
+				// Debug.Log ("spChoice is" + spChoice);
 				pigmentSpr.sprite = sp2;
 				spChoice = 1;
 			}

@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowImagePage () {
-        Debug.Log ("showimagepage");
+        // Debug.Log ("showimagepage");
         HomePageCanvas.GetComponent<Canvas> ().enabled = false;
         SetupPageCanvas.GetComponent<Canvas> ().enabled = false;
         ImagePageCanvas.GetComponent<Canvas> ().enabled = true;

@@ -48,7 +48,7 @@ public class AudioVisualizationController : MonoBehaviour {
 		rowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		cloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
 
-		Debug.Log ("bei:pixSale = " + pixScale + " row:clo=" + rowNum + ":" + cloNum);
+		// Debug.Log ("bei:pixSale = " + pixScale + " row:clo=" + rowNum + ":" + cloNum);
 
 		while (samplesLength < rowNum * cloNum) { //判定音频频谱数组长度若小于粒子数目则增大两倍
 			samplesLength *= 2;

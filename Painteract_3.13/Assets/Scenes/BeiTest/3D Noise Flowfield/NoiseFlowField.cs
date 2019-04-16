@@ -76,7 +76,7 @@ public class NoiseFlowField : MonoBehaviour {
 
 		}
 
-		Debug.Log (_particles.Count);
+		// Debug.Log (_particles.Count);
 
 	}
 
