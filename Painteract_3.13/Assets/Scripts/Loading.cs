@@ -8,7 +8,7 @@ public class Loading : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Load",1.5f);
+        Invoke("Load",0.5f);
     }
     void Load(){
         Debug.Log(":)");

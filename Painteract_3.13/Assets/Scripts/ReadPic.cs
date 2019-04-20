@@ -56,6 +56,21 @@ public class ReadPic : MonoBehaviour {
         }
 
     }
+
+    
+    public void ShowPic(){
+                    //bei  18/10/19
+            OrinImageBg.gameObject.SetActive (true);
+            //让显示图片的UI控件一开始先隐藏，当打开图片之后再激活
+            //因为控件背景为白色才能正常显示图片，但背景为黑
+            OrinImageBg.texture = Img;
+    }
+
+    public void AddPic(string filepath){
+        StartCoroutine (GetTexture (filepath));
+    }
+
+
     public void PicProcess () {
         if (Img == null) return;
         int width = Mathf.FloorToInt (Img.width);

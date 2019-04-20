@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowImagePage () {
-        // Debug.Log ("showimagepage");
+        Debug.Log ("showimagepage");
         HomePageCanvas.GetComponent<Canvas> ().enabled = false;
         SetupPageCanvas.GetComponent<Canvas> ().enabled = false;
         ImagePageCanvas.GetComponent<Canvas> ().enabled = true;
@@ -94,6 +94,7 @@ public class UIManager : MonoBehaviour {
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
+        PropertyBarClose ();
 
     }
 
@@ -107,6 +108,24 @@ public class UIManager : MonoBehaviour {
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
 
+    }
+
+    /// <summary>
+    /// 
+    /// 功能选择第一级栏目的显示和隐藏
+    /// </summary>
+    /// 
+
+    public void ShowClassifyBar () {
+
+        GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (1).gameObject.SetActive (true);
+        GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (0).gameObject.SetActive (false);
+
+    }
+
+    public void CloseClassifyBar () {
+        GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (1).gameObject.SetActive (false);
+        GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (0).gameObject.SetActive (true);
     }
 
     /// <summary>
@@ -215,12 +234,20 @@ public class UIManager : MonoBehaviour {
     }
 
     private void ScrollUp () {
-        GameObject.FindGameObjectWithTag ("FirstButtonPanel").GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 380); //属性栏panel拓宽为两层
+
+        if (GameObject.FindGameObjectWithTag ("FirstButtonPanel")) {
+            var FirstButtonPanel = GameObject.FindGameObjectWithTag ("FirstButtonPanel");
+            FirstButtonPanel.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 380); //属性栏panel拓宽为两层
+        }
+
     }
 
     private void ScrollDown () {
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
-        GameObject.FindGameObjectWithTag ("FirstButtonPanel").GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 200);
+        if (GameObject.FindGameObjectWithTag ("FirstButtonPanel")) {
+            var FirstButtonPanel = GameObject.FindGameObjectWithTag ("FirstButtonPanel");
+            FirstButtonPanel.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 200);
+        }
     }
 
     /// <summary>
@@ -250,11 +277,14 @@ public class UIManager : MonoBehaviour {
 
     public void PropertyBarOpen () {
 
+        var PropertyBarUpButton = GameObject.FindGameObjectWithTag ("AdjustPageCanvas").transform.GetChild (1);
+        PropertyBarUpButton.GetComponent<Image> ().sprite = Resources.Load<Sprite> ("UI/PropertyDown");
+
         Control = CanvasTF.GetComponent<ReadPic> ().Control;
 
         if (isPropertyOpen) {
 
-            PropertyBarClose();
+            PropertyBarClose ();
 
         } else {
             switch (Control) {
@@ -340,8 +370,14 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PropertyBarClose () {
-        Destroy(tempPorpertyBar);
+
+        if (tempPorpertyBar) {
+            Destroy (tempPorpertyBar);
+        }
         isPropertyOpen = false;
+
+        var PropertyBarUpButton = GameObject.FindGameObjectWithTag ("AdjustPageCanvas").transform.GetChild (1);
+        PropertyBarUpButton.GetComponent<Image> ().sprite = Resources.Load<Sprite> ("UI/PropertyUp");
 
     }
 

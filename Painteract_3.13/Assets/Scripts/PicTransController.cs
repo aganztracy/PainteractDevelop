@@ -13,14 +13,14 @@ using UnityEngine.UI;
 public class PicTransController : MonoBehaviour {
     public List<AttractParticle> Pic1Atoms;
     public List<AttractParticle> Pic2Atoms;
-    public List<AttractParticle> Pic2AtomsTemp;//存储图2 所有原子的链表，因为Pic2Atoms在找完对应索引后元素就被一个个删除了
+    public List<AttractParticle> Pic2AtomsTemp; //存储图2 所有原子的链表，因为Pic2Atoms在找完对应索引后元素就被一个个删除了
     GameObject CanvasOBJ;
     public Transform MyPixelsTF;
 
     /// <summary>
     /// pic 2
     /// </summary>
-    Texture2D Img2 = null;
+    public Texture2D Img2 = null;
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
 
@@ -118,7 +118,7 @@ public class PicTransController : MonoBehaviour {
 
     }
 
-    float ColourDistance (Color a, Color b) {//这个比较颜色的算法很随意，待改进
+    float ColourDistance (Color a, Color b) { //这个比较颜色的算法很随意，待改进
         float abr = Mathf.Abs (a.r - b.r);
         float abg = Mathf.Abs (a.g - b.g);
         float abb = Mathf.Abs (a.b - b.b);
@@ -137,13 +137,18 @@ public class PicTransController : MonoBehaviour {
     /// https://www.compuphase.com/cmetric.htm
     /// 
 
-
     //OPEN PIC 2 FROM PC
     /// <summary>
     /// 所以之前看到说多写工具，少写脚本，这里就体现了，如果之前我写的打开图片的代码段被我包装成了一个工具，现在就可以直接用了，
     /// 而不是复制一遍代码（因为内部调用了一些gameobject之类的，耦合性太高，加上这个之后也会被手机端的导入图片所代替，所以没改写），
     /// 之后安卓端的最好有工具思想！！
     /// </summary>
+    /// 
+
+    public void AddPic2(string filepath){
+        StartCoroutine (GetTexture (filepath));
+    }
+    
     public void OpenPic2 () {
         OpenFileDialog od = new OpenFileDialog ();
         od.Title = "请选择头像图片";
@@ -190,7 +195,7 @@ public class PicTransController : MonoBehaviour {
         result.Apply ();
         return result;
     }
-    void Pic2Process () {
+    public void Pic2Process () {
         if (Img2 == null) return;
         int width = Mathf.FloorToInt (Img2.width);
         int height = Mathf.FloorToInt (Img2.height);
