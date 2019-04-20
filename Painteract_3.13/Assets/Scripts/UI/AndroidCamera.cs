@@ -109,13 +109,13 @@ public class AndroidCamera : MonoBehaviour {
             //成功读取图片，写自己的逻辑  
             //CanvasOBJ.GetComponent<ReadPic>().AddPic("file://" + imagePath);
             if (TargetImg == 1) {
-                //GetTexture1 ("file://" + imagePath);
-                CanvasOBJ.GetComponent<ReadPic> ().AddPic(filepath);
+                GetTexture1 (filepath);
+                CanvasOBJ.GetComponent<ReadPic> ().ShowPic();
             }
 
             if (TargetImg == 2) {
-                //GetTexture2 ("file://" + imagePath);
-                CanvasOBJ.GetComponent<PicTransController> ().AddPic2 (filepath);
+                GetTexture2 (filepath);
+                //CanvasOBJ.GetComponent<PicTransController> ().AddPic2 (filepath);
             }
 
         } else
@@ -140,6 +140,7 @@ public class AndroidCamera : MonoBehaviour {
         yield return www;
         if (www.isDone && www.error == null) {
             CanvasOBJ.GetComponent<ReadPic> ().Img = ResizePic (www.texture);
+            GameObject.FindWithTag("Player").SetActive(false);
             isGetTextureDone = true;
         }
     }
@@ -149,6 +150,7 @@ public class AndroidCamera : MonoBehaviour {
         yield return www;
         if (www.isDone && www.error == null) {
             CanvasOBJ.GetComponent<PicTransController> ().Img2 = ResizePic (www.texture);
+            GameObject.FindWithTag("Player").SetActive(false);
             isGetTextureDone = true;
         }
     }
