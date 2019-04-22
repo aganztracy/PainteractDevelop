@@ -15,6 +15,9 @@ TagManager:
   - ChoosePageCanvas
   - ScrollViewCanvas
   - FirstButtonPanel
+  - AdjustPageCanvas
+  - UpClassifyBarbtn
+  - ScrollGrid
   layers:
   - Default
   - TransparentFX

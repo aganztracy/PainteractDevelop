@@ -9,8 +9,10 @@ public class AndroidCamera : MonoBehaviour {
 
     GameObject CanvasOBJ;
 
-    Texture2D Img;
-    Texture2D Img2;
+    public Texture2D Img;
+    public Texture2D Img2;
+
+    public Vector2 ImgSize = new Vector2 (0, 0);
 
     private int myScreemWidth = UnityEngine.Screen.width;
     private int myScreemHeight = UnityEngine.Screen.height;
@@ -44,7 +46,8 @@ public class AndroidCamera : MonoBehaviour {
     public void OpenPhoto (int targetImg)
 
     {
-        SetTargetImg(targetImg);
+
+        SetTargetImg (targetImg);
 
         AndroidJavaClass jc = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
 
@@ -103,66 +106,44 @@ public class AndroidCamera : MonoBehaviour {
 
         yield return www;
 
-        if (www.error == null)
+        if (www.isDone && www.error == null)
 
         {
             //成功读取图片，写自己的逻辑  
-            //CanvasOBJ.GetComponent<ReadPic>().AddPic("file://" + imagePath);
+
             if (TargetImg == 1) {
-                GetTexture1 (filepath);
-                CanvasOBJ.GetComponent<ReadPic> ().ShowPic();
+                CanvasOBJ.GetComponent<UIManager>().ShowImagePage();
+                //GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.green;
+                CanvasOBJ.GetComponent<ReadPic> ().Img = ResizePic (www.texture);
+                CanvasOBJ.GetComponent<ReadPic> ().ShowPic (); //让图片显示到屏幕上
+                
             }
 
             if (TargetImg == 2) {
-                GetTexture2 (filepath);
-                //CanvasOBJ.GetComponent<PicTransController> ().AddPic2 (filepath);
+                //GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.yellow;
+                CanvasOBJ.GetComponent<PicTransController> ().Img2 = ResizePic (www.texture);
+                CanvasOBJ.GetComponent<PicTransController> ().AfterOpenPic2 (); //执行打开第二张照片后的操作
             }
 
         } else
 
         {
+            //GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.red;
             Debug.LogError ("LoadImage>>>www.error:" + www.error);
         }
 
     }
 
-    IEnumerator GetTexture (string url, Texture2D Img) {
-        WWW www = new WWW (url);
-        yield return www;
-        if (www.isDone && www.error == null) {
-            Img = ResizePic (www.texture);
-            isGetTextureDone = true;
-        }
-    }
-
-    IEnumerator GetTexture1 (string url) {
-        WWW www = new WWW (url);
-        yield return www;
-        if (www.isDone && www.error == null) {
-            CanvasOBJ.GetComponent<ReadPic> ().Img = ResizePic (www.texture);
-            GameObject.FindWithTag("Player").SetActive(false);
-            isGetTextureDone = true;
-        }
-    }
-
-        IEnumerator GetTexture2 (string url) {
-        WWW www = new WWW (url);
-        yield return www;
-        if (www.isDone && www.error == null) {
-            CanvasOBJ.GetComponent<PicTransController> ().Img2 = ResizePic (www.texture);
-            GameObject.FindWithTag("Player").SetActive(false);
-            isGetTextureDone = true;
-        }
-    }
-
     Texture2D ResizePic (Texture2D pic) {
         int picW = pic.width;
         int picH = pic.height;
+
         if (Mathf.Max (picW, picH) == picW) {
             pic = ScaleTexture (pic, myScreemWidth, (int) (myScreemWidth * picH / picW));
         } else {
             pic = ScaleTexture (pic, (int) (picW * myScreemWidth / picH), myScreemWidth);
         }
+
         return pic;
 
     }
@@ -172,6 +153,9 @@ public class AndroidCamera : MonoBehaviour {
         float incX = (1.0f / (float) targetWidth);
         float incY = (1.0f / (float) targetHeight);
 
+        ImgSize = new Vector2 (targetWidth, targetHeight);
+        SetOrinImageBgScale ();
+
         for (int i = 0; i < result.height; ++i) {
             for (int j = 0; j < result.width; ++j) {
                 Color newColor = source.GetPixelBilinear ((float) j / (float) result.width, (float) i / (float) result.height);
@@ -180,6 +164,11 @@ public class AndroidCamera : MonoBehaviour {
         }
         result.Apply ();
         return result;
+    }
+
+    public void SetOrinImageBgScale () {
+
+        CanvasOBJ.GetComponent<ReadPic> ().OrinImageBg.GetComponent<RectTransform> ().sizeDelta = ImgSize;
     }
 
 }

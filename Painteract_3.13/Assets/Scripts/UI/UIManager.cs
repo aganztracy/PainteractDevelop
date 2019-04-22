@@ -124,8 +124,10 @@ public class UIManager : MonoBehaviour {
     }
 
     public void CloseClassifyBar () {
+        ScrollDown ();
         GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (1).gameObject.SetActive (false);
         GameObject.FindGameObjectWithTag ("ChoosePageCanvas").transform.GetChild (0).gameObject.SetActive (true);
+
     }
 
     /// <summary>
@@ -141,7 +143,6 @@ public class UIManager : MonoBehaviour {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Flow") {
             ScrollDown ();
-            isScrollOpen = false;
             //Debug.Log ("CloseScrollView");
         } else {
             ShowFunctionScrollView ("Flow");
@@ -154,7 +155,6 @@ public class UIManager : MonoBehaviour {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Music") {
             ScrollDown ();
-            isScrollOpen = false;
         } else {
             ShowFunctionScrollView ("Music");
         }
@@ -165,7 +165,6 @@ public class UIManager : MonoBehaviour {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Physic") {
             ScrollDown ();
-            isScrollOpen = false;
         } else {
             ShowFunctionScrollView ("Physic");
         }
@@ -176,7 +175,6 @@ public class UIManager : MonoBehaviour {
         ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
         if (isScrollOpen && CurrentScrollKind == "Other") {
             ScrollDown ();
-            isScrollOpen = false;
         } else {
             ShowFunctionScrollView ("Other");
         }
@@ -186,7 +184,6 @@ public class UIManager : MonoBehaviour {
     private void ShowFunctionScrollView (string kindIndex) {
 
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = true;
-        isScrollOpen = true;
         CurrentScrollKind = kindIndex;
 
         ScrollUp ();
@@ -239,6 +236,8 @@ public class UIManager : MonoBehaviour {
             var FirstButtonPanel = GameObject.FindGameObjectWithTag ("FirstButtonPanel");
             FirstButtonPanel.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 380); //属性栏panel拓宽为两层
         }
+        ResetScrollGrid ();//切换功能时对滚动栏目位置进行重置
+        isScrollOpen = true;
 
     }
 
@@ -247,6 +246,16 @@ public class UIManager : MonoBehaviour {
         if (GameObject.FindGameObjectWithTag ("FirstButtonPanel")) {
             var FirstButtonPanel = GameObject.FindGameObjectWithTag ("FirstButtonPanel");
             FirstButtonPanel.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 200);
+        }
+        isScrollOpen = false;
+    }
+
+    public void ResetScrollGrid () {
+
+        if (GameObject.FindGameObjectWithTag ("ScrollGrid")) {
+            var ScrollGrid = GameObject.FindGameObjectWithTag ("ScrollGrid");
+            ScrollGrid.GetComponent<RectTransform> ().localPosition = new Vector3 (400, 0,0);
+
         }
     }
 

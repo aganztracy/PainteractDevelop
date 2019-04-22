@@ -145,56 +145,10 @@ public class PicTransController : MonoBehaviour {
     /// </summary>
     /// 
 
-    public void AddPic2(string filepath){
-        StartCoroutine (GetTexture (filepath));
-    }
-    
-    public void OpenPic2 () {
-        OpenFileDialog od = new OpenFileDialog ();
-        od.Title = "请选择头像图片";
-        od.Multiselect = false;
-        od.Filter = "图片文件(*.jpg,*.png,*.bmp)|*.jpg;*.png;*.bmp";
-        if (od.ShowDialog () == DialogResult.OK) {
-            StartCoroutine (GetTexture ("file://" + od.FileName));
-        }
-
-    }
-    IEnumerator GetTexture (string url) {
-        WWW www = new WWW (url);
-        yield return www;
-        if (www.isDone && www.error == null) {
-            Img2 = ResizePic (www.texture); //现在我们得到了图2
-            //需要显示第二张图是什么吗，那ui上也要做些事才行，略麻烦
-            Pic2Process ();
-
-        }
-    }
-    Texture2D ResizePic (Texture2D pic) {
-        int picW = pic.width;
-        int picH = pic.height;
-        if (Mathf.Max (picW, picH) == picW) {
-            pic = ScaleTexture (pic, myScreemWidth, (int) (myScreemWidth * picH / picW));
-        } else {
-            pic = ScaleTexture (pic, (int) (picW * myScreemWidth / picH), myScreemWidth);
-        }
-        return pic;
-
+    public void AfterOpenPic2(){
+        Pic2Process();
     }
 
-    Texture2D ScaleTexture (Texture2D source, int targetWidth, int targetHeight) {
-        Texture2D result = new Texture2D (targetWidth, targetHeight, source.format, false);
-        float incX = (1.0f / (float) targetWidth);
-        float incY = (1.0f / (float) targetHeight);
-
-        for (int i = 0; i < result.height; ++i) {
-            for (int j = 0; j < result.width; ++j) {
-                Color newColor = source.GetPixelBilinear ((float) j / (float) result.width, (float) i / (float) result.height);
-                result.SetPixel (j, i, newColor);
-            }
-        }
-        result.Apply ();
-        return result;
-    }
     public void Pic2Process () {
         if (Img2 == null) return;
         int width = Mathf.FloorToInt (Img2.width);
