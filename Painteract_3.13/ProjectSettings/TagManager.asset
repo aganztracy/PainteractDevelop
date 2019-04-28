@@ -18,6 +18,9 @@ TagManager:
   - AdjustPageCanvas
   - UpClassifyBarbtn
   - ScrollGrid
+  - RECPageCanvas
+  - MyPixel
+  - AndroidCameraPlane
   layers:
   - Default
   - TransparentFX

@@ -37,6 +37,14 @@ public class PropertyBarCallBack : MonoBehaviour {
 
                 break;
             case 4:
+                //要给里面的按钮设置回调函数，因为预置体不保留面板设置的回调
+                Button openImg2Btn = this.transform.Find ("TempBtnPic2").GetComponent<Button> ();
+                GameObject AndroidCamOBJ = GameObject.FindGameObjectWithTag ("AndroidCameraPlane");
+
+                openImg2Btn.onClick.AddListener (delegate () {
+                    AndroidCamOBJ.GetComponent<AndroidCamera> ().OpenPhoto (2);
+                    
+                });
 
                 break;
             case 5:
@@ -127,7 +135,6 @@ public class PropertyBarCallBack : MonoBehaviour {
                 WGComponent.Frequency = slider.value;
                 break;
         }
-
 
     }
 }

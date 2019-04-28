@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour {
     public Canvas ChoosePageCanvas;
     public Canvas AdjustPageCanvas;
     public Canvas ScrollViewCanvas;
+    public Canvas RECPageCanvas;
 
     public GameObject FunctionScrollView;
     public GameObject ScrollGrid;
@@ -59,6 +60,7 @@ public class UIManager : MonoBehaviour {
         ChoosePageCanvas.GetComponent<Canvas> ().enabled = false;
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
 
     }
@@ -71,6 +73,7 @@ public class UIManager : MonoBehaviour {
         ChoosePageCanvas.GetComponent<Canvas> ().enabled = false;
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
     }
 
@@ -82,6 +85,7 @@ public class UIManager : MonoBehaviour {
         ChoosePageCanvas.GetComponent<Canvas> ().enabled = false;
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
     }
 
@@ -93,6 +97,7 @@ public class UIManager : MonoBehaviour {
         ChoosePageCanvas.GetComponent<Canvas> ().enabled = true;
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = false;
         ScrollDown ();
         PropertyBarClose ();
 
@@ -106,6 +111,20 @@ public class UIManager : MonoBehaviour {
         ChoosePageCanvas.GetComponent<Canvas> ().enabled = false;
         AdjustPageCanvas.GetComponent<Canvas> ().enabled = true;
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = true;
+        ScrollDown ();
+
+    }
+
+    public void ShowRECPage () {
+        HomePageCanvas.GetComponent<Canvas> ().enabled = false;
+        SetupPageCanvas.GetComponent<Canvas> ().enabled = false;
+        ImagePageCanvas.GetComponent<Canvas> ().enabled = false;
+        ChoosePageCanvas.GetComponent<Canvas> ().enabled = false;
+        AdjustPageCanvas.GetComponent<Canvas> ().enabled = false;
+        ScrollViewCanvas.GetComponent<Canvas> ().enabled = false;
+        RECPageCanvas.GetComponent<Canvas> ().enabled = true;
+
         ScrollDown ();
 
     }
@@ -236,7 +255,7 @@ public class UIManager : MonoBehaviour {
             var FirstButtonPanel = GameObject.FindGameObjectWithTag ("FirstButtonPanel");
             FirstButtonPanel.GetComponent<RectTransform> ().sizeDelta = new Vector2 (1000, 380); //属性栏panel拓宽为两层
         }
-        ResetScrollGrid ();//切换功能时对滚动栏目位置进行重置
+        ResetScrollGrid (); //切换功能时对滚动栏目位置进行重置
         isScrollOpen = true;
 
     }
@@ -254,7 +273,7 @@ public class UIManager : MonoBehaviour {
 
         if (GameObject.FindGameObjectWithTag ("ScrollGrid")) {
             var ScrollGrid = GameObject.FindGameObjectWithTag ("ScrollGrid");
-            ScrollGrid.GetComponent<RectTransform> ().localPosition = new Vector3 (400, 0,0);
+            ScrollGrid.GetComponent<RectTransform> ().localPosition = new Vector3 (400, 0, 0);
 
         }
     }
@@ -310,6 +329,9 @@ public class UIManager : MonoBehaviour {
 
                     break;
                 case 4:
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_2");
+                    tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+                    isPropertyOpen = true;
 
                     break;
                 case 5:

@@ -26,6 +26,7 @@ public class ReadPic : MonoBehaviour {
 
     public GameObject[, ] pixArray;
     public Color[, ] pixColors; //
+    public string pixelShape;
     // Sprite sp;
     // Material spMaterial;
 
@@ -41,22 +42,24 @@ public class ReadPic : MonoBehaviour {
         MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
         // sp = (Sprite)Resources.Load("Sprites/circle", typeof(Sprite)) as Sprite;
         // spMaterial = Resources.Load ("Materials/AtomMaterial") as Material;
+        SetPixelShape ();
 
+    }
+
+    void SetPixelShape () {
         PixelPrefab = (GameObject) Resources.Load ("Prefabs/PixelPrefab"); //球形prefab
         // PixelPrefab = (GameObject) Resources.Load ("Prefabs/CubePixelPrefab"); //立方体形prefab
+
     }
 
+    public void ShowPic () {
+        //bei  18/10/19
 
-    
-    public void ShowPic(){
-                    //bei  18/10/19
-
-            OrinImageBg.gameObject.SetActive (true);
-            //让显示图片的UI控件一开始先隐藏，当打开图片之后再激活
-            //因为控件背景为白色才能正常显示图片，但背景为黑
-            OrinImageBg.texture = Img;
+        OrinImageBg.gameObject.SetActive (true);
+        //让显示图片的UI控件一开始先隐藏，当打开图片之后再激活
+        //因为控件背景为白色才能正常显示图片，但背景为黑
+        OrinImageBg.texture = Img;
     }
-
 
     public void PicProcess () {
         if (Img == null) return;
@@ -92,6 +95,7 @@ public class ReadPic : MonoBehaviour {
     }
 
     public GameObject CreateSprite (float y, float x, int row, int clo, Color col) {
+        //粒子形状取决于粒子是何种的预置体
         GameObject pixShape = Instantiate (PixelPrefab);
         float hue, saturate, brightness; //brightness 的值是0-1
         Color.RGBToHSV (col, out hue, out saturate, out brightness);

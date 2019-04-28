@@ -35,6 +35,10 @@ public class CameraMove : MonoBehaviour {
     private float rotateSpeed = 10.0f;
     private float zoomFactor = 150.0f;
 
+    //记录默认初始位置，为了重置
+    public Vector3 defaultPosition ;
+    public Quaternion defaultRotation = Quaternion.Euler (0, 0, 0);
+
     //初始化游戏信息设置  
     void Start () {
         Vector3 angles = transform.eulerAngles;
@@ -42,6 +46,9 @@ public class CameraMove : MonoBehaviour {
         y = angles.x;
         distance = -transform.position.z;
         //  GetComponent<Rigidbody>().freezeRotation = true;
+
+        defaultPosition = this.transform.localPosition;
+        defaultRotation = this.transform.localRotation;
 
         //for PC debug
         camerarotate ();
@@ -156,6 +163,17 @@ public class CameraMove : MonoBehaviour {
 
         if (Input.GetAxis ("Mouse ScrollWheel") < 0)
             transform.Translate (Vector3.forward * -0.5f * zoomFactor);
+    }
+
+    public void cameraReset () {
+
+        // this.transform.rotation = defaultRotation;
+        // this.transform.position = defaultPosition;
+
+        // transform.Translate(defaultPosition);
+        transform.SetPositionAndRotation(defaultPosition,defaultRotation);//无法修改transform的信息
+        
+        GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.red;
     }
 
 }
