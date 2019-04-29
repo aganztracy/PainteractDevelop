@@ -43,6 +43,10 @@ public class WarningWinCallBack : MonoBehaviour {
 
 
         }
+
+        if(CurrentPage == "SavePage"){
+             CanvasOBJ.GetComponent<UnityREC> ().onSaveVideo ();
+        }
         
         Destroy (gameObject);
 
