@@ -5,9 +5,10 @@ using UnityEngine;
 public class NoiseFlowFieldController : MonoBehaviour {
     FastNoise _fastNoise;
     public Vector3Int _girdSize; //三维网格
+    public int _girdScale;
     public Vector3[, , ] _flowfieldDirection; //方向场
     public float _increment; //增量
-    public float _cellsize;//网格细胞大小
+    public float _cellsize; //网格细胞大小
     public Vector3 _offset, _offsetSpeed; //偏移和偏移速度
 
     //particle
@@ -23,11 +24,10 @@ public class NoiseFlowFieldController : MonoBehaviour {
     public int cloNum;
     public int pixScale;
 
-
     GameObject CanvasOBJ;
     GameObject MyPixelOBJ;
 
-    bool _particleSpawnVaildation (Vector3 position) {//粒子之间的距离限制，防止距离过近
+    bool _particleSpawnVaildation (Vector3 position) { //粒子之间的距离限制，防止距离过近
         bool vaild = true;
 
         foreach (FlowFieldParticle particle in _particles) {
@@ -48,7 +48,9 @@ public class NoiseFlowFieldController : MonoBehaviour {
     //Awake() Awake is called when the script instance is being loaded.
     //说明会在AudioFlowField.cs中的start()函数执行之后执行
 
-    void Start () {
+    void Awake () {
+        
+        this.transform.position = new Vector3(-240,0,0);
 
         CanvasOBJ = GameObject.FindWithTag ("Canvas");
         MyPixelOBJ = GameObject.FindWithTag ("MyPixels");
@@ -57,60 +59,79 @@ public class NoiseFlowFieldController : MonoBehaviour {
         pixScale = CanvasOBJ.GetComponent<ReadPic> ().pixScale;
 
         _amountOfParticles = rowNum * cloNum;
-        _particleScale = 10;
+        _particleScale = 20;
         _spawnRadius = 10;
 
-        _girdSize = new Vector3Int (cloNum, rowNum, 25);
+        _girdScale = 2;
+        _girdSize = new Vector3Int (cloNum*_girdScale, rowNum*_girdScale, 10*_girdScale);
         _cellsize = pixScale;
+
+        _particleMoveSpeed = 90f;
+        _particleRotateSpeed = 40f;
+        _increment = 20f;
 
         _flowfieldDirection = new Vector3[_girdSize.x, _girdSize.y, _girdSize.z];
         _fastNoise = new FastNoise ();
         _particles = new List<FlowFieldParticle> ();
         _particleMeshRenderer = new List<MeshRenderer> ();
 
-        for (int i = 0; i < _amountOfParticles; i++) {//给每个粒子一个网格内的随机位置，且位置不重复
-
-            int attempt = 0;
-
-            while (attempt < 100) {
-
-                Vector3 randomPos = new Vector3 (
-                    Random.Range (this.transform.position.x, this.transform.position.x + _girdSize.x * _cellsize),
-                    Random.Range (this.transform.position.y, this.transform.position.y + _girdSize.y * _cellsize),
-                    Random.Range (this.transform.position.z, this.transform.position.z + _girdSize.z * _cellsize)
-                );
-
-                bool isVaild = _particleSpawnVaildation (randomPos);
-
-                if (isVaild) {
-                    GameObject particleInstance = gameObject.transform.GetChild (i).gameObject;
-                    particleInstance.transform.position = randomPos;
-                    particleInstance.transform.parent = this.transform;
-                    particleInstance.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
-                   var test = particleInstance.GetComponent<FlowFieldParticle> ();
-                    _particles.Add (test);
-                    // _particles.Add (particleInstance.GetComponent<FlowFieldParticle> ());
-                    _particleMeshRenderer.Add (particleInstance.GetComponent<MeshRenderer> ());
-                    break;
-                }else{
-                    attempt++;
-                    
-                }
-            }
-
-        }
+        // for (int i = 0; i < _amountOfParticles; i++) {
+        //     GameObject particleInstance = gameObject.transform.GetChild (i).gameObject;
+        //     _particles.Add (particleInstance.GetComponent<FlowFieldParticle> ());
+        //     _particleMeshRenderer.Add (particleInstance.GetComponent<MeshRenderer> ());
+        // }
 
         // Debug.Log (_particles.Count);
 
     }
 
-    // Update is called once per frame
-    void Update () {
-        // CalculateFlowfieldDirection ();
-        // ParticleBehavior ();
+    public void setRandomPosition (GameObject particleInstance) {
+
+        // for (int i = 0; i < _amountOfParticles; i++) { //给每个粒子一个网格内的随机位置，且位置不重复
+
+        int attempt = 0;
+
+        while (attempt < 100) {
+
+            Vector3 randomPos = new Vector3 (
+                Random.Range (this.transform.position.x, this.transform.position.x + _girdSize.x * _cellsize),
+                Random.Range (this.transform.position.y, this.transform.position.y + _girdSize.y * _cellsize),
+                Random.Range (this.transform.position.z, this.transform.position.z + _girdSize.z * _cellsize)
+            );
+
+            bool isVaild = _particleSpawnVaildation (randomPos);
+
+            if (isVaild) {
+                //GameObject particleInstance = gameObject.transform.GetChild (i).gameObject;
+                particleInstance.transform.position = randomPos;
+                particleInstance.transform.parent = this.transform;
+                particleInstance.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
+                break;
+            } else {
+                attempt++;
+
+            }
+        }
+
+        // }
     }
 
-    void CalculateFlowfieldDirection () {//计算网格内的方向场，粒子随着场运动
+    public void setParticleScale () {
+
+        foreach (FlowFieldParticle p in _particles) {
+
+            p.transform.localScale = new Vector3 (_particleScale, _particleScale, _particleScale);
+
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
+        CalculateFlowfieldDirection ();
+        ParticleBehavior ();
+    }
+
+    void CalculateFlowfieldDirection () { //计算网格内的方向场，粒子随着场运动
 
         _offset = new Vector3 (_offset.x + (_offsetSpeed.x * Time.deltaTime), _offset.y + (_offsetSpeed.y * Time.deltaTime), _offset.z + (_offsetSpeed.z * Time.deltaTime));
 
@@ -144,33 +165,65 @@ public class NoiseFlowFieldController : MonoBehaviour {
         foreach (FlowFieldParticle p in _particles) {
 
             //粒子限制在网格内，当超过网格区域后进行返回对面壁的操作
+            //返回对面壁的操作会造成拖尾的跳移
+
+            // //X Edges
+            // if (p.transform.position.x > this.transform.position.x + (_girdSize.x * _cellsize)) {
+
+            //     p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, p.transform.position.z);
+            // }
+            // if (p.transform.position.x < this.transform.position.x) {
+            //     p.transform.position = new Vector3 (this.transform.position.x + (_girdSize.x * _cellsize), p.transform.position.y, p.transform.position.z);
+            // }
+            // //Y Edges
+            // if (p.transform.position.y > this.transform.position.y + (_girdSize.y * _cellsize)) {
+
+            //     p.transform.position = new Vector3 (p.transform.position.x, this.transform.position.y, p.transform.position.z);
+            // }
+            // if (p.transform.position.y < this.transform.position.y) {
+            //     p.transform.position = new Vector3 (p.transform.position.x, this.transform.position.y + (_girdSize.y * _cellsize), p.transform.position.z);
+            // }
+            // //Z Edges
+            // if (p.transform.position.z > this.transform.position.z + (_girdSize.z * _cellsize)) {
+
+            //     p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, this.transform.position.z);
+            // }
+            // if (p.transform.position.z < this.transform.position.z) {
+            //     p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, this.transform.position.z + (_girdSize.z * _cellsize));
+            // }
 
             //X Edges
             if (p.transform.position.x > this.transform.position.x + (_girdSize.x * _cellsize)) {
 
                 p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, p.transform.position.z);
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
             if (p.transform.position.x < this.transform.position.x) {
                 p.transform.position = new Vector3 (this.transform.position.x + (_girdSize.x * _cellsize), p.transform.position.y, p.transform.position.z);
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
             //Y Edges
             if (p.transform.position.y > this.transform.position.y + (_girdSize.y * _cellsize)) {
 
                 p.transform.position = new Vector3 (p.transform.position.x, this.transform.position.y, p.transform.position.z);
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
             if (p.transform.position.y < this.transform.position.y) {
                 p.transform.position = new Vector3 (p.transform.position.x, this.transform.position.y + (_girdSize.y * _cellsize), p.transform.position.z);
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
             //Z Edges
             if (p.transform.position.z > this.transform.position.z + (_girdSize.z * _cellsize)) {
 
                 p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, this.transform.position.z);
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
             if (p.transform.position.z < this.transform.position.z) {
                 p.transform.position = new Vector3 (this.transform.position.x, p.transform.position.y, this.transform.position.z + (_girdSize.z * _cellsize));
+                p.GetComponent<TrailRenderer> ().Clear ();
             }
 
-            Vector3Int particlePos = new Vector3Int (//计算粒子在网格空间中的位置
+            Vector3Int particlePos = new Vector3Int ( //计算粒子在网格空间中的位置
                 Mathf.FloorToInt (Mathf.Clamp ((p.transform.position.x - this.transform.position.x) / _cellsize, 0, _girdSize.x - 1)),
                 Mathf.FloorToInt (Mathf.Clamp ((p.transform.position.y - this.transform.position.y) / _cellsize, 0, _girdSize.y - 1)),
                 Mathf.FloorToInt (Mathf.Clamp ((p.transform.position.z - this.transform.position.z) / _cellsize, 0, _girdSize.z - 1))

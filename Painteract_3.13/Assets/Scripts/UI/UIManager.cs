@@ -200,6 +200,16 @@ public class UIManager : MonoBehaviour {
 
     }
 
+    public void ShapeFunctionScroll () {
+        ScrollGrid.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+        if (isScrollOpen && CurrentScrollKind == "Shape") {
+            ScrollDown ();
+        } else {
+            ShowFunctionScrollView ("Shape");
+        }
+
+    }
+
     private void ShowFunctionScrollView (string kindIndex) {
 
         ScrollViewCanvas.GetComponent<Canvas> ().enabled = true;
@@ -246,6 +256,16 @@ public class UIManager : MonoBehaviour {
             }
 
         }
+
+         if (kindIndex == "Shape") { //改变粒子形状的17（球）.18（方）
+            for (int i = 17; i < 19; i++) {
+
+                GameObject tempButton;
+                tempButton = Instantiate (FunctionButtonPrefab, ScrollGrid.transform);
+                tempButton.GetComponent<ButtonCallBack> ().Control = i;
+            }
+
+        }       
 
     }
 
@@ -329,7 +349,7 @@ public class UIManager : MonoBehaviour {
 
                     break;
                 case 4:
-                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_2");
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_4");
                     tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
                     isPropertyOpen = true;
 
@@ -353,6 +373,9 @@ public class UIManager : MonoBehaviour {
 
                 case 9: //=========================================================音乐可视化
 
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_9");
+                    tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+                    isPropertyOpen = true;
                     break;
 
                     /// <summary>
@@ -370,7 +393,7 @@ public class UIManager : MonoBehaviour {
                     break;
                 case 13: //=========================================================WobblyGrid 
 
-                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_1");
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_13");
                     tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
                     isPropertyOpen = true;
 
@@ -383,12 +406,19 @@ public class UIManager : MonoBehaviour {
                     /// 14-16
                     /// </summary>
                 case 14: //=========================================================3D Noise Flow Field
-
+                    PorpertyBarPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/PropertyBars/PorpertyBar_14");
+                    tempPorpertyBar = Instantiate (PorpertyBarPrefab, CanvasTF);
+                    isPropertyOpen = true;
                     break;
 
                 case 15: //=========================================================爆炸粒子系统效果
                     break;
                 case 16: //=========================================================颜料溅开效果
+                    break;
+                    //暂时把改变粒子形状的功能放到这里
+                case 17: //=========================================================粒子形状为球
+                    break;
+                case 18: //=========================================================粒子形状为方
                     break;
 
                 default:

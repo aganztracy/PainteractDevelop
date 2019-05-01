@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioVisualizationController : MonoBehaviour {
-	AudioSource audio;
+	public AudioSource audio;
 	AudioPeer audioPeerOBJ;
 	public AudioClip clipsample_1; //显示当前音频片段
 
@@ -11,13 +11,13 @@ public class AudioVisualizationController : MonoBehaviour {
 
 	GameObject CanvasOBJ;
 
-	int pixScale; //获取粒子原大小数据变量
+	public float pixScale; //获取粒子原大小数据变量
 	int rowNum;
 	int cloNum;
 
 	public GameObject pixel_i; //显示当前粒子对象
 	public Vector3 pixelPosVec; //粒子位置变量
-	public Vector3 pixelScaleVec;//粒子大小变量
+	public Vector3 pixelScaleVec; //粒子大小变量
 
 	[Range (1, 500)]
 	public float SamplesScale; //控制将获得频谱数组值放大的倍数
@@ -35,12 +35,10 @@ public class AudioVisualizationController : MonoBehaviour {
 
 		if (useMicrophone) {
 
-			audioPeerOBJ._useMicrophone = true;
+			useMicrophoneInput ();
 		}
 
 		audio = GetComponent<AudioSource> ();
-		//千万别忘记play()！！！！
-		//audio.Play ();
 
 		//获取粒子原大小
 		CanvasOBJ = GameObject.FindWithTag ("Canvas");
@@ -60,6 +58,41 @@ public class AudioVisualizationController : MonoBehaviour {
 
 	}
 
+	public void useMicrophoneInput () {
+
+		useMicrophone = true;
+		audioPeerOBJ._useMicrophone = true;
+		StopMusic();
+	}
+
+	public void offMicrophoneInput () {
+		useMicrophone = false;
+		audioPeerOBJ._useMicrophone = false;
+		StartMusic();
+	}
+
+	public void setChangePixelPostion () {
+		changePixelPostion = true;
+
+	}
+	public void offChangePixelPostion () {
+		changePixelPostion = false;
+
+	}
+
+	public void setChangePixelScale () {
+		changePixelScale = true;
+
+	}
+		public void offChangePixelScale () {
+		changePixelScale = false;
+
+	}
+
+	public void setPixelScale (float pixscale) {
+		pixScale = pixscale;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -76,12 +109,13 @@ public class AudioVisualizationController : MonoBehaviour {
 			}
 
 			if (changePixelScale) {
-				pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp ( AudioPeer._samplesStereo[i] *  (100 + i * i * 0.5f) * SamplesScale, 0, 500) + pixScale);
+				pixelScaleVec = new Vector3 (pixScale, pixScale, Mathf.Clamp (AudioPeer._samplesStereo[i] * (100 + i * i * 0.5f) * SamplesScale, 0, 500) + pixScale);
 				pixel_i.transform.localScale = pixelScaleVec;
 			}
 
 			bandscount++;
-			if (bandscount == 63) {
+
+			if (bandscount == 63) { //如果数据超过了64频带，重新循环一遍赋值
 				bandscount = 0;
 			}
 		}
@@ -90,5 +124,9 @@ public class AudioVisualizationController : MonoBehaviour {
 
 	public void StopMusic () {
 		audio.Stop ();
+	}
+
+	public void StartMusic(){
+		audio.Play ();
 	}
 }

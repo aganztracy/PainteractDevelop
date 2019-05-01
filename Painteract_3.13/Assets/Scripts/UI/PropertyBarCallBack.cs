@@ -43,7 +43,7 @@ public class PropertyBarCallBack : MonoBehaviour {
 
                 openImg2Btn.onClick.AddListener (delegate () {
                     AndroidCamOBJ.GetComponent<AndroidCamera> ().OpenPhoto (2);
-                    
+
                 });
 
                 break;
@@ -66,6 +66,18 @@ public class PropertyBarCallBack : MonoBehaviour {
 
             case 9: //=========================================================音乐可视化
 
+                Toggle toggle9_1 = this.transform.Find ("UseMicrophoneToggle").GetComponent<Toggle> ();
+                Toggle toggle9_2 = this.transform.Find ("ChangeScaleToggle").GetComponent<Toggle> ();
+                Toggle toggle9_3 = this.transform.Find ("ChangePositionToggle").GetComponent<Toggle> ();
+                Slider slider9_1 = this.transform.Find ("Slider1").GetComponent<Slider> ();
+                Slider slider9_2 = this.transform.Find ("Slider2").GetComponent<Slider> ();
+
+                toggle9_1.onValueChanged.AddListener (delegate { PropertyAdjust_9 (1); });
+                toggle9_2.onValueChanged.AddListener (delegate { PropertyAdjust_9 (2); });
+                toggle9_3.onValueChanged.AddListener (delegate { PropertyAdjust_9 (3); });
+                slider9_1.onValueChanged.AddListener (delegate { PropertyAdjust_9 (4); });
+                slider9_2.onValueChanged.AddListener (delegate { PropertyAdjust_9 (5); });
+
                 break;
 
                 /// <summary>
@@ -83,15 +95,15 @@ public class PropertyBarCallBack : MonoBehaviour {
                 break;
             case 13: //=========================================================WobblyGrid 
 
-                Slider slider1 = this.transform.Find ("Slider1").GetComponent<Slider> ();
-                Slider slider2 = this.transform.Find ("Slider2").GetComponent<Slider> ();
-                Slider slider3 = this.transform.Find ("Slider3").GetComponent<Slider> ();
-                Slider slider4 = this.transform.Find ("Slider4").GetComponent<Slider> ();
+                Slider slider13_1 = this.transform.Find ("Slider1").GetComponent<Slider> ();
+                Slider slider13_2 = this.transform.Find ("Slider2").GetComponent<Slider> ();
+                Slider slider13_3 = this.transform.Find ("Slider3").GetComponent<Slider> ();
+                Slider slider13_4 = this.transform.Find ("Slider4").GetComponent<Slider> ();
 
-                slider1.onValueChanged.AddListener (delegate { PropertyAdjust_13 (1, slider1); });
-                slider2.onValueChanged.AddListener (delegate { PropertyAdjust_13 (2, slider2); });
-                slider3.onValueChanged.AddListener (delegate { PropertyAdjust_13 (3, slider3); });
-                slider4.onValueChanged.AddListener (delegate { PropertyAdjust_13 (4, slider4); });
+                slider13_1.onValueChanged.AddListener (delegate { PropertyAdjust_13 (1, slider13_1); });
+                slider13_2.onValueChanged.AddListener (delegate { PropertyAdjust_13 (2, slider13_2); });
+                slider13_3.onValueChanged.AddListener (delegate { PropertyAdjust_13 (3, slider13_3); });
+                slider13_4.onValueChanged.AddListener (delegate { PropertyAdjust_13 (4, slider13_4); });
 
                 break;
 
@@ -100,6 +112,16 @@ public class PropertyBarCallBack : MonoBehaviour {
                 /// 14-16
                 /// </summary>
             case 14: //=========================================================3D Noise Flow Field
+
+                Slider slider14_1 = this.transform.Find ("Slider1").GetComponent<Slider> ();
+                Slider slider14_2 = this.transform.Find ("Slider2").GetComponent<Slider> ();
+                Slider slider14_3 = this.transform.Find ("Slider3").GetComponent<Slider> ();
+                Slider slider14_4 = this.transform.Find ("Slider4").GetComponent<Slider> ();
+
+                slider14_1.onValueChanged.AddListener (delegate { PropertyAdjust_14 (1, slider14_1); });
+                slider14_2.onValueChanged.AddListener (delegate { PropertyAdjust_14 (2, slider14_2); });
+                slider14_3.onValueChanged.AddListener (delegate { PropertyAdjust_14 (3, slider14_3); });
+                slider14_4.onValueChanged.AddListener (delegate { PropertyAdjust_14 (4, slider14_4); });
 
                 break;
 
@@ -111,6 +133,49 @@ public class PropertyBarCallBack : MonoBehaviour {
             default:
                 break;
 
+        }
+
+    }
+
+    void PropertyAdjust_9 (int property) {
+        GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+        AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
+
+        Toggle toggle9_1 = this.transform.Find ("UseMicrophoneToggle").GetComponent<Toggle> ();
+        Toggle toggle9_2 = this.transform.Find ("ChangeScaleToggle").GetComponent<Toggle> ();
+        Toggle toggle9_3 = this.transform.Find ("ChangePositionToggle").GetComponent<Toggle> ();
+        Slider slider9_1 = this.transform.Find ("Slider1").GetComponent<Slider> ();
+        Slider slider9_2 = this.transform.Find ("Slider2").GetComponent<Slider> ();
+
+        switch (property) {
+            case 1:
+                if (toggle9_1.isOn) {
+                    AVComponent.useMicrophoneInput ();
+                } else {
+                    AVComponent.offMicrophoneInput ();
+                }
+                break;
+            case 2:
+                if (toggle9_2.isOn) {
+                    AVComponent.setChangePixelScale ();
+                } else {
+                    AVComponent.offChangePixelScale ();
+                }
+                break;
+            case 3:
+                if (toggle9_3.isOn) {
+                    AVComponent.setChangePixelPostion ();
+                } else {
+                    AVComponent.offChangePixelPostion ();
+                }
+                break;
+            case 4:
+                AVComponent.pixScale = slider9_1.value;
+
+                break;
+            case 5:
+                AVComponent.SamplesScale = slider9_2.value;
+                break;
         }
 
     }
@@ -137,4 +202,29 @@ public class PropertyBarCallBack : MonoBehaviour {
         }
 
     }
+
+    void PropertyAdjust_14 (int property, Slider slider) {
+
+        GameObject MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
+        NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
+
+        switch (property) {
+            case 1:
+                NFComponent._increment = slider.value;
+
+                break;
+            case 2:
+                NFComponent._particleScale = slider.value;
+                NFComponent.setParticleScale ();
+                break;
+            case 3:
+                NFComponent._particleMoveSpeed = slider.value;
+                break;
+            case 4:
+                NFComponent._particleRotateSpeed = slider.value;
+                break;
+        }
+
+    }
+
 }

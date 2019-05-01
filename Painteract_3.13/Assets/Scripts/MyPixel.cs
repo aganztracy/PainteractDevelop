@@ -15,11 +15,13 @@ public class MyPixel : MonoBehaviour {
     // public GameObject DotFlowOBJ;
 
     public GameObject CanvasOBJ; // 获取挂载该脚本的"Canvas"物体，为了获取ReadPic.cs中的对象和方法
+    public GameObject MyPixelsOBJ;
 
     void Start () {
 
         //获取功能模式控制变量
         CanvasOBJ = GameObject.FindWithTag ("Canvas");
+        MyPixelsOBJ = GameObject.FindWithTag("MyPixels");
         Control = CanvasOBJ.GetComponent<ReadPic> ().Control;
 
         switch (Control) {
@@ -101,7 +103,11 @@ public class MyPixel : MonoBehaviour {
                 /// </summary>
             case 14: //=========================================================3D Noise Flow Field
                 gameObject.AddComponent<FlowFieldParticle> ();
-                // Debug.Log ("added____________________");
+                
+                MyPixelsOBJ.GetComponent<NoiseFlowFieldController>()._particles.Add (this.GetComponent<FlowFieldParticle> ());
+                MyPixelsOBJ.GetComponent<NoiseFlowFieldController>()._particleMeshRenderer.Add (this.GetComponent<MeshRenderer> ());
+                MyPixelsOBJ.GetComponent<NoiseFlowFieldController>().setRandomPosition(this.gameObject);
+                //Debug.Log ("added____________________");
                 break;
 
             case 15: //=========================================================爆炸粒子系统效果
@@ -198,6 +204,8 @@ public class MyPixel : MonoBehaviour {
                 /// </summary>
             case 14: //=========================================================3D Noise Flow Field
                 gameObject.AddComponent<FlowFieldParticle> ();
+                gameObject.GetComponent<TrailRenderer>().startWidth = Random.Range(1,50);
+                //gameObject.GetComponent<TrailRenderer>().endWidth = gameObject.GetComponent<TrailRenderer>().startWidth;
                 // Debug.Log ("added____________________");
                 break;
 

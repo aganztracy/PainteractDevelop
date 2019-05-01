@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 989897683220517438}
   - component: {fileID: 7891089439377225065}
   m_Layer: 5
-  m_Name: PorpertyBar_2
+  m_Name: PorpertyBar_4
   m_TagString: FirstButtonPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

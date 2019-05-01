@@ -112,11 +112,11 @@ public class AndroidCamera : MonoBehaviour {
             //成功读取图片，写自己的逻辑  
 
             if (TargetImg == 1) {
-                CanvasOBJ.GetComponent<UIManager>().ShowImagePage();
+                CanvasOBJ.GetComponent<UIManager> ().ShowImagePage ();
                 //GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.green;
                 CanvasOBJ.GetComponent<ReadPic> ().Img = ResizePic (www.texture);
                 CanvasOBJ.GetComponent<ReadPic> ().ShowPic (); //让图片显示到屏幕上
-                
+
             }
 
             if (TargetImg == 2) {
@@ -169,6 +169,31 @@ public class AndroidCamera : MonoBehaviour {
     public void SetOrinImageBgScale () {
 
         CanvasOBJ.GetComponent<ReadPic> ().OrinImageBg.GetComponent<RectTransform> ().sizeDelta = ImgSize;
+    }
+
+    //电脑端打开图片函数
+    public void AddHead () {
+        OpenFileDialog od = new OpenFileDialog ();
+        od.Title = "请选择头像图片";
+        od.Multiselect = false;
+        od.Filter = "图片文件(*.jpg,*.png,*.bmp)|*.jpg;*.png;*.bmp";
+
+        if (od.ShowDialog () == DialogResult.OK) {
+            StartCoroutine (GetTexture ("file://" + od.FileName));
+        }
+
+    }
+
+    IEnumerator GetTexture (string url) {
+        WWW www = new WWW (url);
+        yield return www;
+        if (www.isDone && www.error == null) {
+            CanvasOBJ.GetComponent<UIManager> ().ShowImagePage ();
+
+            CanvasOBJ.GetComponent<ReadPic> ().Img = ResizePic (www.texture);
+            CanvasOBJ.GetComponent<ReadPic> ().ShowPic (); //让图片显示到屏幕上
+
+        }
     }
 
 }

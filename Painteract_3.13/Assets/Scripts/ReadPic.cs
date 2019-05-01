@@ -42,13 +42,18 @@ public class ReadPic : MonoBehaviour {
         MyPixelsOBJ = GameObject.FindWithTag ("MyPixels");
         // sp = (Sprite)Resources.Load("Sprites/circle", typeof(Sprite)) as Sprite;
         // spMaterial = Resources.Load ("Materials/AtomMaterial") as Material;
-        SetPixelShape ();
+        SetPixelShape (1);
 
     }
 
-    void SetPixelShape () {
-        PixelPrefab = (GameObject) Resources.Load ("Prefabs/PixelPrefab"); //球形prefab
-        // PixelPrefab = (GameObject) Resources.Load ("Prefabs/CubePixelPrefab"); //立方体形prefab
+    void SetPixelShape (int shape) { //shape :1为shpere,2为cube
+
+        if (shape == 1) {
+            PixelPrefab = (GameObject) Resources.Load ("Prefabs/PixelPrefab_trail2"); //球形prefab
+        }
+        if (shape == 2) {
+            PixelPrefab = (GameObject) Resources.Load ("Prefabs/CubePixelPrefab"); //立方体形prefab
+        }
 
     }
 
@@ -221,6 +226,15 @@ public class ReadPic : MonoBehaviour {
 
     public void RefreshProcess_Destroy () { //去除前一效果产生的所有对象，进行新处理
         MyPixelsOBJ.GetComponent<DestroyAllChildren> ().DestroyChildren ();
+
+        //粒子形状切换
+        if (Control == 17) {
+            SetPixelShape (1);
+        }
+        if (Control == 18) {
+            SetPixelShape (2);
+        }
+
         PicProcess ();
 
     }
@@ -291,6 +305,7 @@ public class ReadPic : MonoBehaviour {
         if (Control == 13) {
             MyPixelsOBJ.AddComponent<WobblyGridController> ();
         }
+
     }
 
     public void DestroyController () { //在切换效果或退出效果时，消除效果添加在MyPixelsOBJ上的功能脚本
@@ -339,7 +354,9 @@ public class ReadPic : MonoBehaviour {
         if (Control == 9) {
             AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
-            AVComponent.StopMusic ();
+            if (AVComponent.audio) {
+                AVComponent.StopMusic ();
+            }
             Destroy (AVComponent);
             Destroy (APComponent);
         }
