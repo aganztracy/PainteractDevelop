@@ -47,7 +47,7 @@ public class CameraMove : MonoBehaviour {
         distance = -transform.position.z;
         //  GetComponent<Rigidbody>().freezeRotation = true;
 
-        defaultPosition = new Vector2(angles.y,angles.x);
+        defaultPosition = new Vector3(angles.y,angles.x,distance);
         defaultRotation = this.transform.rotation;
 
         //for PC debug
@@ -174,6 +174,8 @@ public class CameraMove : MonoBehaviour {
         //transform.SetPositionAndRotation(defaultPosition,defaultRotation);//无法修改transform的信息
         x = defaultPosition.x;
         y = defaultPosition.y;
+        distance = defaultPosition.z;
+        
 
 
     }
