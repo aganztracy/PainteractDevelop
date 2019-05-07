@@ -68,17 +68,16 @@ public class MyPixel : MonoBehaviour {
                 /// Physic 类别效果
                 /// 10-13
                 /// </summary>
-            case 10: //=========================================================可拖拽弹簧网格
+            case 10: //=========================================================可拖拽弹簧网格（上端悬挂）
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<SpringGridController> ();
 
                 break;
-            case 11: //=========================================================三维粒子效果
+            case 11: //=========================================================可拖拽弹簧网格（四角钉死）
                 //弹簧三维连接测试
                 //将鼠标拖拽移动粒子相关的脚本添加到粒子上
-                gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<DragObj> ();
                 //将形成弹簧网络的功能脚本添加到粒子上
                 gameObject.AddComponent<Spring3DController> ();
@@ -88,7 +87,8 @@ public class MyPixel : MonoBehaviour {
                 // 给每个粒子添加刚体组件
                 //gameObject.AddComponent<Rigidbody> ();
                 gameObject.AddComponent<Rigidbody> ();
-                gameObject.GetComponent<Rigidbody> ().mass = 10;
+                gameObject.AddComponent<DragObj> ();
+                gameObject.GetComponent<Rigidbody> ().mass = 1;
                 gameObject.GetComponent<Rigidbody> ().drag = 0.01f;
                 break;
             case 13: //=========================================================WobblyGrid

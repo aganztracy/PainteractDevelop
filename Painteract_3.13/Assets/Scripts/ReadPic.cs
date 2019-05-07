@@ -216,6 +216,7 @@ public class ReadPic : MonoBehaviour {
 
     //bei  18/10/19
     public void Cancel () {
+        //在显示图像或选择效果页面返回首页时会执行
         if (OrinImageBg) {
             OrinImageBg.texture = null;
         }
@@ -354,7 +355,7 @@ public class ReadPic : MonoBehaviour {
         if (Control == 9) {
             AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
-            if (AVComponent.audio) {
+            if (AVComponent.isAudioPlay) {
                 AVComponent.StopMusic ();
             }
             Destroy (AVComponent);

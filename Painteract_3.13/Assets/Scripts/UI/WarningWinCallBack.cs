@@ -38,7 +38,6 @@ public class WarningWinCallBack : MonoBehaviour {
         }
         if (CurrentPage == "AdjustPage") {
 
-            CanvasOBJ.GetComponent<ReadPic> ().Cancel ();
             CanvasOBJ.GetComponent<UIManager> ().ShowChoosePage ();
 
 

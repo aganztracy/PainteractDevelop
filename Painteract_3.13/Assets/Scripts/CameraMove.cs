@@ -47,8 +47,8 @@ public class CameraMove : MonoBehaviour {
         distance = -transform.position.z;
         //  GetComponent<Rigidbody>().freezeRotation = true;
 
-        defaultPosition = this.transform.localPosition;
-        defaultRotation = this.transform.localRotation;
+        defaultPosition = new Vector2(angles.y,angles.x);
+        defaultRotation = this.transform.rotation;
 
         //for PC debug
         camerarotate ();
@@ -171,9 +171,11 @@ public class CameraMove : MonoBehaviour {
         // this.transform.position = defaultPosition;
 
         // transform.Translate(defaultPosition);
-        transform.SetPositionAndRotation(defaultPosition,defaultRotation);//无法修改transform的信息
-        
-        GameObject.FindWithTag ("Player").GetComponent<MeshRenderer> ().material.color = Color.red;
+        //transform.SetPositionAndRotation(defaultPosition,defaultRotation);//无法修改transform的信息
+        x = defaultPosition.x;
+        y = defaultPosition.y;
+
+
     }
 
 }

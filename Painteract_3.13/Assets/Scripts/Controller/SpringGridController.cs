@@ -51,7 +51,6 @@ public class SpringGridController : MonoBehaviour {
 			connectedObjRow = CanvasOBJ.GetComponent<ReadPic> ().pixArray[Row - 1, Clo];
 			jointComponentRow.connectedBody = connectedObjRow.GetComponent<Rigidbody> ();
 
-
 		}
 
 		if (Row != 0 && Clo != 0) { // 一般粒子元，和其左方和下方的粒子连接
@@ -70,19 +69,14 @@ public class SpringGridController : MonoBehaviour {
 			jointComponentClo.connectedBody = connectedObjClo.GetComponent<Rigidbody> ();
 		}
 
-		if (Row == RowNum-1) //最上方一行锁定
+		if (Row == RowNum - 1) //最上方一行锁定
 
 		{
-			//Debug.Log("my row is" + Row + "and my clo is" + Clo);
-			//Debug.Log ("lock" + Row + ":" + Clo);
 			gameObject.GetComponent<Rigidbody> ().constraints =
 				RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
 		}
 
 	}
 
-	// Update is called once per frame
-	void Update () {
 
-	}
 }

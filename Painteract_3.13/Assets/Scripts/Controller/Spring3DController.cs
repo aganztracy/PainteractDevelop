@@ -22,9 +22,6 @@ public class Spring3DController : MonoBehaviour {
 	int RowNum;
 	int CloNum;
 
-	float PosX;
-	float PosY;
-
 	// Use this for initialization
 	void Start () {
 
@@ -35,8 +32,6 @@ public class Spring3DController : MonoBehaviour {
 		Col = MyPixelOBJ.Col;
 		RowNum = CanvasOBJ.GetComponent<ReadPic> ().rowNum;
 		CloNum = CanvasOBJ.GetComponent<ReadPic> ().cloNum;
-		PosX = MyPixelOBJ.PosXY.x;
-		PosY = MyPixelOBJ.PosXY.y;
 
 		// 给每个粒子添加刚体组件
 		gameObject.AddComponent<Rigidbody> ();
@@ -74,23 +69,15 @@ public class Spring3DController : MonoBehaviour {
 			jointComponentClo.connectedBody = connectedObjClo.GetComponent<Rigidbody> ();
 		}
 
-		if (Row == RowNum - 1) //最上方一行锁定
+		//四个角的粒子锁定
 
-		{
-			//Debug.Log("my row is" + Row + "and my clo is" + Clo);
-			//Debug.Log ("lock" + Row + ":" + Clo);
-			gameObject.GetComponent<Rigidbody> ().constraints =
-				RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+		if (Row == RowNum - 1||Row == 0) {
+			if (Clo == 0 || Clo == CloNum - 1) {
+				gameObject.GetComponent<Rigidbody> ().constraints =
+					RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+			}
 		}
 
-
-		gameObject.transform.localPosition = new Vector3 (PosX, PosY, PosX/10+PosY/10);
 	}
 
-	
-
-	// Update is called once per frame
-	void Update () {
-
-	}
 }

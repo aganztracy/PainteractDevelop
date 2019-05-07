@@ -28,10 +28,13 @@ public class AudioVisualizationController : MonoBehaviour {
 
 	public bool useMicrophone;
 
+	public bool isAudioPlay;
+
 	// Use this for initialization
 	void Start () {
 
 		audioPeerOBJ = gameObject.GetComponent<AudioPeer> ();
+		isAudioPlay = true;
 
 		if (useMicrophone) {
 
@@ -124,9 +127,11 @@ public class AudioVisualizationController : MonoBehaviour {
 
 	public void StopMusic () {
 		audio.Stop ();
+		isAudioPlay = false;
 	}
 
 	public void StartMusic(){
 		audio.Play ();
+		isAudioPlay = true;
 	}
 }
