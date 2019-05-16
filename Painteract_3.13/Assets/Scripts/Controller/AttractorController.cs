@@ -78,6 +78,8 @@ public class AttractorController : MonoBehaviour {
     }
 
     public bool IsTouchedUI () {
+        if(Input.touchCount==0) return false;
+        
         bool touchedUI = false;
         if (UnityEngine.Application.isMobilePlatform) {
             if (EventSystem.current.IsPointerOverGameObject (Input.GetTouch (0).fingerId)) {

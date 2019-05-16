@@ -7,7 +7,6 @@ public class DragObj : MonoBehaviour {
 
     //下面的函数是当鼠标触碰到碰撞体或者刚体时调用，我的碰撞体设置是mesh collider，然后别忘了，给这个collider添加物理材质  
 
-
     //值得注意的是世界坐标系转化为屏幕坐标系，Z轴是不变的  
     IEnumerator OnMouseDown () {
         //将物体由世界坐标系转化为屏幕坐标系 ，由vector3 结构体变量ScreenSpace存储，以用来明确屏幕坐标系Z轴的位置  
@@ -32,12 +31,14 @@ public class DragObj : MonoBehaviour {
                 yield return new WaitForFixedUpdate ();
             }
 
-            Debug.Log("untouchedUI");
+            Debug.Log ("untouchedUI");
         }
 
     }
 
-        public bool IsTouchedUI () {
+    public bool IsTouchedUI () {
+        if (Input.touchCount == 0) return false;
+        
         bool touchedUI = false;
         if (UnityEngine.Application.isMobilePlatform) {
             if (EventSystem.current.IsPointerOverGameObject (Input.GetTouch (0).fingerId)) {
@@ -47,6 +48,6 @@ public class DragObj : MonoBehaviour {
             touchedUI = true;
         }
         return touchedUI;
-        
+
     }
 }

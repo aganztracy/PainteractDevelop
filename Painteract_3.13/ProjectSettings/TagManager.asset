@@ -21,6 +21,8 @@ TagManager:
   - RECPageCanvas
   - MyPixel
   - AndroidCameraPlane
+  - VectorField
+  - MeshGenerator
   layers:
   - Default
   - TransparentFX

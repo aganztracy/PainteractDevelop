@@ -19,12 +19,6 @@ public class ParticleBoomController : MonoBehaviour {
 		Pmaterial = Resources.Load ("Materials/P") as Material;
 		sp = (Sprite) Resources.Load ("Sprites/circle", typeof (Sprite)) as Sprite;
 	}
-
-	// Update is called once per frame
-	void Update () {
-
-	}
-
 	IEnumerator OnMouseDown () {
 		//将物体由世界坐标系转化为屏幕坐标系 ，由vector3 结构体变量ScreenSpace存储，以用来明确屏幕坐标系Z轴的位置  
 		Vector3 ScreenSpace = Camera.main.WorldToScreenPoint (transform.position);

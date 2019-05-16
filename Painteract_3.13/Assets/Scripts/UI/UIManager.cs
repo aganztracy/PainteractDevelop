@@ -41,12 +41,6 @@ public class UIManager : MonoBehaviour {
         WarningWinPrefab = Resources.Load<GameObject> ("Prefabs/UIPrefabs/WarningWindow");
 
     }
-
-    // Update is called once per frame
-    void Update () {
-
-    }
-
     /// <summary>
     /// Show***Page () 函数为界面显示和其他界面影藏函数
     /// 界面跳转（显隐）通过禁用界面上的画布组件实现，避免了画布的重载

@@ -15,12 +15,6 @@ public class PropertyBarCallBack : MonoBehaviour {
         PropertyBarInstantiate (Control);
 
     }
-
-    // Update is called once per frame
-    void Update () {
-
-    }
-
     void PropertyBarInstantiate (int control) {
 
         switch (Control) {

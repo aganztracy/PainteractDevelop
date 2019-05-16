@@ -32,6 +32,8 @@ public class ReadPic : MonoBehaviour {
 
     //--------------------------功能模式控制变量--------------------------------
     public int Control = 1;
+    //--------------------------形状模式控制变量--------------------------------
+    public int PicShapeControl = 1;
 
     public GameObject PixelPrefab;
     //test bei
@@ -116,32 +118,62 @@ public class ReadPic : MonoBehaviour {
         pixShape.GetComponent<MyPixel> ().Clo = clo;
         pixShape.GetComponent<MyPixel> ().Col = col;
 
-        //test 3d position by z
-
         ///-无效果0----------------------------
-        float z = 10.0f;
-        ///-效果1可----------------------------
-        // float z = Mathf.Sin(Mathf.Sqrt(x*x+y*y))*100; //比较混乱的城市效果
-        ///-效果2可---------------------------
-        // float z = Mathf.Sin (Mathf.Sqrt (clo * clo + row * row)) * 100; //有规律的波纹效果1，用其他函数也可以变成其他类型的波纹
-        ///--效果3可---------------------------
-        // float u = ExtensionMethods.Map (row, 0, rowNum,-10, 10);
-        // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
-        // float z = Mathf.Cos (Mathf.Sqrt (u * u + v * v)) * 100; //有规律的波纹效果2
+        float z = 10.0f; //每次重新执行都会执行这个 所以又会回到原状。
+        /// 法1：重新弄一个 shapecontrol? 点击按钮时，把这个shapecontrol的全局变量改了
 
-        ///-卷曲效果零食可-------------------------------
-        // float u = ExtensionMethods.Map (row, 0, rowNum, -0, 5);//后面这两个参数对形状影响很大
-        // float v = ExtensionMethods.Map (clo, 0, cloNum, -1, 1);
-        // x = v*100*5;
-        // y = Mathf.Sin (u) * Mathf.Cos (v)*100*5;
-        // float z = Mathf.Cos (u) * Mathf.Cos (v)*100*5;
-        ///---效果4---？---------------------------
-        // float u = ExtensionMethods.Map (row, 0, rowNum, 10, 52);
-        // float v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
-        // x = 0.75f * v * 100;
-        // y = Mathf.Sin (u) * v * 100;
-        // float z = Mathf.Cos (u) * Mathf.Cos (v) * 500;
-        //--------------------------------------
+        float u = 0.0f; //便于case里面有些要计算，先声明
+        float v = 0.0f;
+
+        switch (PicShapeControl) {
+            /// <summary>
+            /// 设置图像阵列的形状 3d position by z row clo rowNum colNum
+            /// 暂时是 5-8
+            /// </summary>
+            case 1:
+                //形状1 原始形状
+                z = 10.0f;
+                // pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
+                break;
+            case 2:
+                //形状2可-比较混乱的城市效果
+                z = Mathf.Sin (Mathf.Sqrt (x * x + y * y)) * 100;
+                // pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
+                break;
+            case 3:
+                //形状3可-有规律的波纹效果1，用其他函数也可以变成其他类型的波纹
+                z = Mathf.Sin (Mathf.Sqrt (clo * clo + row * row)) * 100;
+                // pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
+                break;
+            case 4:
+                //形状4可-有规律的波纹效果2
+                u = ExtensionMethods.Map (row, 0, rowNum, -10, 10);
+                v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
+                z = Mathf.Cos (Mathf.Sqrt (u * u + v * v)) * 100;
+                // pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
+                break;
+            case 5:
+                //形状5可 卷曲效果零食
+                u = ExtensionMethods.Map (row, 0, rowNum, -0, 5); //后面这两个参数对形状影响很大
+                v = ExtensionMethods.Map (clo, 0, cloNum, -1, 1);
+                x = v * 100 * 5;
+                y = Mathf.Sin (u) * Mathf.Cos (v) * 100 * 5;
+                z = Mathf.Cos (u) * Mathf.Cos (v) * 100 * 5;
+                break;
+            case 6:
+                //形状6？这是个啥玩意儿
+                u = ExtensionMethods.Map (row, 0, rowNum, 10, 52);
+                v = ExtensionMethods.Map (clo, 0, cloNum, -10, 10);
+                x = 0.75f * v * 100;
+                y = Mathf.Sin (u) * v * 100;
+                z = Mathf.Cos (u) * Mathf.Cos (v) * 500;
+                break;
+            case 7:
+                //形状7
+                break;
+            default: //不是这些情况形状上就什么也不做
+                break;
+        }
 
         pixShape.GetComponent<MyPixel> ().PosXY = new Vector3 (x, y, z);
         pixShape.name = row + "," + clo;
@@ -280,6 +312,28 @@ public class ReadPic : MonoBehaviour {
         if (Control == 4) {
 
         }
+
+        if (Control == 5) { //功能5
+            MyPixelsOBJ.SetActive (false);
+            GameObject.FindGameObjectWithTag ("MeshGenerator").AddComponent<MeshGeneratorController> ();
+        }
+        if (Control == 6) { //功能6
+        }
+
+        /// <summary>
+        /// 控制形状变量
+        /// </summary>
+        /// <value></value>
+        // if (Control == 6) {
+        //     PicShapeControl = 1;
+        // }
+        if (Control == 7) {
+            PicShapeControl = 2;
+        }
+        if (Control == 8) {
+            PicShapeControl = 3;
+        }
+
         //如果是音乐可视化功能，在粒子产生后添加音乐可视化脚本
         if (Control == 9) {
             MyPixelsOBJ.AddComponent<AudioPeer> ();
@@ -294,17 +348,15 @@ public class ReadPic : MonoBehaviour {
             GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
             BeverageBoxsOBJ.AddComponent<BeveragesController> ();
         }
-
+        // Debug.Log ("Music Visualization2 setup");
+        if (Control == 13) {
+            MyPixelsOBJ.AddComponent<WobblyGridController> ();
+        }
         if (Control == 14) {
             MyPixelsOBJ.AddComponent<NoiseFlowFieldController> ();
             NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
             Debug.Log ("add noise.cs");
 
-        }
-
-        // Debug.Log ("Music Visualization2 setup");
-        if (Control == 13) {
-            MyPixelsOBJ.AddComponent<WobblyGridController> ();
         }
 
     }
@@ -338,20 +390,14 @@ public class ReadPic : MonoBehaviour {
             // PicTranPixel PTCComponent=MyPixelsOBJ.GetComponent<PicTranPixel>();
             // Destroy (PTCComponent);
         }
-        //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
-        if (Control == 12) {
-            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
-            BeveragesController BBoxComponent = BeverageBoxsOBJ.GetComponent<BeveragesController> ();
-            BBoxComponent.DestroyChildren ();
-            Destroy (BBoxComponent);
+        if (Control == 5) { //功能5
+            GameObject MeshGeneratorOBJ = GameObject.FindWithTag ("MeshGenerator");
+            MeshGeneratorOBJ.GetComponent<MeshFilter> ().mesh = null;
+            MeshGeneratorController MGComponent = MeshGeneratorOBJ.GetComponent<MeshGeneratorController> ();
+            Destroy (MGComponent);
+
+            MyPixelsOBJ.SetActive (true);
         }
-
-        if (Control == 14) {
-            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
-            Destroy (NFComponent);
-
-        }
-
         if (Control == 9) {
             AudioVisualizationController AVComponent = MyPixelsOBJ.GetComponent<AudioVisualizationController> ();
             AudioPeer APComponent = MyPixelsOBJ.GetComponent<AudioPeer> ();
@@ -361,10 +407,22 @@ public class ReadPic : MonoBehaviour {
             Destroy (AVComponent);
             Destroy (APComponent);
         }
-
+        //如果是音乐可视化功能，在返回首页时需要暂停音乐的播放并去除音乐可视化的脚本
+        if (Control == 12) {
+            GameObject BeverageBoxsOBJ = GameObject.FindWithTag ("BeverageBoxs");
+            BeveragesController BBoxComponent = BeverageBoxsOBJ.GetComponent<BeveragesController> ();
+            BBoxComponent.DestroyChildren ();
+            Destroy (BBoxComponent);
+        }
         if (Control == 13) {
             WobblyGridController WGComponent = MyPixelsOBJ.GetComponent<WobblyGridController> ();
             Destroy (WGComponent);
+        }
+
+        if (Control == 14) {
+            NoiseFlowFieldController NFComponent = MyPixelsOBJ.GetComponent<NoiseFlowFieldController> ();
+            Destroy (NFComponent);
+
         }
 
     }

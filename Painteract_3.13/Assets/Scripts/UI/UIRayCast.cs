@@ -19,27 +19,8 @@ using System.Collections.Generic;
 
 
 public class UIRayCast : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start () {
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-
-        // if (IsTouchedUI ()) {
-        //     Debug.Log ("当前触摸在UI上");
-        // } else {
-
-        // }
-
-        // if (!IsPointerOverGameObject (Input.mousePosition)) {
-        //     //没有点击UI
-        // }
-
-    }
-
     public bool IsTouchedUI () {
+        if (Input.touchCount == 0) return false;
         bool touchedUI = false;
         if (UnityEngine.Application.isMobilePlatform) {
             if (EventSystem.current.IsPointerOverGameObject (Input.GetTouch (0).fingerId)) {

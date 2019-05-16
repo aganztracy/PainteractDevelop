@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class FlowFieldParticle : MonoBehaviour {
 	public float _moveSpeed;
-	public int _audioBand;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+	public int _audioBand;	
 	// Update is called once per frame
 	void Update () {
 		this.transform.position = this.transform.position + transform.forward  * _moveSpeed * Time.deltaTime;;

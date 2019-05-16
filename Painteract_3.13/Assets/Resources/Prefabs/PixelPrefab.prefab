@@ -112,6 +112,7 @@ MonoBehaviour:
   Col: {r: 0.05882353, g: 0.05882353, b: 0.05882353, a: 1}
   PosXY: {x: 0, y: 0, z: 10}
   CanvasOBJ: {fileID: 0}
+  MyPixelsOBJ: {fileID: 0}
 --- !u!96 &8688902556759746827
 TrailRenderer:
   serializedVersion: 2
@@ -120,7 +121,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2592600218656946520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2592600218656946520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78085bf8dc88cba499e0b8e47a0e62a3, type: 3}
   m_Name: 
